@@ -1,7 +1,11 @@
 import styled from "styled-components";
 
-import logoImage from "../../assets/logo.svg";
-import glassImage from "../../assets/glass.png";
+import logoImage from "../../assets/images/logo.svg";
+import glassImage from "../../assets/images/glass.png";
+import sellIcon from "../../assets/images/sell-icon.png";
+import myStoreIcon from "../../assets/images/my-store-icon.png";
+import talkIcon from "../../assets/images/talk-icon.png";
+import menuImage from "../../assets/images/menu.png";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -9,11 +13,13 @@ const StyledHeader = styled.div`
   position: fixed;
   top: 40px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-bottom: 1px solid #eeeeee;
 `;
 
 const HeaderWrapper = styled.div`
-  width: 80%;
+  width: 60%;
   height: 100%;
   display: flex;
 `;
@@ -26,7 +32,7 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-  width: 60%;
+  width: 65%;
 `;
 
 const SearchBarWrapper = styled.div`
@@ -38,7 +44,7 @@ const SearchBarWrapper = styled.div`
 
 const InputWrapper = styled.div`
   width: 100%;
-  height: 36px;
+  height: 40px;
   border: 2px solid #f72f33;
   display: flex;
   justify-content: center;
@@ -59,9 +65,42 @@ const GlassWrapper = styled.div`
 
 const Glass = styled.img``;
 
-const UtilButtonWrapper = styled.div`
+const UtilLinkWrapper = styled.div`
   width: 30%;
   height: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const UtilLink = styled.button`
+  width: 30%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+`;
+
+const UtilLinkIcon = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
+const UtilLinkText = styled.div`
+  color: #212121;
+  font-size: 14px;
+`;
+
+const Category = styled.div`
+  width: 60%;
+  height: 70px;
+  display: flex;
+`;
+
+const HambergerMenu = styled.img`
+  width: 22px;
+  height: 18px;
+  cursor: pointer;
 `;
 
 const Header = () => {
@@ -79,8 +118,24 @@ const Header = () => {
             </GlassWrapper>
           </InputWrapper>
         </SearchBarWrapper>
-        <UtilButtonWrapper></UtilButtonWrapper>
+        <UtilLinkWrapper>
+          <UtilLink>
+            <UtilLinkIcon src={sellIcon} />
+            <UtilLinkText>판매하기</UtilLinkText>
+          </UtilLink>
+          <UtilLink>
+            <UtilLinkIcon src={myStoreIcon} />
+            <UtilLinkText>나의상점</UtilLinkText>
+          </UtilLink>
+          <UtilLink>
+            <UtilLinkIcon src={talkIcon} />
+            <UtilLinkText>중고톡</UtilLinkText>
+          </UtilLink>
+        </UtilLinkWrapper>
       </HeaderWrapper>
+      <Category>
+        <HambergerMenu src={menuImage} />
+      </Category>
     </StyledHeader>
   );
 };

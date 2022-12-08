@@ -10,7 +10,7 @@ const StyledTopHeader = styled.div`
 `;
 
 const LinkWrapper = styled.div`
-  width: 80%;
+  width: 60%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
@@ -31,8 +31,8 @@ const TopHeader = () => {
   return (
     <StyledTopHeader>
       <LinkWrapper>
-        <LinkItem to="">로그인</LinkItem>
-        <LinkItem to="">회원가입</LinkItem>
+        <LinkItem to="/login">로그인</LinkItem>
+        <LinkItem to="/register">회원가입</LinkItem>
       </LinkWrapper>
     </StyledTopHeader>
   );

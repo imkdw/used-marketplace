@@ -6,10 +6,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     font-family: 'Noto Sans KR', 'Noto Sans', sans-serif;
-
-  }
-
-  body {
   }
 
   a {
@@ -18,6 +14,13 @@ const GlobalStyle = createGlobalStyle`
 
   input {
     border: none;
+    outline: none;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
 `;
 

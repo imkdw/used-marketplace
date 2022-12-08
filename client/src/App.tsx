@@ -1,16 +1,18 @@
-import { Routes } from "react-router-dom";
-import TopHeader from "./components/topHeader/TopHeader";
-import Header from "./components/header/Header";
+import { Route, Routes } from "react-router-dom";
 import GlobalStyle from "./GlobalStyles";
+import Main from "./components/main/Main";
+import Register from "./components/register/Register";
+import Container from "./components/common/Container";
 
 const App = () => {
   return (
-    <>
+    <Container>
       <GlobalStyle />
-      <TopHeader />
-      <Header />
-      <Routes></Routes>
-    </>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+    </Container>
   );
 };
 
