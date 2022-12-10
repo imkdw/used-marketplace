@@ -3,11 +3,7 @@ import styled from "styled-components";
 const StyledAuthInput = styled.div`
   width: 100%;
   height: 50px;
-  border-bottom: 1px solid #eeeeee;
-
-  &:focus {
-    border-bottom: 1px solid black;
-  }
+  border-bottom: 2px solid #eeeeee;
 `;
 
 const Input = styled.input`

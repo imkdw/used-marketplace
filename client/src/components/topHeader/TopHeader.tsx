@@ -7,15 +7,27 @@ const StyledTopHeader = styled.div`
   border: 1px solid #eeeeee;
   display: flex;
   justify-content: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const LinkWrapper = styled.div`
-  width: 60%;
+  width: 55%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   padding: 0 10px 0 10px;
+
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 1023px) {
+    width: 90%;
+  }
 `;
 
 const LinkItem = styled(Link)`

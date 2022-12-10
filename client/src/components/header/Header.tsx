@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 import logoImage from "../../assets/images/logo.svg";
-import glassImage from "../../assets/images/glass.png";
 import sellIcon from "../../assets/images/sell-icon.png";
 import myStoreIcon from "../../assets/images/my-store-icon.png";
 import talkIcon from "../../assets/images/talk-icon.png";
 import menuImage from "../../assets/images/menu.png";
+import GlassIcon from "../common/icons/GlassIcon";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -16,12 +16,25 @@ const StyledHeader = styled.div`
   align-items: center;
   flex-direction: column;
   border-bottom: 1px solid #eeeeee;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const HeaderWrapper = styled.div`
-  width: 60%;
+  width: 55%;
   height: 100%;
   display: flex;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 1023px) {
+    width: 90%;
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -36,7 +49,7 @@ const Logo = styled.img`
 `;
 
 const SearchBarWrapper = styled.div`
-  width: 50%;
+  width: 45%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -51,29 +64,19 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled.input`
-  width: 90%;
+  width: 85%;
   height: 100%;
 `;
-
-const GlassWrapper = styled.div`
-  width: 30px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Glass = styled.img``;
 
 const UtilLinkWrapper = styled.div`
-  width: 30%;
+  width: 40%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
 `;
 
 const UtilLink = styled.button`
-  width: 30%;
+  width: 32%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -82,8 +85,8 @@ const UtilLink = styled.button`
 `;
 
 const UtilLinkIcon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 `;
 
 const UtilLinkText = styled.div`
@@ -92,9 +95,17 @@ const UtilLinkText = styled.div`
 `;
 
 const Category = styled.div`
-  width: 60%;
+  width: 55%;
   height: 70px;
   display: flex;
+
+  @media screen and (max-width: 1300px) {
+    width: 70%;
+  }
+
+  @media screen and (max-width: 1023px) {
+    width: 90%;
+  }
 `;
 
 const HambergerMenu = styled.img`
@@ -113,9 +124,7 @@ const Header = () => {
         <SearchBarWrapper>
           <InputWrapper>
             <Input placeholder="상품명, 지역명, @상점명 입력" />
-            <GlassWrapper>
-              <Glass src={glassImage} alt="glass" />
-            </GlassWrapper>
+            <GlassIcon />
           </InputWrapper>
         </SearchBarWrapper>
         <UtilLinkWrapper>

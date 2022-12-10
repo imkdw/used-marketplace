@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { FormEvent } from "react";
 import AuthInput from "../common/AuthInput";
-import ErrorMessage from "./ErrorMessage";
+import { Link } from "react-router-dom";
+import KakaoLogin from "./KakaoLogin";
 
-const StyledRegisterForm = styled.form`
+const StyledLoginForm = styled.form`
   width: 500px;
   height: 750px;
   display: flex;
@@ -24,7 +25,8 @@ const Wrapper = styled.div`
   height: 80%;
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  align-items: center;
+  gap: 40px;
 `;
 
 const HeaderText = styled.h1`
@@ -60,37 +62,46 @@ const SubmitButton = styled.button`
   font-size: 20px;
 `;
 
-const RegisterForm = () => {
+const LinkWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+`;
+
+const StyledLink = styled(Link)`
+  font-size: 16px;
+  color: #888888;
+`;
+
+const LoginForm = () => {
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
   return (
-    <StyledRegisterForm onSubmit={submitHandler}>
+    <StyledLoginForm onSubmit={submitHandler}>
       <Wrapper>
-        <HeaderText>본인 정보를 입력해주세요</HeaderText>
+        <HeaderText>계정을 입력해주세요</HeaderText>
         <InputWrapper>
           <FormControl>
             <AuthInput label="이메일" name="email" type="text" />
-            <ErrorMessage message="" />
-          </FormControl>
-          <FormControl>
-            <AuthInput label="닉네임" name="nickname" type="text" />
-            <ErrorMessage message="" />
           </FormControl>
           <FormControl>
             <AuthInput label="비밀번호" name="password" type="password" />
-            <ErrorMessage message="" />
-          </FormControl>
-          <FormControl>
-            <AuthInput label="비밀번호 확인" name="rePassword" type="password" />
-            <ErrorMessage message="" />
           </FormControl>
         </InputWrapper>
-        <SubmitButton>회원가입</SubmitButton>
+        <LinkWrapper>
+          <StyledLink to="">비밀번호를 까먹으셨나요?</StyledLink>
+          <StyledLink to="/register">아직 계정이 없으신가요?</StyledLink>
+        </LinkWrapper>
+        <KakaoLogin />
+        <SubmitButton>로그인</SubmitButton>
       </Wrapper>
-    </StyledRegisterForm>
+    </StyledLoginForm>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;
