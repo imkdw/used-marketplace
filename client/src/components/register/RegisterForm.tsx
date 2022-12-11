@@ -1,7 +1,11 @@
 import styled from "styled-components";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import AuthInput from "../common/AuthInput";
 import ErrorMessage from "./ErrorMessage";
+import axios from "axios";
+import { authUrl } from "../../config/url";
+import { RegisterAccount } from "../../types/register";
+import { registerValidator } from "./register.validator";
 
 const StyledRegisterForm = styled.form`
   width: 500px;
@@ -61,8 +65,50 @@ const SubmitButton = styled.button`
 `;
 
 const RegisterForm = () => {
-  const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+  const [account, setAccount] = useState<RegisterAccount>({
+    email: "",
+    nickname: "",
+    password: "",
+    rePassword: "",
+  });
+
+  const [isValidAccount, setIsValidAccount] = useState({
+    email: false,
+    nickname: false,
+    password: false,
+    rePassword: false,
+  });
+
+  const { email, nickname, password, rePassword } = account;
+
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.currentTarget;
+
+    setAccount((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+
+    const isValid = registerValidator(name, value);
+    if (isValid) {
+      setIsValidAccount((prevState) => {
+        return { ...prevState, [name]: true };
+      });
+    } else {
+      setIsValidAccount((prevState) => {
+        return { ...prevState, [name]: false };
+      });
+    }
+
+    if (name === "rePassword") {
+      // 비밀번호 확인 검증로직 구현필요 22.12.11
+    }
+  };
+
+  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const res = await axios.post(authUrl.register, account);
+    console.log(res);
   };
 
   return (
@@ -71,20 +117,32 @@ const RegisterForm = () => {
         <HeaderText>본인 정보를 입력해주세요</HeaderText>
         <InputWrapper>
           <FormControl>
-            <AuthInput label="이메일" name="email" type="text" />
-            <ErrorMessage message="" />
+            <AuthInput label="이메일" name="email" type="text" onChange={changeHandler} value={email} />
+            {isValidAccount.email && <ErrorMessage message="올바른 이메일 형식입니다." isValid />}
+            {!isValidAccount.email && <ErrorMessage message="올바르지않은 이메일 형식입니다." isValid={false} />}
           </FormControl>
           <FormControl>
-            <AuthInput label="닉네임" name="nickname" type="text" />
-            <ErrorMessage message="" />
+            <AuthInput label="닉네임" name="nickname" type="text" onChange={changeHandler} value={nickname} />
+            {isValidAccount.nickname && <ErrorMessage message="올바른 닉네임 형식입니다." isValid />}
+            {!isValidAccount.nickname && (
+              <ErrorMessage message="특수문자는 사용이 불가능하며 최대 2~8자리까지 가능합니다." isValid={false} />
+            )}
           </FormControl>
           <FormControl>
-            <AuthInput label="비밀번호" name="password" type="password" />
-            <ErrorMessage message="" />
+            <AuthInput label="비밀번호" name="password" type="password" onChange={changeHandler} value={password} />
+            {isValidAccount.password && <ErrorMessage message="올바른 비밀번호 형식입니다." isValid />}
+            {!isValidAccount.password && (
+              <ErrorMessage message="특수문자를 포함하여 최대 10자리이상 입력해주세요." isValid={false} />
+            )}
           </FormControl>
           <FormControl>
-            <AuthInput label="비밀번호 확인" name="rePassword" type="password" />
-            <ErrorMessage message="" />
+            <AuthInput
+              label="비밀번호 확인"
+              name="rePassword"
+              type="password"
+              onChange={changeHandler}
+              value={rePassword}
+            />
           </FormControl>
         </InputWrapper>
         <SubmitButton>회원가입</SubmitButton>

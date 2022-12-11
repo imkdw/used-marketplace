@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { FormEvent } from "react";
+import { FormEvent, useState, ChangeEvent } from "react";
 import AuthInput from "../common/AuthInput";
 import { Link } from "react-router-dom";
 import KakaoLogin from "./KakaoLogin";
@@ -77,6 +77,21 @@ const StyledLink = styled(Link)`
 `;
 
 const LoginForm = () => {
+  const [account, setAccount] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { email, password } = account;
+
+  const changeAccountHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = event.currentTarget;
+
+    setAccount((prevState) => {
+      return { ...prevState, [name]: value };
+    });
+  };
+
   const submitHandler = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
@@ -87,10 +102,16 @@ const LoginForm = () => {
         <HeaderText>계정을 입력해주세요</HeaderText>
         <InputWrapper>
           <FormControl>
-            <AuthInput label="이메일" name="email" type="text" />
+            <AuthInput label="이메일" name="email" type="text" onChange={changeAccountHandler} value={email} />
           </FormControl>
           <FormControl>
-            <AuthInput label="비밀번호" name="password" type="password" />
+            <AuthInput
+              label="비밀번호"
+              name="password"
+              type="password"
+              onChange={changeAccountHandler}
+              value={password}
+            />
           </FormControl>
         </InputWrapper>
         <LinkWrapper>

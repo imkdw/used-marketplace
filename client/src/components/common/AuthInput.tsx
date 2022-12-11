@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import styled from "styled-components";
 
 const StyledAuthInput = styled.div`
@@ -16,12 +17,14 @@ interface AuthInputProps {
   label: string;
   name: string;
   type: string;
+  onChange(event: ChangeEvent<HTMLInputElement>): void;
+  value: string;
 }
 
-const AuthInput = ({ label, name, type }: AuthInputProps) => {
+const AuthInput = ({ label, name, type, onChange, value }: AuthInputProps) => {
   return (
     <StyledAuthInput>
-      <Input placeholder={label} name={name} type={type} />
+      <Input placeholder={label} name={name} type={type} onChange={onChange} value={value} />
     </StyledAuthInput>
   );
 };
