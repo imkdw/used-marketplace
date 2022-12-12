@@ -4,3 +4,10 @@ export interface RegisterAccount {
   password: string;
   rePassword: string;
 }
+
+export interface RegisterAccountValid {
+  email: boolean;
+  nickname: boolean;
+  password: boolean;
+  rePassword: boolean;
+}

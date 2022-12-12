@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import AuthInput from "../common/AuthInput";
 import ErrorMessage from "./ErrorMessage";
 import axios from "axios";
@@ -54,10 +54,10 @@ const FormControl = styled.div`
   min-height: 70px;
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button<{ backgroundColor: string }>`
   width: 100%;
   height: 72px;
-  background-color: #f3b7ba;
+  background-color: ${(props) => props.backgroundColor};
   color: white;
   border-radius: 10px;
   font-weight: bold;
@@ -79,29 +79,18 @@ const RegisterForm = () => {
     rePassword: false,
   });
 
-  const { email, nickname, password, rePassword } = account;
+  /** useState 비동기처리 해결을 위한 유효성검증 로직 */
+  useEffect(() => {
+    setIsValidAccount(registerValidator(account));
+  }, [account]);
 
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
+  /** input용 change handler */
+  const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = event.currentTarget;
 
-    setAccount((prevState) => {
-      return { ...prevState, [name]: value };
+    setAccount((account) => {
+      return { ...account, [name]: value };
     });
-
-    const isValid = registerValidator(name, value);
-    if (isValid) {
-      setIsValidAccount((prevState) => {
-        return { ...prevState, [name]: true };
-      });
-    } else {
-      setIsValidAccount((prevState) => {
-        return { ...prevState, [name]: false };
-      });
-    }
-
-    if (name === "rePassword") {
-      // 비밀번호 확인 검증로직 구현필요 22.12.11
-    }
   };
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
@@ -111,25 +100,39 @@ const RegisterForm = () => {
     console.log(res);
   };
 
+  const { email, nickname, password, rePassword } = isValidAccount;
+
   return (
     <StyledRegisterForm onSubmit={submitHandler}>
       <Wrapper>
         <HeaderText>본인 정보를 입력해주세요</HeaderText>
         <InputWrapper>
           <FormControl>
-            <AuthInput label="이메일" name="email" type="text" onChange={changeHandler} value={email} />
+            <AuthInput label="이메일" name="email" type="text" onChange={inputChangeHandler} value={account.email} />
             {isValidAccount.email && <ErrorMessage message="올바른 이메일 형식입니다." isValid />}
             {!isValidAccount.email && <ErrorMessage message="올바르지않은 이메일 형식입니다." isValid={false} />}
           </FormControl>
           <FormControl>
-            <AuthInput label="닉네임" name="nickname" type="text" onChange={changeHandler} value={nickname} />
+            <AuthInput
+              label="닉네임"
+              name="nickname"
+              type="text"
+              onChange={inputChangeHandler}
+              value={account.nickname}
+            />
             {isValidAccount.nickname && <ErrorMessage message="올바른 닉네임 형식입니다." isValid />}
             {!isValidAccount.nickname && (
-              <ErrorMessage message="특수문자는 사용이 불가능하며 최대 2~8자리까지 가능합니다." isValid={false} />
+              <ErrorMessage message="특수문자는 사용불가, 최대 2~8자리까지 가능합니다." isValid={false} />
             )}
           </FormControl>
           <FormControl>
-            <AuthInput label="비밀번호" name="password" type="password" onChange={changeHandler} value={password} />
+            <AuthInput
+              label="비밀번호"
+              name="password"
+              type="password"
+              onChange={inputChangeHandler}
+              value={account.password}
+            />
             {isValidAccount.password && <ErrorMessage message="올바른 비밀번호 형식입니다." isValid />}
             {!isValidAccount.password && (
               <ErrorMessage message="특수문자를 포함하여 최대 10자리이상 입력해주세요." isValid={false} />
@@ -140,12 +143,17 @@ const RegisterForm = () => {
               label="비밀번호 확인"
               name="rePassword"
               type="password"
-              onChange={changeHandler}
-              value={rePassword}
+              onChange={inputChangeHandler}
+              value={account.rePassword}
             />
+            {isValidAccount.rePassword && <ErrorMessage message="비밀번호가 일치합니다." isValid />}
+            {!isValidAccount.rePassword && <ErrorMessage message="비밀번호가 일치하지 않습니다." isValid={false} />}
           </FormControl>
         </InputWrapper>
         <SubmitButton>회원가입</SubmitButton>
+        {email && nickname}
+        {/* valid시 버튼 background #D80C18 */}
+        {/* #f3b7ba */}
       </Wrapper>
     </StyledRegisterForm>
   );
