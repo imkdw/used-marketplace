@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import AuthInput from "../common/AuthInput";
 import ErrorMessage from "./ErrorMessage";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { authUrl } from "../../config/url";
 import { RegisterAccount } from "../../types/register";
 import { registerValidator } from "./register.validator";
@@ -96,8 +96,29 @@ const RegisterForm = () => {
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const res = await axios.post(authUrl.register, account);
-    console.log(res);
+    try {
+      const res = await axios.post(authUrl.register, account);
+      console.log(res);
+    } catch (error: any) {
+      const { status, data } = error.response;
+      if (status === 400) {
+        const { message } = data;
+        if (message === "exist_email_and_nickname") {
+          alert("중복된 이메일과 닉네임 입니다.");
+        } else if (message === "exist_email") {
+          alert("중복된 이메일 입니다.");
+        } else if (message === "exist_nickname") {
+          alert("중복된 닉네임 입니다.");
+        } else {
+          alert("서버 오류입니다. 다시 시도해주세요.");
+          return;
+        }
+      } else {
+        /** HTTP 500 Error */
+        alert("서버 오류입니다. 다시 시도해주세요.");
+        return;
+      }
+    }
   };
 
   const { email, nickname, password, rePassword } = isValidAccount;
@@ -150,10 +171,14 @@ const RegisterForm = () => {
             {!isValidAccount.rePassword && <ErrorMessage message="비밀번호가 일치하지 않습니다." isValid={false} />}
           </FormControl>
         </InputWrapper>
-        <SubmitButton>회원가입</SubmitButton>
-        {email && nickname}
-        {/* valid시 버튼 background #D80C18 */}
-        {/* #f3b7ba */}
+
+        {email && nickname && password && rePassword ? (
+          <SubmitButton backgroundColor="#D80C18">회원가입</SubmitButton>
+        ) : (
+          <SubmitButton backgroundColor="#f3b7ba" disabled>
+            회원가입
+          </SubmitButton>
+        )}
       </Wrapper>
     </StyledRegisterForm>
   );
