@@ -1,10 +1,10 @@
 import { ChangeEvent } from "react";
 import styled from "styled-components";
 
-const StyledAuthInput = styled.div`
+const StyledAuthInput = styled.div<{ borderColor: string }>`
   width: 100%;
   height: 50px;
-  border-bottom: 2px solid #eeeeee;
+  border-bottom: 2px solid ${(props) => props.borderColor || "#eeeeee"};
 `;
 
 const Input = styled.input`
@@ -19,11 +19,12 @@ interface AuthInputProps {
   type: string;
   onChange(event: ChangeEvent<HTMLInputElement>): void;
   value: string;
+  borderColor?: string;
 }
 
-const AuthInput = ({ label, name, type, onChange, value }: AuthInputProps) => {
+const AuthInput = ({ label, name, type, onChange, value, borderColor }: AuthInputProps) => {
   return (
-    <StyledAuthInput>
+    <StyledAuthInput borderColor={borderColor || ""}>
       <Input placeholder={label} name={name} type={type} onChange={onChange} value={value} />
     </StyledAuthInput>
   );

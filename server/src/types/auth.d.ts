@@ -10,4 +10,15 @@ export interface RegisterUserDTO {
 export interface GetUserByEmailReturn extends RowDataPacket {
   email: string;
   nickname: string;
+  password: string;
+}
+
+export interface GetUserByNicknameReturn extends RowDataPacket {
+  email: string;
+  nickname: string;
+}
+
+export interface LoginUserDTO {
+  email: string;
+  password: string;
 }

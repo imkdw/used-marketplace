@@ -1,5 +1,5 @@
 import { FieldPacket } from "mysql2";
-import { GetUserByEmailReturn, RegisterUserDTO } from "../types/auth";
+import { GetUserByEmailReturn, GetUserByNicknameReturn, RegisterUserDTO } from "../types/auth";
 import { connectionPool } from "../utils/db";
 
 /**
@@ -8,7 +8,7 @@ import { connectionPool } from "../utils/db";
  */
 
 export default class AuthModel {
-  static create = async (userDTO: RegisterUserDTO) => {
+  static register = async (userDTO: RegisterUserDTO) => {
     const query = `INSERT INTO users(email, nickname, password) VALUES(?, ?, ?)`;
     const values = [userDTO.email, userDTO.nickname, userDTO.password];
     try {
@@ -19,10 +19,21 @@ export default class AuthModel {
   };
 
   static getUserByEmail = async (email: string) => {
-    const query = "SELECT email, nickname FROM users WHERE email=?";
+    const query = "SELECT * FROM users WHERE email=?";
     const values = [email];
     try {
       const [rows, fields]: [GetUserByEmailReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (error: any) {
+      throw error.code;
+    }
+  };
+
+  static getUserByNickname = async (nickname: string) => {
+    const query = "SELECT email, nickname FROM users WHERE nickname=?";
+    const values = [nickname];
+    try {
+      const [rows, fields]: [GetUserByNicknameReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (error: any) {
       throw error.code;

@@ -8,7 +8,7 @@ import authRouter from "./routes/auth.router";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT;
+app.set("port", process.env.PORT);
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -17,4 +17,4 @@ app.use(cors());
 
 app.use("/auth", authRouter);
 
-app.listen(port, () => console.log(`App Running on localhost:${port}`));
+export default app;
