@@ -1,3 +1,4 @@
+import axios from "axios";
 import styled from "styled-components";
 
 const StyledKakaoLogin = styled.button`
@@ -47,8 +48,13 @@ const KakaoIcon = () => {
 };
 
 const KakaoLogin = () => {
+  const kakaoLoginHandler = async () => {
+    const res = await axios.get("http://localhost:5000/auth/kakao-login");
+    console.log(res);
+  };
+
   return (
-    <StyledKakaoLogin>
+    <StyledKakaoLogin onClick={kakaoLoginHandler}>
       <KakaoIcon />
       <ButtonText>카카오톡으로 3초만에 시작하기</ButtonText>
     </StyledKakaoLogin>

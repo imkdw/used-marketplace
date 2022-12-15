@@ -14,7 +14,10 @@ export default class AuthModel {
     try {
       await connectionPool.execute(query, values);
     } catch (error: any) {
-      return error.code;
+      throw {
+        status: 500,
+        message: error.message,
+      };
     }
   };
 
@@ -25,7 +28,10 @@ export default class AuthModel {
       const [rows, fields]: [GetUserByEmailReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (error: any) {
-      throw error.code;
+      throw {
+        status: 500,
+        message: error.message,
+      };
     }
   };
 
@@ -36,7 +42,10 @@ export default class AuthModel {
       const [rows, fields]: [GetUserByNicknameReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (error: any) {
-      throw error.code;
+      throw {
+        status: 500,
+        message: error.message,
+      };
     }
   };
 }

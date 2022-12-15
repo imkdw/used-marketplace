@@ -5,4 +5,5 @@ const makeUrl = (path: string) => {
 
 export const authUrl = {
   register: makeUrl("/auth/register"),
+  login: makeUrl("/auth/login"),
 };

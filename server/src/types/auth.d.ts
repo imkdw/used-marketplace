@@ -22,3 +22,9 @@ export interface LoginUserDTO {
   email: string;
   password: string;
 }
+
+export interface LoginReturn {
+  accessToken: string;
+  email: string;
+  nickname: string;
+}
