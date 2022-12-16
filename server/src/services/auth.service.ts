@@ -2,6 +2,8 @@ import AuthModel from "../models/auth.model";
 import { LoginReturn, LoginUserDTO, RegisterUserDTO } from "../types/auth";
 import Secure from "../utils/secure";
 import Jwt from "../utils/jwt";
+import axios from "axios";
+import { kakaoConfig } from "../config/kakaoConfig";
 
 export default class AuthService {
   static register = async (userDTO: RegisterUserDTO) => {
@@ -76,6 +78,70 @@ export default class AuthService {
     } catch (error: any) {
       throw {
         status: error.status,
+        message: error.message,
+      };
+    }
+  };
+
+  static kakaoLogin = async (code: string) => {
+    try {
+      /** 카카오 OAuth를 통해 사용자의 accessToken 가져오기 */
+      const token = await axios.post(
+        "https://kauth.kakao.com/oauth/token",
+        {
+          grant_type: "authorization_code",
+          client_id: kakaoConfig.restApikey,
+          redirect_uri: kakaoConfig.redirectUri,
+          code: code,
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+
+      /** accessToken이 없는경우 */
+      if (!token.data) {
+        throw {
+          status: 500,
+          message: "OAuth error",
+        };
+      }
+
+      /** acessToken으로 사용자 정보 가져오기 */
+      const kakaoUser = await axios.get("https://kapi.kakao.com/v2/user/me", {
+        headers: {
+          Authorization: `Bearer ${token.data.access_token}`,
+        },
+      });
+
+      /** 사용자 정보 가져오기 실패 */
+      if (!kakaoUser) {
+        throw {
+          status: 500,
+          message: "Get Your Info Failed",
+        };
+      }
+
+      const email = kakaoUser.data.kakao_account.email;
+      const nickname = kakaoUser.data.properties.nickname;
+
+      /** 사용자가 가입되어있는 유저인지 체크 */
+      const userByEmail = await AuthModel.getUserByEmail(email);
+
+      /** 신규 유저인 경우 */
+      if (userByEmail.length === 0) {
+        return kakaoUser.data;
+      }
+
+      /** 기존 가입된 유저면 accessToken 발행 */
+      const accessToken = Jwt.createToken(email, nickname);
+
+      return accessToken;
+    } catch (error: any) {
+      throw {
+        status: 500,
         message: error.message,
       };
     }

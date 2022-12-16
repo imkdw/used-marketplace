@@ -1,7 +1,10 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useState } from "react";
+import { kakaoConfig } from "../../config/kakao";
 
-const StyledKakaoLogin = styled.button`
+const StyledKakaoLogin = styled.a`
   width: 100%;
   height: 50px;
   background-color: #fae100;
@@ -10,6 +13,7 @@ const StyledKakaoLogin = styled.button`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  cursor: pointer;
 `;
 
 const ButtonText = styled.div`
@@ -48,13 +52,13 @@ const KakaoIcon = () => {
 };
 
 const KakaoLogin = () => {
-  const kakaoLoginHandler = async () => {
-    const res = await axios.get("http://localhost:5000/auth/kakao-login");
-    console.log(res);
+  const KakaoLoginHandler = async () => {
+    const KakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoConfig.restApiKey}&redirect_uri=${kakaoConfig.redirectUri}&response_type=code`;
+    window.location.href = KakaoLoginUrl;
   };
 
   return (
-    <StyledKakaoLogin onClick={kakaoLoginHandler}>
+    <StyledKakaoLogin onClick={KakaoLoginHandler}>
       <KakaoIcon />
       <ButtonText>카카오톡으로 3초만에 시작하기</ButtonText>
     </StyledKakaoLogin>

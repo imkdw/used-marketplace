@@ -34,11 +34,14 @@ export default class AuthController {
   };
 
   static kakaoLogin = async (req: Request, res: Response, next: NextFunction) => {
-    const restApiKey = "ae9c6c5a747e16203dc5fc41e65b93ab";
-    const redirectUrl = "http://localhost:3000";
-    const kakaoServer = `https://kauth.kakao.com/oauth/authorize?client_id=${restApiKey}&redirect_uri=${redirectUrl}&response_type=code`;
-    const response = await axios.get(kakaoServer);
-    console.log(response.data);
-    res.json("");
+    const { code } = req.body;
+
+    try {
+      const userData = await AuthService.kakaoLogin(code);
+      console.log("userData:", userData);
+      res.status(200).json(userData);
+    } catch (error: any) {
+      res.status(error.status || 500).json({ message: error.message || "에러발생" });
+    }
   };
 }

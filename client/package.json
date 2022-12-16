@@ -19,6 +19,7 @@
     "@types/styled-components": "^5.1.26",
     "@types/swiper": "^6.0.0",
     "axios": "^1.2.1",
+    "query-string": "^8.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.4",
@@ -54,6 +55,7 @@
     ]
   },
   "devDependencies": {
-    "@types/axios": "^0.14.0"
+    "@types/axios": "^0.14.0",
+    "@types/query-string": "^6.3.0"
   }
 }

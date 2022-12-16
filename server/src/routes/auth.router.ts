@@ -6,6 +6,6 @@ const authRouter = express.Router();
 
 authRouter.post("/register", AuthValidator.userRegister, AuthController.register);
 authRouter.post("/login", AuthController.login);
-authRouter.get("/kakao-login", AuthController.kakaoLogin);
+authRouter.post("/kakao-login", AuthController.kakaoLogin);
 
 export default authRouter;

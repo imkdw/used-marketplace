@@ -6,7 +6,8 @@ import axios, { AxiosError } from "axios";
 import { authUrl } from "../../config/url";
 import { RegisterAccount } from "../../types/register";
 import { registerValidator } from "./register.validator";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import queryString from "query-string";
 
 const StyledRegisterForm = styled.form`
   width: 500px;
@@ -66,6 +67,9 @@ const SubmitButton = styled.button<{ backgroundColor: string }>`
 `;
 
 const RegisterForm = () => {
+  const { search } = useLocation();
+  const { code } = queryString.parse(search);
+
   const [account, setAccount] = useState<RegisterAccount>({
     email: "",
     nickname: "",
@@ -91,8 +95,33 @@ const RegisterForm = () => {
 
   /** useState 비동기처리 해결을 위한 유효성검증 로직 */
   useEffect(() => {
-    setIsValidAccount(registerValidator(account));
-  }, [account]);
+    const checkValidAccount = () => {
+      setIsValidAccount(registerValidator(account));
+    };
+
+    const kakaoAuth = async () => {
+      try {
+        const res = await axios.post("http://localhost:5000/auth/kakao-login", { code });
+        if (res.data) {
+          setAccount({
+            ...account,
+            email: res.data.kakao_account.email,
+            nickname: res.data.properties.nickname,
+          });
+        }
+      } catch (error: any) {
+        throw error;
+      }
+    };
+
+    if (account) {
+      checkValidAccount();
+    }
+
+    if (code) {
+      kakaoAuth();
+    }
+  }, [account, code]);
 
   /** input용 change handler */
   const inputChangeHandler = (event: ChangeEvent<HTMLInputElement>): void => {
