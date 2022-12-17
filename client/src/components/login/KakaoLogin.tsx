@@ -1,7 +1,4 @@
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
 import { kakaoConfig } from "../../config/kakao";
 
 const StyledKakaoLogin = styled.a`
@@ -53,8 +50,9 @@ const KakaoIcon = () => {
 
 const KakaoLogin = () => {
   const KakaoLoginHandler = async () => {
-    const KakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoConfig.restApiKey}&redirect_uri=${kakaoConfig.redirectUri}&response_type=code`;
-    window.location.href = KakaoLoginUrl;
+    const getCodeUrl = "https://kauth.kakao.com/oauth/authorize";
+    const parameter = `?client_id=${kakaoConfig.restApiKey}&redirect_uri=${kakaoConfig.redirectUri}&response_type=code`;
+    window.location.href = getCodeUrl + parameter;
   };
 
   return (

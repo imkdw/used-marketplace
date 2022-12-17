@@ -11,7 +11,6 @@ class Secure {
   };
 
   static compareHash = async (plainText: string, hashedText: string) => {
-    console.log(plainText, hashedText);
     return await bcrypt.compare(plainText, hashedText);
   };
 }

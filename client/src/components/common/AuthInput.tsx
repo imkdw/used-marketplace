@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import styled from "styled-components";
+import React from "react";
 
 const StyledAuthInput = styled.div<{ borderColor: string }>`
   width: 100%;
@@ -30,4 +31,4 @@ const AuthInput = ({ label, name, type, onChange, value, borderColor }: AuthInpu
   );
 };
 
-export default AuthInput;
+export default React.memo(AuthInput);

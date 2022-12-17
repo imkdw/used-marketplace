@@ -120,7 +120,7 @@ export default class AuthService {
       if (!kakaoUser) {
         throw {
           status: 500,
-          message: "Get Your Info Failed",
+          message: "Get User Info Failed",
         };
       }
 
@@ -132,13 +132,26 @@ export default class AuthService {
 
       /** 신규 유저인 경우 */
       if (userByEmail.length === 0) {
-        return kakaoUser.data;
+        return {
+          existUser: false,
+          data: {
+            email,
+            nickname,
+          },
+        };
       }
 
       /** 기존 가입된 유저면 accessToken 발행 */
       const accessToken = Jwt.createToken(email, nickname);
 
-      return accessToken;
+      return {
+        existUser: true,
+        data: {
+          accessToken: accessToken,
+          email: email,
+          nickname: nickname,
+        },
+      };
     } catch (error: any) {
       throw {
         status: 500,

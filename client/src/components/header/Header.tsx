@@ -6,6 +6,7 @@ import myStoreIcon from "../../assets/images/my-store-icon.png";
 import talkIcon from "../../assets/images/talk-icon.png";
 import menuImage from "../../assets/images/menu.png";
 import GlassIcon from "../common/icons/GlassIcon";
+import { Link } from "react-router-dom";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -75,8 +76,8 @@ const UtilLinkWrapper = styled.div`
   justify-content: flex-end;
 `;
 
-const UtilLink = styled.button`
-  width: 32%;
+const UtilLink = styled(Link)`
+  width: 28%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -128,15 +129,15 @@ const Header = () => {
           </InputWrapper>
         </SearchBarWrapper>
         <UtilLinkWrapper>
-          <UtilLink>
+          <UtilLink to="">
             <UtilLinkIcon src={sellIcon} />
             <UtilLinkText>판매하기</UtilLinkText>
           </UtilLink>
-          <UtilLink>
+          <UtilLink to="">
             <UtilLinkIcon src={myStoreIcon} />
             <UtilLinkText>나의상점</UtilLinkText>
           </UtilLink>
-          <UtilLink>
+          <UtilLink to="">
             <UtilLinkIcon src={talkIcon} />
             <UtilLinkText>중고톡</UtilLinkText>
           </UtilLink>
