@@ -9,6 +9,9 @@ const StyledTopHeader = styled.div`
   border: 1px solid #eeeeee;
   display: flex;
   justify-content: center;
+  background-color: white;
+  position: fixed;
+  top: 0;
 
   @media screen and (max-width: 767px) {
     display: none;
@@ -22,14 +25,6 @@ const LinkWrapper = styled.div`
   justify-content: flex-end;
   gap: 10px;
   padding: 0 10px 0 10px;
-
-  @media screen and (max-width: 1300px) {
-    width: 70%;
-  }
-
-  @media screen and (max-width: 1023px) {
-    width: 90%;
-  }
 `;
 
 const LinkItem = styled(Link)`

@@ -17,6 +17,8 @@ const StyledHeader = styled.div`
   align-items: center;
   flex-direction: column;
   border-bottom: 1px solid #eeeeee;
+  background-color: white;
+  z-index: 999;
 
   @media screen and (max-width: 767px) {
     display: none;
@@ -28,14 +30,6 @@ const HeaderWrapper = styled.div`
   height: 100%;
   display: flex;
   justify-content: space-between;
-
-  @media screen and (max-width: 1300px) {
-    width: 70%;
-  }
-
-  @media screen and (max-width: 1023px) {
-    width: 90%;
-  }
 `;
 
 const LogoWrapper = styled.div`
@@ -99,14 +93,6 @@ const Category = styled.div`
   width: 55%;
   height: 70px;
   display: flex;
-
-  @media screen and (max-width: 1300px) {
-    width: 70%;
-  }
-
-  @media screen and (max-width: 1023px) {
-    width: 90%;
-  }
 `;
 
 const HambergerMenu = styled.img`
@@ -129,7 +115,7 @@ const Header = () => {
           </InputWrapper>
         </SearchBarWrapper>
         <UtilLinkWrapper>
-          <UtilLink to="">
+          <UtilLink to="/product">
             <UtilLinkIcon src={sellIcon} />
             <UtilLinkText>판매하기</UtilLinkText>
           </UtilLink>
