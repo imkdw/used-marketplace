@@ -1,28 +1,5 @@
-import { useRef } from "react";
 import styled from "styled-components";
-
-const StyledAddProduct = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-`;
-
-const ProductForm = styled.div`
-  width: 55%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-`;
-
-const FormHeader = styled.div`
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  border-bottom: 2px solid;
-  font-size: 26px;
-`;
+import { useRef } from "react";
 
 const FormControl = styled.div`
   width: 100%;
@@ -30,7 +7,7 @@ const FormControl = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #dbdbdb;
-  padding: 50px 0 50px 0;
+  padding: 40px 0 40px 0;
 `;
 
 const Label = styled.label`
@@ -39,7 +16,7 @@ const Label = styled.label`
   font-size: 18px;
 `;
 
-const ImageUpload = styled.div`
+const StyledImageUpload = styled.div`
   width: 80%;
   height: auto;
   display: flex;
@@ -92,7 +69,7 @@ const ImageAddIcon = () => {
   );
 };
 
-const AddProduct = () => {
+const ImageUpload = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const imageUploadHandler = () => {
@@ -110,35 +87,30 @@ const AddProduct = () => {
   ];
 
   return (
-    <StyledAddProduct>
-      <ProductForm>
-        <FormHeader>기본정보</FormHeader>
-        <FormControl>
-          <Label>상품이미지</Label>
-          <ImageUpload>
-            <input type="file" accept="image/*" ref={fileInputRef} hidden />
-            <ImageUploadBox onClick={imageUploadHandler}>
-              <ImageAddIcon />
-              <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
-            </ImageUploadBox>
-            <ImageUploadDesc>
-              {imageUploadDescData.map((data, index) => {
-                if (index === 0) {
-                  return (
-                    <ImageUploadDescText key={index} fontWeight="bold">
-                      {data}
-                    </ImageUploadDescText>
-                  );
-                }
+    <FormControl>
+      <Label>상품이미지</Label>
+      <StyledImageUpload>
+        <input type="file" accept="image/*" ref={fileInputRef} hidden />
+        <ImageUploadBox onClick={imageUploadHandler}>
+          <ImageAddIcon />
+          <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
+        </ImageUploadBox>
+        <ImageUploadDesc>
+          {imageUploadDescData.map((data, index) => {
+            if (index === 0) {
+              return (
+                <ImageUploadDescText key={index} fontWeight="bold">
+                  {data}
+                </ImageUploadDescText>
+              );
+            }
 
-                return <ImageUploadDescText key={index}>{data}</ImageUploadDescText>;
-              })}
-            </ImageUploadDesc>
-          </ImageUpload>
-        </FormControl>
-      </ProductForm>
-    </StyledAddProduct>
+            return <ImageUploadDescText key={index}>{data}</ImageUploadDescText>;
+          })}
+        </ImageUploadDesc>
+      </StyledImageUpload>
+    </FormControl>
   );
 };
 
-export default AddProduct;
+export default ImageUpload;

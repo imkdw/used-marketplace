@@ -32,7 +32,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled(Link)`
   width: 20%;
   height: 100%;
   display: flex;
@@ -105,7 +105,7 @@ const Header = () => {
   return (
     <StyledHeader>
       <HeaderWrapper>
-        <LogoWrapper>
+        <LogoWrapper to="/">
           <Logo src={logoImage} alt="logo" />
         </LogoWrapper>
         <SearchBarWrapper>

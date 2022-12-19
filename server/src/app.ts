@@ -17,13 +17,4 @@ app.use(cors());
 
 app.use("/auth", authRouter);
 
-function test(denum1: number, num1: number, denum2: number, num2: number) {
-  const [a, b] = [denum1 / num1, denum2 / num2];
-  const sum = a + b;
-  const sumSplit = String(sum).split(".");
-  console.log(sumSplit);
-}
-
-test(1, 2, 3, 4);
-
 export default app;

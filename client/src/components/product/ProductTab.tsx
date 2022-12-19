@@ -6,6 +6,7 @@ import { enableProductTabState } from "../../recoil/product.recoil";
 const StyledProductTab = styled.div`
   width: 100%;
   height: 63px;
+  min-height: 63px;
   margin-top: 190px;
   display: flex;
   justify-content: center;

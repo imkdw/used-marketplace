@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { enableProductTabState } from "../../recoil/product.recoil";
 import Header from "../header/Header";
 import TopHeader from "../topHeader/TopHeader";
-import AddProduct from "./AddProduct";
+import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 
 const StyledProduct = styled.div`

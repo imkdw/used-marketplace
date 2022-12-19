@@ -12,7 +12,7 @@ const StyledMain = styled.div`
 const MainWrapper = styled.div`
   width: 100%;
   height: auto;
-  margin-top: 150px;
+  margin-top: 190px;
 
   @media screen and (max-width: 767px) {
     margin-top: 50px;
