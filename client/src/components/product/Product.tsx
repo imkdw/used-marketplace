@@ -9,10 +9,9 @@ import ProductTab from "./ProductTab";
 
 const StyledProduct = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
 
 const Product = () => {

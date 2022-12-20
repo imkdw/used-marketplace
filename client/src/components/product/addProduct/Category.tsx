@@ -18,7 +18,7 @@ const Label = styled.label`
 const StyledCategory = styled.div`
   width: 80%;
   height: 300px;
-  border: 1px solid #dbdbdb;
+  border: 1px solid #c3c2cc;
 `;
 
 const Category = () => {
