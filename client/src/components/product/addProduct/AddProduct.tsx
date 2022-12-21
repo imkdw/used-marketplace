@@ -15,6 +15,7 @@ const StyledAddProduct = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 const ProductForm = styled.div`
@@ -22,6 +23,7 @@ const ProductForm = styled.div`
   height: auto;
   display: flex;
   flex-direction: column;
+  margin-bottom: 100px;
 `;
 
 const FormHeader = styled.div`
@@ -36,14 +38,14 @@ const FormHeader = styled.div`
 const SubmitButtonWrapper = styled.div`
   width: 100%;
   height: 88px;
+  position: fixed;
+  bottom: 0;
   border-top: 1px solid #c3c2cc;
   border-bottom: 1px solid #c3c2cc;
   background-color: #fafafd;
   display: flex;
   align-items: center;
   justify-content: end;
-  margin-right: 20rem;
-  margin-top: 20px;
 `;
 
 const SubmitButton = styled.button`
@@ -53,6 +55,10 @@ const SubmitButton = styled.button`
   font-size: 20px;
   color: white;
   font-weight: bold;
+  position: absolute;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
 `;
 
 const AddProduct = () => {

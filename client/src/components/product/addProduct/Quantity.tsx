@@ -41,7 +41,7 @@ const Quantity = () => {
       <Label>수량</Label>
       <StyledQuantity>
         <InputWrapper>
-          <Input value={1} />
+          <Input defaultValue={1} />
         </InputWrapper>
         <div style={{ fontSize: "18px" }}>개</div>
       </StyledQuantity>

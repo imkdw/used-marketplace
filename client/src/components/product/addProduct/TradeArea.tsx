@@ -63,7 +63,7 @@ const TradeArea = () => {
           <AddressButton>지역설정안함</AddressButton>
         </AddressButtons>
         <AddressWrapper>
-          <Address value="서울특별시 서울시 강남구 제3동" />
+          <Address defaultValue="서울특별시 서울시 강남구" />
         </AddressWrapper>
       </StyledTradeArea>
     </FormControl>
