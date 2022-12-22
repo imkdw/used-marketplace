@@ -126,7 +126,11 @@ const ImageUpload = () => {
     fileInputRef.current?.click();
   };
 
+  /** 업로드된 이미지 삭제 */
   const imageRemoveHandler = () => {};
+
+  /** 원본 이미지 보여주기 */
+  const showOriginalImageHandler = () => {};
 
   /** 이미지 업로드 핸들러 */
   const imageUploadHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -179,9 +183,9 @@ const ImageUpload = () => {
             <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
           </ImageUploadBox>
           {uploadImage.map((image) => (
-            <UploadImagePreview>
+            <UploadImagePreview onClick={showOriginalImageHandler}>
               <Image src={String(image)} />
-              <ImageRemoveButton>
+              <ImageRemoveButton onClick={imageRemoveHandler}>
                 <ImageRemoveIcon />
               </ImageRemoveButton>
             </UploadImagePreview>
