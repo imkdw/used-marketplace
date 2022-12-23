@@ -1,4 +1,6 @@
+import { useState } from "react";
 import styled from "styled-components";
+import DaumPostcodeEmbed from "react-daum-postcode";
 
 const FormControl = styled.div`
   width: 100%;
@@ -52,6 +54,13 @@ const Address = styled.input`
 `;
 
 const TradeArea = () => {
+  const [area, setArea] = useState("");
+  const [enablePostCode, setEnablePostCode] = useState(false);
+
+  const noAreaHandler = () => {
+    setArea("지역설정안함");
+  };
+
   return (
     <FormControl>
       <Label>거래지역</Label>
@@ -60,10 +69,10 @@ const TradeArea = () => {
           <AddressButton>내 위치</AddressButton>
           <AddressButton>최근 지역</AddressButton>
           <AddressButton>주소 검색</AddressButton>
-          <AddressButton>지역설정안함</AddressButton>
+          <AddressButton onClick={noAreaHandler}>지역설정안함</AddressButton>
         </AddressButtons>
         <AddressWrapper>
-          <Address defaultValue="서울특별시 서울시 강남구" />
+          <Address value={area} />
         </AddressWrapper>
       </StyledTradeArea>
     </FormControl>

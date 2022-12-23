@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
+import { UploadImage } from "../../../types/product";
 
 const FormControl = styled.div`
   width: 100%;
@@ -94,8 +95,8 @@ const ImageRemoveButton = styled.button`
 const ImageRemoveIcon = () => {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M3.5 3.5L12.5 12.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-      <path d="M3.5 12.5L12.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M3.5 3.5L12.5 12.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3.5 12.5L12.5 3.5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
@@ -120,14 +121,17 @@ const ImageAddIcon = () => {
 
 const ImageUpload = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadImage, setUploadImage] = useState<File[]>([]);
+  const [uploadImage, setUploadImage] = useState<UploadImage[]>([]);
 
   const clickImageUploadHandler = () => {
     fileInputRef.current?.click();
   };
 
   /** 업로드된 이미지 삭제 */
-  const imageRemoveHandler = () => {};
+  const imageRemoveHandler = (id: number) => {
+    const newUploadImage = uploadImage.filter((image) => image.id !== id);
+    setUploadImage(newUploadImage);
+  };
 
   /** 원본 이미지 보여주기 */
   const showOriginalImageHandler = () => {};
@@ -154,7 +158,9 @@ const ImageUpload = () => {
       /** 업로드된 이미지를 블롭형식으로 상태에 추가 */
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        setUploadImage((prevState) => [...prevState, e.target.result]);
+        setUploadImage((prevState) => {
+          return [...prevState, { id: i, image: e.target.result }];
+        });
       };
       reader.readAsDataURL(file);
     }
@@ -183,9 +189,9 @@ const ImageUpload = () => {
             <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
           </ImageUploadBox>
           {uploadImage.map((image) => (
-            <UploadImagePreview onClick={showOriginalImageHandler}>
-              <Image src={String(image)} />
-              <ImageRemoveButton onClick={imageRemoveHandler}>
+            <UploadImagePreview onClick={showOriginalImageHandler} key={image.id}>
+              <Image src={String(image.image)} />
+              <ImageRemoveButton onClick={() => imageRemoveHandler(image.id)}>
                 <ImageRemoveIcon />
               </ImageRemoveButton>
             </UploadImagePreview>
