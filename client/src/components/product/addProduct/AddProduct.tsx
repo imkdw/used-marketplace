@@ -1,5 +1,8 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { enableDaumPostcodeState } from "../../../recoil/product.recoil";
 import Category from "./Category";
+import DaumPostCode from "./DaumPostcode";
 import Description from "./Description";
 import ImageUpload from "./ImageUpload";
 import Price from "./Price";

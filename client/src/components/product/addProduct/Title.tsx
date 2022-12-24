@@ -1,4 +1,7 @@
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
+import { ChangeEvent } from "react";
 
 const FormControl = styled.div`
   width: 100%;
@@ -44,14 +47,30 @@ const TitleCounter = styled.div`
 `;
 
 const Title = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+
+    setAddProductData({
+      ...addProductData,
+      title: value,
+    });
+  };
+
   return (
     <FormControl>
       <Label>제목</Label>
       <StyledTitle>
         <InputWrapper>
-          <Input type="text" placeholder="상품 제목을 입력해주세요." />
+          <Input
+            type="text"
+            placeholder="상품 제목을 입력해주세요."
+            onChange={changeHandler}
+            value={addProductData.title}
+          />
         </InputWrapper>
-        <TitleCounter>0/40</TitleCounter>
+        <TitleCounter>{addProductData.title.length}/40</TitleCounter>
       </StyledTitle>
     </FormControl>
   );

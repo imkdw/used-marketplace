@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import DaumPostcodeEmbed from "react-daum-postcode";
+import { addProductDataState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
+import DaumPostCode from "./DaumPostcode";
 
 const FormControl = styled.div`
   width: 100%;
@@ -54,11 +56,36 @@ const Address = styled.input`
 `;
 
 const TradeArea = () => {
-  const [area, setArea] = useState("");
-  const [enablePostCode, setEnablePostCode] = useState(false);
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+  const setEnableDaumPostcode = useSetRecoilState(enableDaumPostcodeState);
 
   const noAreaHandler = () => {
-    setArea("지역설정안함");
+    setAddProductData((prevState) => {
+      return { ...prevState, tradeArea: "지역설정안함" };
+    });
+  };
+
+  const searchAreaHandler = () => {
+    /** 다음 주소검색창 온/오프 기능 */
+    setEnableDaumPostcode((prevState) => !prevState);
+  };
+
+  const gpsHandler = () => {
+    if (!("geolocation" in navigator)) {
+      alert("GPS 사용불가");
+      return;
+    }
+
+    console.log("위치 계산중..");
+    navigator.geolocation.getCurrentPosition((position) => {
+      /**
+       * latitude : 위도
+       * longitude: 경도
+       */
+      const { latitude, longitude } = position.coords;
+      console.log(latitude, longitude);
+      return;
+    });
   };
 
   return (
@@ -66,13 +93,13 @@ const TradeArea = () => {
       <Label>거래지역</Label>
       <StyledTradeArea>
         <AddressButtons>
-          <AddressButton>내 위치</AddressButton>
+          <AddressButton onClick={gpsHandler}>내 위치</AddressButton>
           <AddressButton>최근 지역</AddressButton>
-          <AddressButton>주소 검색</AddressButton>
+          <AddressButton onClick={searchAreaHandler}>주소 검색</AddressButton>
           <AddressButton onClick={noAreaHandler}>지역설정안함</AddressButton>
         </AddressButtons>
         <AddressWrapper>
-          <Address value={area} />
+          <Address value={addProductData.tradeArea} onChange={() => {}} />
         </AddressWrapper>
       </StyledTradeArea>
     </FormControl>

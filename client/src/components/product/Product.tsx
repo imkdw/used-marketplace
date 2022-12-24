@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { enableProductTabState } from "../../recoil/product.recoil";
+import { enableDaumPostcodeState, enableProductTabState } from "../../recoil/product.recoil";
 import Header from "../header/Header";
 import TopHeader from "../topHeader/TopHeader";
 import AddProduct from "./addProduct/AddProduct";
+import DaumPostcode from "./addProduct/DaumPostcode";
 import ProductTab from "./ProductTab";
 
 const StyledProduct = styled.div`
@@ -16,8 +17,11 @@ const StyledProduct = styled.div`
 
 const Product = () => {
   const enableProductTab = useRecoilValue(enableProductTabState);
+  const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
+
   return (
     <StyledProduct>
+      {enableDaumPostcode && <DaumPostcode />}
       <TopHeader />
       <Header />
       <ProductTab />
