@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+// 인증 관련 라우터
 app.use("/auth", authRouter);
 
 export default app;
