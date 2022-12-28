@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -77,14 +78,21 @@ const TradeArea = () => {
     }
 
     console.log("위치 계산중..");
-    navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.getCurrentPosition(async (position) => {
       /**
        * latitude : 위도
        * longitude: 경도
        */
       const { latitude, longitude } = position.coords;
-      console.log(latitude, longitude);
-      return;
+      const url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latitude}&y=${longitude}&input_coord=WGS84`;
+      const apiKey = "71266bec59e9ef439c4ca0ad99ca7c04";
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `KakaoAK ${apiKey}`,
+        },
+      });
+
+      console.log(res);
     });
   };
 

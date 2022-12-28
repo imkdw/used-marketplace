@@ -15,6 +15,26 @@ const ModalBackground = styled.div`
   justify-content: center;
 `;
 
+const CloseButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+`;
+
+const CloseButtonIcon = () => {
+  return (
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M4.63125 3.76875L3.76875 4.63125L14.1375 15L3.76875 25.3688L4.63125 26.2313L15 15.8625L25.3688 26.2313L26.2313 25.3688L15.8625 15L26.2313 4.63125L25.3688 3.76875L15 14.1375L4.63125 3.76875Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
 const DaumPostcode = () => {
   const setEnableDaumPostcode = useSetRecoilState(enableDaumPostcodeState);
   const setAddProduct = useSetRecoilState(addProductDataState);
@@ -33,7 +53,7 @@ const DaumPostcode = () => {
 
   const props = {
     style: {
-      width: "50%",
+      width: "35%",
       height: "50%",
     },
   };
@@ -41,6 +61,9 @@ const DaumPostcode = () => {
   return (
     <ModalBackground>
       <DaumPostcodeEmbed onComplete={handleComplete} onClose={handleClose} {...props} />
+      <CloseButton onClick={handleClose}>
+        <CloseButtonIcon />
+      </CloseButton>
     </ModalBackground>
   );
 };
