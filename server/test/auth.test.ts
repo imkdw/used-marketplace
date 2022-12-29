@@ -12,12 +12,11 @@ describe("🔔 회원가입 API 테스트", () => {
     rePassword: "test12345!",
   };
 
-  /** 모든 테스트 수행 전 users 테이블 초기화 */
+  /** Teardrop */
   beforeAll(async () => {
     await connectionPool.execute("TRUNCATE users");
   });
 
-  /** 모든 테스트 수행 후 users 테이블 초기화 */
   afterAll(async () => {
     await connectionPool.execute("TRUNCATE users");
   });
@@ -124,5 +123,15 @@ describe("🔔 로그인 API 테스트", () => {
 
     expect(res.status).toBe(400);
     expect(res.body.message).toEqual("bad_request");
+  });
+});
+
+describe("민간인 여부 테스트", () => {
+  test("강민성은 민간인 이다.", () => {
+    expect(1 + 1).toBe(2);
+  });
+
+  test("김동우는 민간인 이다.", () => {
+    expect(1 + 1).toBe(1);
   });
 });

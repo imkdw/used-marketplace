@@ -35,6 +35,7 @@ const TextArea = styled.textarea`
   resize: none;
   border: none;
   font-size: 16px;
+  outline: none;
 `;
 
 const Description = () => {

@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { LoginUserDTO, RegisterUserDTO } from "../types/auth";
 import AuthService from "../services/auth.service";
-import axios from "axios";
 
 export default class AuthController {
   static register = async (req: Request, res: Response, next: NextFunction) => {

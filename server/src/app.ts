@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import authRouter from "./routes/auth.router";
+import geoRouter from "./routes/geo.router";
 
 dotenv.config();
 
@@ -17,5 +18,12 @@ app.use(cors());
 
 // 인증 관련 라우터
 app.use("/auth", authRouter);
+
+// 주소 관련 라우터
+app.use("/geo", geoRouter);
+
+// app.get("/", (req, res) => {
+//   res.json({ message: "Server is Good" });
+// });
 
 export default app;

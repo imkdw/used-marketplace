@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-/** MUI */
-import Radio from "@mui/material/Radio";
-
 const FormControl = styled.div`
   width: 100%;
   height: auto;
@@ -29,10 +26,28 @@ const RadioWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 `;
 
 const RadioLabel = styled.label`
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const Radio = styled.input`
+  appearance: none;
+  border: max(2px, 0.1em) solid gray;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  cursor: pointer;
+
+  &:checked {
+    border: 0.4em solid tomato;
+  }
 `;
 
 const ProductTradeable = () => {
@@ -41,12 +56,12 @@ const ProductTradeable = () => {
       <Label>교환</Label>
       <StyledProductTradeable>
         <RadioWrapper>
-          <Radio color="secondary" />
-          <RadioLabel>교환가능</RadioLabel>
+          <Radio type="radio" name="tradeable" value="can" checked id="can" />
+          <RadioLabel htmlFor="can">교환가능</RadioLabel>
         </RadioWrapper>
         <RadioWrapper>
-          <Radio color="secondary" />
-          <RadioLabel>교환불가</RadioLabel>
+          <Radio type="radio" name="tradeable" value="cant" id="cant" />
+          <RadioLabel htmlFor="cant">교환불가</RadioLabel>
         </RadioWrapper>
       </StyledProductTradeable>
     </FormControl>

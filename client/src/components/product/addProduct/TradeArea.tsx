@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { geoUrl } from "../../../config/url";
 import { addProductDataState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
 import DaumPostCode from "./DaumPostcode";
 
@@ -66,33 +67,26 @@ const TradeArea = () => {
     });
   };
 
+  /** 다음 주소검색 온오프  */
   const searchAreaHandler = () => {
-    /** 다음 주소검색창 온/오프 기능 */
     setEnableDaumPostcode((prevState) => !prevState);
   };
 
   const gpsHandler = () => {
     if (!("geolocation" in navigator)) {
-      alert("GPS 사용불가");
+      alert("GPS 사용이 불가능한 환경입니다.");
       return;
     }
 
-    console.log("위치 계산중..");
     navigator.geolocation.getCurrentPosition(async (position) => {
-      /**
-       * latitude : 위도
-       * longitude: 경도
-       */
       const { latitude, longitude } = position.coords;
-      const url = `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${latitude}&y=${longitude}&input_coord=WGS84`;
-      const apiKey = "71266bec59e9ef439c4ca0ad99ca7c04";
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `KakaoAK ${apiKey}`,
-        },
-      });
+      const url = `${geoUrl.coordToAddress}?coords=${latitude},${longitude}`;
+      const res = await axios.get(url);
+      const { sido, sigungu, bname } = res.data;
 
-      console.log(res);
+      setAddProductData((prevState) => {
+        return { ...prevState, tradeArea: `${sido} ${sigungu} ${bname}` };
+      });
     });
   };
 
