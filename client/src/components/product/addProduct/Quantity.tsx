@@ -1,4 +1,7 @@
+import { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -36,12 +39,21 @@ const Input = styled.input`
 `;
 
 const Quantity = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const changeQuantityHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+
+    setAddProductData((prevState) => {
+      return { ...prevState, quantity: Number(value) };
+    });
+  };
   return (
     <FormControl>
       <Label>수량</Label>
       <StyledQuantity>
         <InputWrapper>
-          <Input defaultValue={1} />
+          <Input type="number" value={addProductData.quantity} onChange={changeQuantityHandler} />
         </InputWrapper>
         <div style={{ fontSize: "18px" }}>개</div>
       </StyledQuantity>

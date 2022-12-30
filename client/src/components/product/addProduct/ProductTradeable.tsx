@@ -1,4 +1,7 @@
+import { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -51,16 +54,40 @@ const Radio = styled.input`
 `;
 
 const ProductTradeable = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const tradeableChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+
+    setAddProductData((prevState) => {
+      return { ...prevState, tradeable: value === "can" ? true : false };
+    });
+  };
+
   return (
     <FormControl>
       <Label>교환</Label>
       <StyledProductTradeable>
         <RadioWrapper>
-          <Radio type="radio" name="tradeable" value="can" checked id="can" />
+          <Radio
+            type="radio"
+            name="tradeable"
+            value="can"
+            id="can"
+            onChange={tradeableChangeHandler}
+            checked={addProductData.tradeable}
+          />
           <RadioLabel htmlFor="can">교환가능</RadioLabel>
         </RadioWrapper>
         <RadioWrapper>
-          <Radio type="radio" name="tradeable" value="cant" id="cant" />
+          <Radio
+            type="radio"
+            name="tradeable"
+            value="cant"
+            id="cant"
+            onChange={tradeableChangeHandler}
+            checked={!addProductData.tradeable}
+          />
           <RadioLabel htmlFor="cant">교환불가</RadioLabel>
         </RadioWrapper>
       </StyledProductTradeable>

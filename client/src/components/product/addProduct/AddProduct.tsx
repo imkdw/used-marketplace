@@ -1,6 +1,9 @@
-import { useRecoilValue } from "recoil";
+import axios from "axios";
+import { FormEvent } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { enableDaumPostcodeState } from "../../../recoil/product.recoil";
+import { productUrl } from "../../../config/url";
+import { addProductDataState, addProductImageState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
 import Category from "./Category";
 import DaumPostCode from "./DaumPostcode";
 import Description from "./Description";
@@ -12,7 +15,7 @@ import Quantity from "./Quantity";
 import Title from "./Title";
 import TradeArea from "./TradeArea";
 
-const StyledAddProduct = styled.div`
+const StyledAddProduct = styled.form`
   width: 100%;
   height: auto;
   display: flex;
@@ -65,8 +68,30 @@ const SubmitButton = styled.button`
 `;
 
 const AddProduct = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+  const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
+
+  const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    formData.append("addProductData", JSON.stringify(addProductData));
+
+    for (let i = 0; i < addProductImage.length; i++) {
+      formData.append("image", addProductImage[i].image);
+    }
+
+    const res = await axios.post(productUrl.addProduct, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(res);
+  };
+
   return (
-    <StyledAddProduct>
+    <StyledAddProduct encType="multipart/form-data" onSubmit={submitHandler} acceptCharset="UTF-8">
       <ProductForm>
         <FormHeader>기본정보</FormHeader>
         <ImageUpload />

@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { AddProductData } from "../types/product";
+import { AddProductData, AddProductImage } from "../types/product";
 
 export const enableProductTabState = atom<string>({
   key: "enableProductTabState",
@@ -18,6 +18,11 @@ export const addProductDataState = atom<AddProductData>({
     description: "",
     quantity: 1,
   },
+});
+
+export const addProductImageState = atom<AddProductImage[]>({
+  key: "addProductImageState",
+  default: [],
 });
 
 export const enableDaumPostcodeState = atom<boolean>({

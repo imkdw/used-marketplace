@@ -13,3 +13,8 @@ export interface AddProductData {
   description: string;
   quantity: number;
 }
+
+export interface AddProductImage {
+  id: number;
+  image: Blob;
+}

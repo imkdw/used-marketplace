@@ -1,4 +1,7 @@
+import { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -39,12 +42,26 @@ const TextArea = styled.textarea`
 `;
 
 const Description = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const descChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { value } = event.currentTarget;
+
+    setAddProductData((prevState) => {
+      return { ...prevState, description: value };
+    });
+  };
+
   return (
     <FormControl>
       <Label>설명</Label>
       <StyledDescription>
         <TextAreaWrapper>
-          <TextArea placeholder="여러 장의 상품 사진과 구입 연도, 브랜드, 사용감, 하자 유무 등 구매자에게 필요한 정보를 꼭 포함해 주세요. (10자 이상)" />
+          <TextArea
+            placeholder="여러 장의 상품 사진과 구입 연도, 브랜드, 사용감, 하자 유무 등 구매자에게 필요한 정보를 꼭 포함해 주세요. (10자 이상)"
+            onChange={descChangeHandler}
+            value={addProductData.description}
+          />
         </TextAreaWrapper>
       </StyledDescription>
     </FormControl>

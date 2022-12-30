@@ -12,3 +12,7 @@ export const authUrl = {
 export const geoUrl = {
   coordToAddress: makeUrl("/geo/coord-to-address"),
 };
+
+export const productUrl = {
+  addProduct: makeUrl("/product/add"),
+};

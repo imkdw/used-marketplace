@@ -1,4 +1,7 @@
+import { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -51,16 +54,39 @@ const Radio = styled.input`
 `;
 
 const ProductStatus = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const statusChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    setAddProductData((prevState) => {
+      return { ...prevState, status: value };
+    });
+  };
+
   return (
     <FormControl>
       <Label>상태</Label>
       <StyledProductStatus>
         <RadioWrapper>
-          <Radio type="radio" name="status" value="old" checked id="old" />
+          <Radio
+            type="radio"
+            name="status"
+            value="old"
+            id="old"
+            onChange={statusChangeHandler}
+            checked={addProductData.status === "old"}
+          />
           <RadioLabel htmlFor="old">중고상품</RadioLabel>
         </RadioWrapper>
         <RadioWrapper>
-          <Radio type="radio" name="status" value="new" id="new" />
+          <Radio
+            type="radio"
+            name="status"
+            value="new"
+            id="new"
+            onChange={statusChangeHandler}
+            checked={addProductData.status === "new"}
+          />
           <RadioLabel htmlFor="new">새상품</RadioLabel>
         </RadioWrapper>
       </StyledProductStatus>

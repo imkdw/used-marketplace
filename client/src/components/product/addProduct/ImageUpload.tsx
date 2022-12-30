@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { ChangeEvent, useRef, useState, useEffect } from "react";
-import { UploadImage } from "../../../types/product";
+import { AddProductImage } from "../../../types/product";
+import { useRecoilState } from "recoil";
+import { addProductImageState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -65,7 +67,7 @@ const Images = styled.div`
   flex-wrap: wrap;
 `;
 
-const UploadImagePreview = styled.div`
+const ImagePreview = styled.div`
   width: 195px;
   height: 195px;
   cursor: pointer;
@@ -121,7 +123,7 @@ const ImageAddIcon = () => {
 
 const ImageUpload = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [uploadImage, setUploadImage] = useState<UploadImage[]>([]);
+  const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
 
   const clickImageUploadHandler = () => {
     fileInputRef.current?.click();
@@ -129,8 +131,8 @@ const ImageUpload = () => {
 
   /** 업로드된 이미지 삭제 */
   const imageRemoveHandler = (id: number) => {
-    const newUploadImage = uploadImage.filter((image) => image.id !== id);
-    setUploadImage(newUploadImage);
+    const newaddProductImage = addProductImage.filter((image) => image.id !== id);
+    setAddProductImage(newaddProductImage);
   };
 
   /** 원본 이미지 보여주기 */
@@ -158,7 +160,7 @@ const ImageUpload = () => {
       /** 업로드된 이미지를 블롭형식으로 상태에 추가 */
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        setUploadImage((prevState) => {
+        setAddProductImage((prevState) => {
           return [...prevState, { id: i, image: e.target.result }];
         });
       };
@@ -179,22 +181,30 @@ const ImageUpload = () => {
   return (
     <FormControl>
       <Label>
-        상품이미지 <ImageCount>({uploadImage.length}/8)</ImageCount>
+        상품이미지 <ImageCount>({addProductImage.length}/8)</ImageCount>
       </Label>
       <StyledImageUpload>
-        <input type="file" accept="image/*" ref={fileInputRef} hidden onChange={imageUploadHandler} multiple />
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          hidden
+          onChange={imageUploadHandler}
+          multiple
+          name="image"
+        />
         <Images>
           <ImageUploadBox onClick={clickImageUploadHandler}>
             <ImageAddIcon />
             <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
           </ImageUploadBox>
-          {uploadImage.map((image) => (
-            <UploadImagePreview onClick={showOriginalImageHandler} key={image.id}>
+          {addProductImage.map((image) => (
+            <ImagePreview onClick={showOriginalImageHandler} key={image.id}>
               <Image src={String(image.image)} />
               <ImageRemoveButton onClick={() => imageRemoveHandler(image.id)}>
                 <ImageRemoveIcon />
               </ImageRemoveButton>
-            </UploadImagePreview>
+            </ImagePreview>
           ))}
         </Images>
         <ImageUploadDesc>

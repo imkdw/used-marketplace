@@ -3,7 +3,7 @@ import { LoginReturn, LoginUserDTO, RegisterUserDTO } from "../types/auth";
 import Secure from "../utils/secure";
 import Jwt from "../utils/jwt";
 import axios from "axios";
-import { kakaoConfig } from "../config/kakaoConfig";
+import { kakaoConfig } from "../config/config";
 
 export default class AuthService {
   static register = async (userDTO: RegisterUserDTO) => {

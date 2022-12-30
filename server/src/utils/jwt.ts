@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import jwtConfig from "../config/jwtConfig";
+import { jwtConfig } from "../config/config";
 
 class Jwt {
   static createToken = (email: string, nickname: string): string => {

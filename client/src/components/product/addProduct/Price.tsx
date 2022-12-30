@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 /** MUI */
 import Checkbox from "@mui/material/Checkbox";
+import { addProductDataState } from "../../../recoil/product.recoil";
+import { useRecoilState } from "recoil";
+import { ChangeEvent } from "react";
 
 const FormControl = styled.div`
   width: 100%;
@@ -56,13 +59,27 @@ const CheckboxWrapper = styled.div`
 `;
 
 const Price = () => {
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  const priceChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget;
+    setAddProductData((prevState) => {
+      return { ...prevState, price: Number(value) };
+    });
+  };
+
   return (
     <FormControl>
       <Label>가격</Label>
       <StyledPrice>
         <PriceInputWrapper>
           <InputWrapper>
-            <PriceInput placeholder="숫자만 입력해주세요." />
+            <PriceInput
+              placeholder="숫자만 입력해주세요."
+              type="number"
+              onChange={priceChangeHandler}
+              value={addProductData.price}
+            />
           </InputWrapper>
           <div style={{ fontSize: "18px" }}>원</div>
         </PriceInputWrapper>
