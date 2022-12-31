@@ -50,27 +50,61 @@ const CategoryItemText = styled.div`
   align-items: center;
 `;
 
-// const BigCategory = styled.ul``
-
-// const BigCategoryItem = styled.li``
-
-// const MiddleCategory = styled.ul``
-
-// const MiddleCategoryItem = styled.li``
-
-// const LittleCategory = styled.ul``
-
-// const LittleCategoryItem = styled.li``
-
 const Category = () => {
+  const categoryData = [
+    {
+      의류: {
+        남자옷: {
+          a: "셔츠",
+          b: "언더웨어",
+          c: "정장",
+          d: "기타",
+        },
+        여자옷: {
+          a: "블라우스",
+          b: "원피스",
+          c: "치마",
+          d: "기타",
+        },
+      },
+    },
+    {
+      전자제품: {
+        컴퓨터: {
+          a: "그래픽카드",
+          b: "메인보드",
+          c: "CPU",
+          d: "기타",
+        },
+        모바일: {
+          a: "스마트폰",
+          b: "이어폰",
+          c: "태블릿",
+          d: "기타",
+        },
+      },
+    },
+    {
+      기타: {
+        기타: {
+          a: "기타",
+        },
+      },
+    },
+  ];
+
   return (
     <FormControl>
       <Label>카테고리</Label>
       <StyledCategory>
         <CategoryWrapper>
-          <CategoryItem>
+          {/* <CategoryItem>
             <CategoryItemText>여성의류</CategoryItemText>
-          </CategoryItem>
+          </CategoryItem> */}
+          {categoryData.map((data) => {
+            const key = Object.keys(data);
+            return <div>{key}</div>;
+          })}
         </CategoryWrapper>
         <CategoryWrapper></CategoryWrapper>
         <CategoryWrapper></CategoryWrapper>
