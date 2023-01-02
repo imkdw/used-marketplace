@@ -5,7 +5,11 @@ export interface UploadImage {
 
 export interface AddProductData {
   title: string;
-  category: string;
+  category: {
+    big: string;
+    medium: string;
+    small: string;
+  };
   tradeArea: string;
   status: string;
   tradeable: boolean;

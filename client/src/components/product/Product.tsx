@@ -5,7 +5,7 @@ import { enableDaumPostcodeState, enableProductTabState } from "../../recoil/pro
 import Header from "../header/Header";
 import TopHeader from "../topHeader/TopHeader";
 import AddProduct from "./addProduct/AddProduct";
-import DaumPostcode from "./addProduct/DaumPostcode";
+import DaumPostcode from "./addProduct/DaumPostCode";
 import ProductTab from "./ProductTab";
 
 const StyledProduct = styled.div`

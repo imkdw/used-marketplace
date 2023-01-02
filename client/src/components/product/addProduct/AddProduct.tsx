@@ -1,11 +1,10 @@
 import axios from "axios";
-import { FormEvent } from "react";
+import { FormEvent, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { productUrl } from "../../../config/url";
 import { addProductDataState, addProductImageState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
 import Category from "./Category";
-import DaumPostCode from "./DaumPostcode";
 import Description from "./Description";
 import ImageUpload from "./ImageUpload";
 import Price from "./Price";

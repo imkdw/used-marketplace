@@ -10,7 +10,11 @@ export const addProductDataState = atom<AddProductData>({
   key: "addProductDataState",
   default: {
     title: "",
-    category: "",
+    category: {
+      big: "의류",
+      medium: "남자옷",
+      small: "정장",
+    },
     tradeArea: "",
     status: "new",
     tradeable: true,

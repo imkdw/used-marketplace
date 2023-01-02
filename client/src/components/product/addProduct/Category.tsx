@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { addProductDataState } from "../../../recoil/product.recoil";
 
 const FormControl = styled.div`
   width: 100%;
@@ -50,64 +53,53 @@ const CategoryItemText = styled.div`
   align-items: center;
 `;
 
+const SelectCategory = styled.div`
+  color: red;
+  font-size: 16px;
+`;
+
 const Category = () => {
-  const categoryData = [
-    {
-      의류: {
-        남자옷: {
-          a: "셔츠",
-          b: "언더웨어",
-          c: "정장",
-          d: "기타",
-        },
-        여자옷: {
-          a: "블라우스",
-          b: "원피스",
-          c: "치마",
-          d: "기타",
-        },
-      },
-    },
-    {
-      전자제품: {
-        컴퓨터: {
-          a: "그래픽카드",
-          b: "메인보드",
-          c: "CPU",
-          d: "기타",
-        },
-        모바일: {
-          a: "스마트폰",
-          b: "이어폰",
-          c: "태블릿",
-          d: "기타",
-        },
-      },
-    },
-    {
-      기타: {
-        기타: {
-          a: "기타",
-        },
-      },
-    },
-  ];
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+
+  // setAddProductData((prevState) => {
+  //   return {
+  //     ...prevState,
+  //     category: {
+  //       big: "의류",
+  //       medium: "남자옷",
+  //       small: "정장",
+  //     },
+  //   };
+  // });
 
   return (
     <FormControl>
       <Label>카테고리</Label>
       <StyledCategory>
         <CategoryWrapper>
-          {/* <CategoryItem>
-            <CategoryItemText>여성의류</CategoryItemText>
-          </CategoryItem> */}
-          {categoryData.map((data) => {
-            const key = Object.keys(data);
-            return <div>{key}</div>;
-          })}
+          <CategoryItem>
+            <CategoryItemText>의류</CategoryItemText>
+          </CategoryItem>
         </CategoryWrapper>
-        <CategoryWrapper></CategoryWrapper>
-        <CategoryWrapper></CategoryWrapper>
+        <CategoryWrapper>
+          <CategoryItem>
+            <CategoryItemText>남자옷</CategoryItemText>
+          </CategoryItem>
+        </CategoryWrapper>
+        <CategoryWrapper>
+          <CategoryItem>
+            <CategoryItemText>셔츠</CategoryItemText>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryItemText>언더웨어</CategoryItemText>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryItemText>정장</CategoryItemText>
+          </CategoryItem>
+          <CategoryItem>
+            <CategoryItemText>기타</CategoryItemText>
+          </CategoryItem>
+        </CategoryWrapper>
       </StyledCategory>
     </FormControl>
   );

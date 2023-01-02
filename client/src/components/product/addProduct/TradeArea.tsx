@@ -4,7 +4,6 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { geoUrl } from "../../../config/url";
 import { addProductDataState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
-import DaumPostCode from "./DaumPostcode";
 
 const FormControl = styled.div`
   width: 100%;
