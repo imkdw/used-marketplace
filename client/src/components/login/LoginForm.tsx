@@ -144,7 +144,13 @@ const LoginForm = () => {
         <HeaderText>계정을 입력해주세요</HeaderText>
         <InputWrapper>
           <FormControl>
-            <AuthInput label="이메일" name="email" type="text" onChange={changeAccountHandler} value={account.email} />
+            <AuthInput
+              label="이메일"
+              name="email"
+              type="text"
+              onChange={changeAccountHandler}
+              value={account.email}
+            />
           </FormControl>
           <FormControl>
             <AuthInput

@@ -1,8 +1,3 @@
-export interface UploadImage {
-  id: number;
-  image: Blob;
-}
-
 export interface AddProductData {
   title: string;
   category: {
@@ -12,15 +7,11 @@ export interface AddProductData {
   };
   tradeArea: string;
   quality: string;
-  tradeable: boolean;
+  tradeable: string;
   price: number;
   isIncludeDeliveryCost: boolean;
   description: string;
   quantity: number;
+  productId?: string;
   author: string;
-}
-
-export interface AddProductImage {
-  id: number;
-  image: Blob;
 }

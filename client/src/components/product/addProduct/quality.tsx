@@ -59,7 +59,7 @@ const ProductStatus = () => {
   const statusChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.currentTarget;
     setAddProductData((prevState) => {
-      return { ...prevState, status: value };
+      return { ...prevState, quality: value };
     });
   };
 
@@ -74,7 +74,7 @@ const ProductStatus = () => {
             value="old"
             id="old"
             onChange={statusChangeHandler}
-            checked={addProductData.status === "old"}
+            checked={addProductData.quality === "old"}
           />
           <RadioLabel htmlFor="old">중고상품</RadioLabel>
         </RadioWrapper>
@@ -85,7 +85,7 @@ const ProductStatus = () => {
             value="new"
             id="new"
             onChange={statusChangeHandler}
-            checked={addProductData.status === "new"}
+            checked={addProductData.quality === "new"}
           />
           <RadioLabel htmlFor="new">새상품</RadioLabel>
         </RadioWrapper>

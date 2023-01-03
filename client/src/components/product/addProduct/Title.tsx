@@ -27,11 +27,11 @@ const StyledTitle = styled.div`
   justify-content: center;
 `;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.div<{ borderColor?: string }>`
   width: 90%;
   display: flex;
   justify-content: center;
-  border: 1px solid #c3c2cc;
+  border: 1px solid ${(props) => props.borderColor || "#c3c2cc"};
 `;
 
 const Input = styled.input`
@@ -62,14 +62,25 @@ const Title = () => {
     <FormControl>
       <Label>제목</Label>
       <StyledTitle>
-        <InputWrapper>
-          <Input
-            type="text"
-            placeholder="상품 제목을 입력해주세요."
-            onChange={changeHandler}
-            value={addProductData.title}
-          />
-        </InputWrapper>
+        {String(addProductData.title).length <= 40 ? (
+          <InputWrapper>
+            <Input
+              type="text"
+              placeholder="상품 제목을 입력해주세요."
+              onChange={changeHandler}
+              value={addProductData.title}
+            />
+          </InputWrapper>
+        ) : (
+          <InputWrapper borderColor="red">
+            <Input
+              type="text"
+              placeholder="상품 제목을 입력해주세요."
+              onChange={changeHandler}
+              value={addProductData.title}
+            />
+          </InputWrapper>
+        )}
         <TitleCounter>{addProductData.title.length}/40</TitleCounter>
       </StyledTitle>
     </FormControl>

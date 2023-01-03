@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useState, MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 import { enableProductTabState } from "../../recoil/product.recoil";
+import { Link } from "react-router-dom";
 
 const StyledProductTab = styled.div`
   width: 100%;

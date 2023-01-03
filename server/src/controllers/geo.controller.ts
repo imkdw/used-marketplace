@@ -8,10 +8,9 @@ export default class GeoController {
 
     try {
       const address = await GeoService.coordToAddress(latitude, longitude);
-      // console.log(address);
       res.json(address);
     } catch (err: any) {
-      res.status(500).json("error");
+      res.status(500).json(err.message);
     }
   };
 }

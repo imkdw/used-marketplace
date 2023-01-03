@@ -33,3 +33,9 @@ export const kakaoConfig = {
   restApikey: process.env.KAKAO_REST_API_KEY,
   redirectUri: process.env.KAKAO_REDIRECT_URI,
 };
+
+/** NCP API 관련 */
+export const ncpConfig = {
+  apiKeyId: process.env.NCP_APIGW_API_KEY_ID,
+  apiKey: process.env.NCP_APIGW_API_KEY,
+};

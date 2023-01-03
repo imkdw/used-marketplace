@@ -3,13 +3,21 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { addProductDataState } from "../../../recoil/product.recoil";
 
+const StyledCategoryWrapper = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 40px 0 40px 0;
+  gap: 20px;
+`;
+
 const FormControl = styled.div`
   width: 100%;
   height: auto;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #dbdbdb;
-  padding: 40px 0 40px 0;
 `;
 
 const Label = styled.label`
@@ -56,10 +64,12 @@ const CategoryItemText = styled.div`
 const SelectCategory = styled.div`
   color: red;
   font-size: 16px;
+  margin-left: 20%;
 `;
 
 const Category = () => {
   const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+  const { big, medium, small } = addProductData.category;
 
   // setAddProductData((prevState) => {
   //   return {
@@ -73,35 +83,43 @@ const Category = () => {
   // });
 
   return (
-    <FormControl>
-      <Label>카테고리</Label>
-      <StyledCategory>
-        <CategoryWrapper>
-          <CategoryItem>
-            <CategoryItemText>의류</CategoryItemText>
-          </CategoryItem>
-        </CategoryWrapper>
-        <CategoryWrapper>
-          <CategoryItem>
-            <CategoryItemText>남자옷</CategoryItemText>
-          </CategoryItem>
-        </CategoryWrapper>
-        <CategoryWrapper>
-          <CategoryItem>
-            <CategoryItemText>셔츠</CategoryItemText>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryItemText>언더웨어</CategoryItemText>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryItemText>정장</CategoryItemText>
-          </CategoryItem>
-          <CategoryItem>
-            <CategoryItemText>기타</CategoryItemText>
-          </CategoryItem>
-        </CategoryWrapper>
-      </StyledCategory>
-    </FormControl>
+    <StyledCategoryWrapper>
+      <FormControl>
+        <Label>카테고리</Label>
+        <StyledCategory>
+          <CategoryWrapper>
+            <CategoryItem>
+              <CategoryItemText>의류</CategoryItemText>
+            </CategoryItem>
+          </CategoryWrapper>
+          <CategoryWrapper>
+            <CategoryItem>
+              <CategoryItemText>남자옷</CategoryItemText>
+            </CategoryItem>
+          </CategoryWrapper>
+          <CategoryWrapper>
+            <CategoryItem>
+              <CategoryItemText>셔츠</CategoryItemText>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryItemText>언더웨어</CategoryItemText>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryItemText>정장</CategoryItemText>
+            </CategoryItem>
+            <CategoryItem>
+              <CategoryItemText>기타</CategoryItemText>
+            </CategoryItem>
+          </CategoryWrapper>
+        </StyledCategory>
+      </FormControl>
+      <SelectCategory>
+        선택한 카테고리 :{" "}
+        <b style={{ fontWeight: "bold", color: "red" }}>
+          {big} &gt; {medium} &gt; {small}
+        </b>
+      </SelectCategory>
+    </StyledCategoryWrapper>
   );
 };
 

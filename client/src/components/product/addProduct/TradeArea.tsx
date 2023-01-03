@@ -94,10 +94,16 @@ const TradeArea = () => {
       <Label>거래지역</Label>
       <StyledTradeArea>
         <AddressButtons>
-          <AddressButton onClick={gpsHandler}>내 위치</AddressButton>
-          <AddressButton>최근 지역</AddressButton>
-          <AddressButton onClick={searchAreaHandler}>주소 검색</AddressButton>
-          <AddressButton onClick={noAreaHandler}>지역설정안함</AddressButton>
+          <AddressButton onClick={gpsHandler} type="button">
+            내 위치
+          </AddressButton>
+          <AddressButton type="button">최근 지역</AddressButton>
+          <AddressButton onClick={searchAreaHandler} type="button">
+            주소 검색
+          </AddressButton>
+          <AddressButton onClick={noAreaHandler} type="button">
+            지역설정안함
+          </AddressButton>
         </AddressButtons>
         <AddressWrapper>
           <Address value={addProductData.tradeArea} onChange={() => {}} />

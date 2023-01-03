@@ -16,11 +16,13 @@ export const addProductDataState = atom<AddProductData>({
       small: "정장",
     },
     tradeArea: "",
-    status: "new",
-    tradeable: true,
+    quality: "old",
+    tradeable: false,
     price: 0,
+    isIncludeDeliveryCost: false,
     description: "",
     quantity: 1,
+    author: "",
   },
 });
 

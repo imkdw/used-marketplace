@@ -1,10 +1,9 @@
 import styled from "styled-components";
 
 /** MUI */
-import Checkbox from "@mui/material/Checkbox";
 import { addProductDataState } from "../../../recoil/product.recoil";
 import { useRecoilState } from "recoil";
-import { ChangeEvent } from "react";
+import { ChangeEvent, HTMLInputTypeAttribute } from "react";
 
 const FormControl = styled.div`
   width: 100%;
@@ -56,7 +55,10 @@ const CheckboxWrapper = styled.div`
   height: auto;
   display: flex;
   align-items: center;
+  gap: 10px;
 `;
+
+const Checkbox = styled.input``;
 
 const Price = () => {
   const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
@@ -65,6 +67,12 @@ const Price = () => {
     const { value } = event.currentTarget;
     setAddProductData((prevState) => {
       return { ...prevState, price: Number(value) };
+    });
+  };
+
+  const isIncludeDeliveryCostChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddProductData((prevState) => {
+      return { ...prevState, isIncludeDeliveryCost: !addProductData.isIncludeDeliveryCost };
     });
   };
 
@@ -84,7 +92,11 @@ const Price = () => {
           <div style={{ fontSize: "18px" }}>원</div>
         </PriceInputWrapper>
         <CheckboxWrapper>
-          <Checkbox defaultChecked />
+          <input
+            type="checkbox"
+            checked={addProductData.isIncludeDeliveryCost}
+            onChange={isIncludeDeliveryCostChangeHandler}
+          />
           <label>배송비 포함</label>
         </CheckboxWrapper>
       </StyledPrice>

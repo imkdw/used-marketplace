@@ -6,9 +6,9 @@ import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from "react";
 
-import prevArrow from "../../assets/images/left-arrow.svg";
-import nextArrow from "../../assets/images/right-arrow.svg";
-import sliderImage from "../../assets/images/slider-image.webp";
+import prevArrow from "../../assets/images/left-arrow.png";
+import nextArrow from "../../assets/images/right-arrow.png";
+import sliderImage from "../../assets/images/slider-image.jpg";
 
 const StyledSwiper = styled(Swiper)`
   width: 55%;
@@ -31,7 +31,6 @@ const StyledSwiper = styled(Swiper)`
 const StyledSwiperSlide = styled(SwiperSlide)`
   width: 100%;
   height: 100%;
-  background-color: aliceblue;
 `;
 
 const SliderButton = styled.button<{ left?: string; right?: string }>`
@@ -43,10 +42,14 @@ const SliderButton = styled.button<{ left?: string; right?: string }>`
   top: 50%;
   transform: translateY(-50%);
   z-index: 999;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const SliderButtonArrow = styled.img`
-  width: 100%;
+  width: 50%;
   height: 100%;
 `;
 

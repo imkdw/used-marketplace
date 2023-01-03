@@ -15,6 +15,8 @@ const StyledProduct = styled.div`
   flex-direction: column;
 `;
 
+const ProductWrapper = styled.div``;
+
 const Product = () => {
   const enableProductTab = useRecoilValue(enableProductTabState);
   const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
