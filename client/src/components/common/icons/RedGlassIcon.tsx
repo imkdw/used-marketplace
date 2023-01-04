@@ -1,4 +1,4 @@
-import glassImage from "../../../assets/images/glass.png";
+import glassImage from "../../../assets/images/red-glass.png";
 import styled from "styled-components";
 
 const StyledGlassIcon = styled.div`
@@ -11,7 +11,7 @@ const StyledGlassIcon = styled.div`
 
 const Glass = styled.img``;
 
-const GlassIcon = () => {
+const RedGlassIcon = () => {
   return (
     <StyledGlassIcon>
       <Glass src={glassImage} alt="돋보기 아이콘" />
@@ -19,4 +19,4 @@ const GlassIcon = () => {
   );
 };
 
-export default GlassIcon;
+export default RedGlassIcon;

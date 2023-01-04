@@ -5,7 +5,7 @@ import sellIcon from "../../assets/images/sell-icon.png";
 import myStoreIcon from "../../assets/images/my-store-icon.png";
 import talkIcon from "../../assets/images/talk-icon.png";
 import menuImage from "../../assets/images/menu.png";
-import GlassIcon from "../common/icons/GlassIcon";
+import GlassIcon from "../common/icons/RedGlassIcon";
 import { Link } from "react-router-dom";
 
 const StyledHeader = styled.div`

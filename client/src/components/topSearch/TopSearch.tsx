@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import GlassIcon from "../common/icons/GlassIcon";
+import GlassIcon from "../common/icons/RedGlassIcon";
 
 const StyledTopSearch = styled.div`
   display: none;

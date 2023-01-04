@@ -3,11 +3,7 @@ import { FormEvent, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { productUrl } from "../../../config/url";
-import {
-  addProductDataState,
-  addProductImageState,
-  enableDaumPostcodeState,
-} from "../../../recoil/product.recoil";
+import { addProductDataState, addProductImageState } from "../../../recoil/product.recoil";
 import { AddProductData } from "../../../types/product";
 import Category from "./Category";
 import Description from "./Description";
@@ -107,8 +103,6 @@ const AddProduct = () => {
   const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
   const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-
-  const tempAddProductData = Object.assign({}, addProductData);
 
   const navigator = useNavigate();
 
