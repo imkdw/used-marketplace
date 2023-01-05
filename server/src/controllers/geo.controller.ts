@@ -10,6 +10,7 @@ export default class GeoController {
       const address = await GeoService.coordToAddress(latitude, longitude);
       res.json(address);
     } catch (err: any) {
+      console.log(err);
       res.status(500).json(err.message);
     }
   };

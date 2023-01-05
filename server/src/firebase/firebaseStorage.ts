@@ -3,31 +3,30 @@ import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "fire
 
 const storage = getStorage(firebaseApp);
 
-export const uploadImageAndGetUrl = async (reviewId: string, files: Express.Multer.File[]) => {
-  const imageUrls = await Promise.all(
+class FirebaseStorage {
+  static uploadImage = async (productId: string, files: Express.Multer.File[]) => {
     files.map(async (file, index) => {
-      /** 신규 이미지에 대한 참조 생성 */
-      const imageRef = ref(storage, `posts/${reviewId}/${reviewId}-${index}`);
-
-      /** 메타데이터 정의 */
+      const imageRef = ref(storage, `posts/${productId}/${productId}-${index}`);
       const metadata = { contentType: "image/jpeg" };
 
       /** Multer.memoryStorage에 정의된 file.buffer를 Storage에 업로드 */
-      await uploadBytes(imageRef, file.buffer, metadata);
+      try {
+        await uploadBytes(imageRef, file.buffer, metadata);
+      } catch (err: any) {
+        throw err;
+      }
 
       /** 업로드된 파일에 대한 참조를 가져와서 다운로드링크 반환 */
-      const url = await getDownloadURL(ref(storage, `posts/${reviewId}/${reviewId}-${index}`));
+      // const url = await getDownloadURL(ref(storage, `posts/${productId}/${productId}-${index}`));
+    });
+  };
+}
 
-      return url;
-    })
-  );
+export default FirebaseStorage;
 
-  return imageUrls;
-};
-
-export const removeFiles = async (reviewId: string, imageCount: number) => {
+export const removeFiles = async (productId: string, imageCount: number) => {
   for (let i = 0; i < imageCount; i++) {
-    const imageRef = ref(storage, `posts/${reviewId}/${reviewId}-${i}`);
+    const imageRef = ref(storage, `posts/${productId}/${productId}-${i}`);
     await deleteObject(imageRef);
   }
 };

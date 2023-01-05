@@ -8,13 +8,12 @@ export default class ProductController {
     const userDTO: AddProductData = JSON.parse(req.body.addProductData);
     const images = req.files;
 
-    /** Firebase Storage 이미지 업로드 구현 */
-    /** 게시글 DB CRUD 구현 */
     try {
-      await ProductService.addProduct(userDTO);
+      await ProductService.addProduct(userDTO, images);
       res.status(200).json({ message: "상품 등록 성공" });
     } catch (err: any) {
-      res.status(err.status).json({ message: err.message });
+      console.log(err);
+      res.status(err.status || 500).json({ message: err.message });
     }
   };
 }

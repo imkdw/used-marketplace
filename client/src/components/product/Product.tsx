@@ -1,13 +1,12 @@
-import { Route, Routes } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { enableDaumPostcodeState, enableProductTabState } from "../../recoil/product.recoil";
 import Header from "../header/Header";
 import TopHeader from "../topHeader/TopHeader";
 import AddProduct from "./addProduct/AddProduct";
-import DaumPostcode from "./addProduct/DaumPostCode";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
+import DaumPostcode from "./addProduct/DaumPostcode";
 
 const StyledProduct = styled.div`
   width: 100%;

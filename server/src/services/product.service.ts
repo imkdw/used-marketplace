@@ -1,14 +1,17 @@
 import { AddProductData } from "./../types/product.d";
 import ProductModel from "./../models/product.model";
 import Secure from "./../utils/secure";
+import FirebaseStorage from "../firebase/firebaseStorage";
 
 class ProductService {
-  static addProduct = async (userDTO: AddProductData) => {
+  // TODO: images 타입 변경
+  static addProduct = async (userDTO: AddProductData, images: any) => {
     const productId = Secure.getUUID();
     userDTO.productId = productId;
 
     try {
       await ProductModel.addProduct(userDTO);
+      await FirebaseStorage.uploadImage(userDTO.productId, images);
     } catch (err: any) {
       throw err;
     }
