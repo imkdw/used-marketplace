@@ -10,7 +10,10 @@ class ProductService {
     userDTO.productId = productId;
 
     try {
+      /** 상품 추가 */
       await ProductModel.addProduct(userDTO);
+
+      /** 상품 이미지 업로드 */
       await FirebaseStorage.uploadImage(userDTO.productId, images);
     } catch (err: any) {
       throw err;
