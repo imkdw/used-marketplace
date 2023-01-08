@@ -26,10 +26,14 @@ const StyledHeader = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-  width: 55%;
+  width: 60%;
   height: 100%;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 1400px) {
+    width: 70%;
+  }
 `;
 
 const LogoWrapper = styled(Link)`
@@ -67,16 +71,22 @@ const UtilLinkWrapper = styled.div`
   width: 40%;
   height: 100%;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
 `;
 
 const UtilLink = styled(Link)`
   width: 28%;
-  height: 100%;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
+  border-right: 1px solid #bebebe;
+
+  &:last-child {
+    border: none;
+  }
 `;
 
 const UtilLinkIcon = styled.img`
@@ -90,9 +100,13 @@ const UtilLinkText = styled.div`
 `;
 
 const Category = styled.div`
-  width: 55%;
+  width: 60%;
   height: 70px;
   display: flex;
+
+  @media screen and (max-width: 1400px) {
+    width: 70%;
+  }
 `;
 
 const HambergerMenu = styled.img`

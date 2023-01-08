@@ -19,7 +19,7 @@ class ProductModel {
     } = userDTO;
 
     const query =
-      "INSERT INTO product(" +
+      "INSERT INTO products(" +
       "product_id, title, category_big, category_medium, category_small, trade_area, quality, tradeable, price, include_delivery_cost, description, quantity, author) " +
       "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -41,6 +41,24 @@ class ProductModel {
 
     try {
       await connectionPool.execute(query, values);
+    } catch (err: any) {
+      throw {
+        status: 500,
+        message: err.message,
+      };
+    }
+  };
+
+  static addProductImage = async (productId: string, imageUrls: string[]) => {
+    const query = "INSERT INTO products_image(product_id, image_url) VALUES(?, ?)";
+
+    try {
+      await Promise.all(
+        imageUrls.map(async (imageUrl) => {
+          const values = [productId, imageUrl];
+          await connectionPool.execute(query, values);
+        })
+      );
     } catch (err: any) {
       throw {
         status: 500,

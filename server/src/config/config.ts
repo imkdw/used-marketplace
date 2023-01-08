@@ -24,8 +24,9 @@ export const firebaseConfig = {
 
 /** JWT 관련 설정 */
 export const jwtConfig = {
-  secretKey: process.env.SECRET_KEY,
-  expiresIn: process.env.EXPIRES_IN,
+  secretKey: process.env.JWT_SECRET_KEY as string,
+  expiresIn: process.env.JWT_EXPIRES_IN,
+  algorithm: process.env.JWT_ALGORITHM ? process.env.JWT_ALGORITHM : "none",
 };
 
 /** 카카오 OAuth 관련 설정 */

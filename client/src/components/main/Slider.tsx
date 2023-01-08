@@ -15,7 +15,7 @@ const StyledSwiper = styled(Swiper)`
   height: 300px;
   position: relative;
 
-  @media screen and (max-width: 1300px) {
+  @media screen and (max-width: 1400px) {
     width: 70%;
   }
 

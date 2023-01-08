@@ -13,5 +13,12 @@ export interface AddProductData {
   description: string;
   quantity: number;
   productId?: string;
-  author: string;
+  author?: string;
+}
+
+export interface UploadImage extends Express.Multer.File {
+  buffer: {
+    type: string;
+    data: Buffer;
+  };
 }

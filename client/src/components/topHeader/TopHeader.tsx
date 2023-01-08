@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { loginUserState } from "../../recoil/auth.recoil";
@@ -20,12 +20,16 @@ const StyledTopHeader = styled.div`
 `;
 
 const LinkWrapper = styled.div`
-  width: 55%;
+  width: 60%;
   height: 100%;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
   padding: 0 10px 0 10px;
+
+  @media screen and (max-width: 1400px) {
+    width: 70%;
+  }
 `;
 
 const LinkItem = styled(Link)`

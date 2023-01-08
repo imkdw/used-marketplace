@@ -1,10 +1,10 @@
 import axios from "axios";
 import { FormEvent, useEffect } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { productUrl } from "../../../config/url";
 import { addProductDataState, addProductImageState } from "../../../recoil/product.recoil";
-import { AddProductData } from "../../../types/product";
+import { AddProductData, AddProductImage } from "../../../types/product";
 import Category from "./Category";
 import Description from "./Description";
 import ImageUpload from "./ImageUpload";
@@ -27,11 +27,15 @@ const StyledAddProduct = styled.form`
 `;
 
 const ProductForm = styled.div`
-  width: 55%;
+  width: 60%;
   height: auto;
   display: flex;
   flex-direction: column;
   margin-bottom: 100px;
+
+  @media screen and (max-width: 1400px) {
+    width: 70%;
+  }
 `;
 
 const FormHeader = styled.div`
@@ -69,6 +73,11 @@ const SubmitButton = styled.button`
   transform: translateY(-50%);
 `;
 
+/**
+ * 상품 추가 폼데이터 유효성체크
+ * @param addProductData {AddProductData} 상품 추가 폼데이터
+ * @returns {boolean} 검증 실패시 false, 성공시 true
+ */
 const checkValidAddProductData = (addProductData: AddProductData): boolean => {
   const { title, category, tradeArea, description } = addProductData;
   /** 상품의 제목은 0~40자 까지 입력가능 */
@@ -99,6 +108,25 @@ const checkValidAddProductData = (addProductData: AddProductData): boolean => {
   return true;
 };
 
+/**
+ * 상품 추가 이미지 유효성체크
+ * @param addProductImage {AddProductImage[]} 상품 추가 이미지 데이터
+ * @returns {boolean} 검증 실패시 false, 성공시 true
+ */
+const checkValidAddProductImage = (addProductImage: AddProductImage[]): boolean => {
+  if (addProductImage.length === 0) {
+    alert("상품 이미지는 한장이상 첨부해주세요");
+    return false;
+  }
+
+  if (addProductImage.length >= 9) {
+    alert("상품 이미지는 최대 8장까지 첨부가 가능합니다");
+    return false;
+  }
+
+  return true;
+};
+
 const AddProduct = () => {
   const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
   const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
@@ -107,13 +135,6 @@ const AddProduct = () => {
   const navigator = useNavigate();
 
   useEffect(() => {
-    /** 상품 추가 데이터에 로그인된 유저를 저장 */
-    const setAuthor = () => {
-      setAddProductData((prevState) => {
-        return { ...prevState, author: loginUser.email };
-      });
-    };
-
     /** 로그인 여부 체크 */
     const checkLoginUser = () => {
       if (loginUser.accessToken.length === 0) {
@@ -123,16 +144,18 @@ const AddProduct = () => {
       }
     };
 
-    setAuthor();
     checkLoginUser();
-  }, []);
+  }, [loginUser]);
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    /** 상품 추가 폼데이터 및 이미지 유효성체크 */
     const isValidAddProductData = checkValidAddProductData(addProductData);
+    const isValiAddProductImage = checkValidAddProductImage(addProductImage);
 
-    if (isValidAddProductData) {
+    /** 데이터가 유효할경우 서버측으로 상품추가 요청 */
+    if (isValidAddProductData && isValiAddProductImage) {
       const formData = new FormData(event.currentTarget);
       formData.append("addProductData", JSON.stringify(addProductData));
 
@@ -144,31 +167,33 @@ const AddProduct = () => {
         const res = await axios.post(productUrl.addProduct, formData, {
           headers: {
             "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${loginUser.accessToken}`,
           },
         });
 
         if (res.status === 200) {
           alert("상품 등록이 완료되었습니다.");
-          setAddProductData({
-            title: "",
-            category: {
-              big: "의류",
-              medium: "남자옷",
-              small: "정장",
-            },
-            tradeArea: "",
-            quality: "old",
-            tradeable: false,
-            price: 0,
-            isIncludeDeliveryCost: false,
-            description: "",
-            quantity: 1,
-            author: "",
-          });
-          navigator("/");
+          // setAddProductData({
+          //   title: "",
+          //   category: {
+          //     big: "의류",
+          //     medium: "남자옷",
+          //     small: "정장",
+          //   },
+          //   tradeArea: "",
+          //   quality: "old",
+          //   tradeable: false,
+          //   price: 0,
+          //   isIncludeDeliveryCost: false,
+          //   description: "",
+          //   quantity: 1,
+          // });
+          // setAddProductImage([]);
+          // navigator("/");
         }
       } catch (err: any) {
         alert("서버 오류입니다. 다시 시도해주세요.");
+        console.log(err);
       }
     }
   };

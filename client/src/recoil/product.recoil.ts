@@ -22,7 +22,6 @@ export const addProductDataState = atom<AddProductData>({
     isIncludeDeliveryCost: false,
     description: "",
     quantity: 1,
-    author: "",
   },
 });
 

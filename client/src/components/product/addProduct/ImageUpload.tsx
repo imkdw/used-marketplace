@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { ChangeEvent, useRef, useState, useEffect } from "react";
-import { AddProductImage } from "../../../types/product";
+import { ChangeEvent, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { addProductImageState } from "../../../recoil/product.recoil";
 

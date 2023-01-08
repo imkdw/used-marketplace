@@ -19,9 +19,13 @@ const storage = multer.memoryStorage();
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(multer({ storage }).fields([{ name: "image", maxCount: 4 }]));
+app.use(
+  multer({ storage, limits: { fieldSize: 25 * 1024 * 1024 } }).fields([
+    { name: "image", maxCount: 4 },
+  ])
+);
 
 /** 라우터 설정 */
 app.use("/auth", authRouter); // 인증관련

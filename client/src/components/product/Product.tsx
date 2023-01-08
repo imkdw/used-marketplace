@@ -6,7 +6,7 @@ import TopHeader from "../topHeader/TopHeader";
 import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
-import DaumPostcode from "./addProduct/DaumPostcode";
+import DaumPostcode from "./addProduct/DaumPostCode";
 
 const StyledProduct = styled.div`
   width: 100%;
@@ -14,8 +14,6 @@ const StyledProduct = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
-const ProductWrapper = styled.div``;
 
 const Product = () => {
   const enableProductTab = useRecoilValue(enableProductTabState);

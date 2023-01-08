@@ -23,7 +23,6 @@ export default class GeoService {
         };
       }
     } catch (err: any) {
-      console.error(err);
       throw {
         status: err.code,
         message: err.message,

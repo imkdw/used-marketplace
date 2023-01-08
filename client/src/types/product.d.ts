@@ -17,7 +17,6 @@ export interface AddProductData {
   isIncludeDeliveryCost: boolean;
   description: string;
   quantity: number;
-  author: string;
 }
 
 export interface AddProductImage {
