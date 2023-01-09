@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { useEffect } from "react";
 import Filter from "./Filter";
 import MyProduct from "./MyProduct";
+import axios from "axios";
 
 const StyledManageProduct = styled.div`
   width: 100%;
@@ -15,8 +15,6 @@ const StyledManageProduct = styled.div`
 `;
 
 const ManageProduct = () => {
-  useEffect(() => {}, []);
-
   return (
     <StyledManageProduct>
       <Filter />

@@ -16,4 +16,15 @@ export default class ProductController {
       res.status(err.status || 500).json({ message: err.message });
     }
   };
+
+  static myProducts = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const email = res.locals.email;
+      const products = await ProductService.myProducts(email);
+      res.status(200).json(products);
+    } catch (err: any) {
+      console.error(err);
+      res.status(err.status || 500).json({ message: err.message });
+    }
+  };
 }

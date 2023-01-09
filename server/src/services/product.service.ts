@@ -4,7 +4,6 @@ import Secure from "./../utils/secure";
 import FirebaseStorage from "../firebase/firebaseStorage";
 
 class ProductService {
-  // TODO: images 타입 변경
   static addProduct = async (userDTO: AddProductData, images: UploadImage[], author: string) => {
     const productId = Secure.getUUID();
     userDTO.productId = productId;
@@ -19,6 +18,15 @@ class ProductService {
 
       /** 3. 상품 이미지 URL을 저장 */
       await ProductModel.addProductImage(productId, imageUrls);
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
+  static myProducts = async (email: string) => {
+    try {
+      const products = await ProductModel.myProducts(email);
+      return products;
     } catch (err: any) {
       throw err;
     }

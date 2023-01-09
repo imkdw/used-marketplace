@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  li {
+    list-style: none;
+  }
+
   input {
     border: none;
     outline: none;

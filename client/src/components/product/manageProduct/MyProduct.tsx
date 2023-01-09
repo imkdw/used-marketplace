@@ -1,6 +1,12 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { productUrl } from "../../../config/url";
+import { useRecoilValue } from "recoil";
+import { loginUserState } from "../../../recoil/auth.recoil";
+import MyProductItem from "./MyProductItem";
 
-const StyledMyProduct = styled.div`
+const StyledMyProduct = styled.ul`
   width: 55%;
   height: auto;
 `;
@@ -24,6 +30,23 @@ const MyProductSubjectItem = styled.div<{ width: string }>`
 `;
 
 const MyProduct = () => {
+  const [myProducts, setMyProducts] = useState([]);
+  const loginUser = useRecoilValue(loginUserState);
+
+  useEffect(() => {
+    const getMyProducts = async () => {
+      const res = await axios.get(productUrl.myProducts, {
+        headers: {
+          Authorization: `Bearer ${loginUser.accessToken}`,
+        },
+      });
+
+      setMyProducts(res.data);
+    };
+
+    getMyProducts();
+  }, []);
+
   return (
     <StyledMyProduct>
       <MyProductSubject>
@@ -35,6 +58,9 @@ const MyProduct = () => {
         <MyProductSubjectItem width="14%">최근수정일</MyProductSubjectItem>
         <MyProductSubjectItem width="10%">기능</MyProductSubjectItem>
       </MyProductSubject>
+      {myProducts.map((myProduct) => (
+        <MyProductItem></MyProductItem>
+      ))}
     </StyledMyProduct>
   );
 };

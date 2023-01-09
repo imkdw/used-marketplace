@@ -26,7 +26,7 @@ const TabWrapper = styled.div`
 
 const TabItem = styled.span<{ color: string }>`
   width: auto;
-  height: 20px;
+  height: auto;
   padding: 0 20px 0 0;
   display: flex;
   color: ${(props) => props.color || "#212121"};
