@@ -58,8 +58,8 @@ const MyProduct = () => {
         <MyProductSubjectItem width="14%">최근수정일</MyProductSubjectItem>
         <MyProductSubjectItem width="10%">기능</MyProductSubjectItem>
       </MyProductSubject>
-      {myProducts.map((myProduct) => (
-        <MyProductItem></MyProductItem>
+      {myProducts.map((myProduct, index) => (
+        <MyProductItem key={index}></MyProductItem>
       ))}
     </StyledMyProduct>
   );
