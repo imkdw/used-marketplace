@@ -6,7 +6,7 @@ import TopHeader from "../topHeader/TopHeader";
 import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
-import DaumPostcode from "./addProduct/DaumPostCode";
+import DaumPostcode from "./addProduct/DaumPostcode";
 
 const StyledProduct = styled.div`
   width: 100%;
@@ -27,6 +27,7 @@ const Product = () => {
       <ProductTab />
       {enableProductTab === "add" && <AddProduct />}
       {enableProductTab === "manage" && <ManageProduct />}
+      {/* {enableProductTab === "manage" && <ManageProduct />} */}
     </StyledProduct>
   );
 };
