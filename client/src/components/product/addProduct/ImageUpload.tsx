@@ -93,6 +93,22 @@ const ImageRemoveButton = styled.button`
   justify-content: center;
 `;
 
+
+const ImageSumbnailText = styled.div`
+  width: 70px;
+  height: 25px;
+  background: rgba(0,0,0,.4);
+  border-radius: 25px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  top: 5px;
+  left: 5px;
+  font-size: 12px;
+`
+
 const ImageRemoveIcon = () => {
   return (
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -113,6 +129,7 @@ const ImageRemoveIcon = () => {
     </svg>
   );
 };
+
 
 const ImageAddIcon = () => {
   return (
@@ -147,7 +164,10 @@ const ImageUpload = () => {
   };
 
   /** 원본 이미지 보여주기 */
-  const showOriginalImageHandler = () => {};
+  const showOriginalImageHandler = () => {
+    alert('원본 이미지보기 구현중');
+    return;
+  };
 
   /** 이미지 업로드 핸들러 */
   const imageUploadHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -209,8 +229,9 @@ const ImageUpload = () => {
             <ImageAddIcon />
             <div style={{ fontSize: "1rem", color: "#9B99A9" }}>이미지 등록</div>
           </ImageUploadBox>
-          {addProductImage.map((image) => (
+          {addProductImage.map((image, index) => (
             <ImagePreview onClick={showOriginalImageHandler} key={image.id}>
+              {index === 0 && <ImageSumbnailText>대표이미지</ImageSumbnailText>}
               <Image src={String(image.image)} />
               <ImageRemoveButton onClick={() => imageRemoveHandler(image.id)}>
                 <ImageRemoveIcon />

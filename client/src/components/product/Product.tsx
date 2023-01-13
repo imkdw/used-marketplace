@@ -27,7 +27,6 @@ const Product = () => {
       <ProductTab />
       {enableProductTab === "add" && <AddProduct />}
       {enableProductTab === "manage" && <ManageProduct />}
-      {/* {enableProductTab === "manage" && <ManageProduct />} */}
     </StyledProduct>
   );
 };

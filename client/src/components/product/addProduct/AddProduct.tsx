@@ -173,23 +173,23 @@ const AddProduct = () => {
 
         if (res.status === 200) {
           alert("상품 등록이 완료되었습니다.");
-          // setAddProductData({
-          //   title: "",
-          //   category: {
-          //     big: "의류",
-          //     medium: "남자옷",
-          //     small: "정장",
-          //   },
-          //   tradeArea: "",
-          //   quality: "old",
-          //   tradeable: false,
-          //   price: 0,
-          //   isIncludeDeliveryCost: false,
-          //   description: "",
-          //   quantity: 1,
-          // });
-          // setAddProductImage([]);
-          // navigator("/");
+          setAddProductData({
+            title: "",
+            category: {
+              big: "의류",
+              medium: "남자옷",
+              small: "정장",
+            },
+            tradeArea: "",
+            quality: "old",
+            tradeable: false,
+            price: 0,
+            isIncludeDeliveryCost: false,
+            description: "",
+            quantity: 1,
+          });
+          setAddProductImage([]);
+          navigator("/");
         }
       } catch (err: any) {
         alert("서버 오류입니다. 다시 시도해주세요.");

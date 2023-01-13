@@ -27,4 +27,10 @@ export default class ProductController {
       res.status(err.status || 500).json({ message: err.message });
     }
   };
+  
+  static productInfo = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params;
+    console.log(productId);
+    res.json('');
+  }
 }

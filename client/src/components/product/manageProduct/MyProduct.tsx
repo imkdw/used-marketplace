@@ -5,9 +5,10 @@ import { productUrl } from "../../../config/url";
 import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../../recoil/auth.recoil";
 import MyProductItem from "./MyProductItem";
+import { ManageProductData } from "../../../types/product";
 
 const StyledMyProduct = styled.ul`
-  width: 55%;
+  width: 60%;
   height: auto;
 `;
 
@@ -30,7 +31,7 @@ const MyProductSubjectItem = styled.div<{ width: string }>`
 `;
 
 const MyProduct = () => {
-  const [myProducts, setMyProducts] = useState([]);
+  const [myProducts, setMyProducts] = useState<ManageProductData[]>([]);
   const loginUser = useRecoilValue(loginUserState);
 
   useEffect(() => {
@@ -42,6 +43,7 @@ const MyProduct = () => {
       });
 
       setMyProducts(res.data);
+      console.log(res.data);
     };
 
     getMyProducts();
@@ -59,7 +61,7 @@ const MyProduct = () => {
         <MyProductSubjectItem width="10%">기능</MyProductSubjectItem>
       </MyProductSubject>
       {myProducts.map((myProduct, index) => (
-        <MyProductItem key={index}></MyProductItem>
+        <MyProductItem key={index} myProduct={myProduct}></MyProductItem>
       ))}
     </StyledMyProduct>
   );

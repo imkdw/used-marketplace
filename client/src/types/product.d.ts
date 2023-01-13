@@ -23,3 +23,12 @@ export interface AddProductImage {
   id: number;
   image: Blob;
 }
+
+export interface ManageProductData {
+  like_count: number;
+  price: number;
+  product_id: string;
+  sumbnail: string;
+  title: string;
+  modified_at: string;
+}

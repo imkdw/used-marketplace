@@ -68,7 +68,7 @@ class ProductModel {
   };
 
   static myProducts = async (email: string) => {
-    const query = "SELECT title, price, like_count FROM products WHERE author=?";
+    const query = "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
     const values = [email];
     try {
       const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
@@ -80,6 +80,20 @@ class ProductModel {
       };
     }
   };
+
+  static myProductsImage = async (productId: string) => {
+    const query = "SELECT image_url FROM products_image WHERE product_id=?";
+    const values = [productId];
+    try {
+      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status,
+        message: err.message
+      }
+    }
+  }
 }
 
 export default ProductModel;

@@ -25,8 +25,23 @@ class ProductService {
 
   static myProducts = async (email: string) => {
     try {
-      const products = await ProductModel.myProducts(email);
-      return products;
+      /** 나의 상품 조회 */
+      const myProducts = await ProductModel.myProducts(email);
+
+      /** 나의 상품 첫번쨰 이미지 조회 */
+      const productsImage = await Promise.all(
+        myProducts.map(async (product, index) => {
+          const productId = product.product_id;
+          const imageUrls = await ProductModel.myProductsImage(productId);
+          return imageUrls[0];
+        })
+      )
+
+      const myProductsData = myProducts.map((myProduct, index) => {
+        return {...myProduct, sumbnail: productsImage[index].image_url};
+      });
+
+      return myProductsData;
     } catch (err: any) {
       throw err;
     }
