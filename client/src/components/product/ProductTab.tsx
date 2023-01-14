@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 import { enableProductTabState } from "../../recoil/product.recoil";
+import { Link } from "react-router-dom";
 
 const StyledProductTab = styled.div`
   width: 100%;
@@ -24,7 +25,7 @@ const TabWrapper = styled.div`
   }
 `;
 
-const TabItem = styled.span<{ color: string }>`
+const TabItem = styled(Link)<{ color?: string }>`
   width: auto;
   height: auto;
   padding: 0 20px 0 0;
@@ -45,40 +46,16 @@ const TabItem = styled.span<{ color: string }>`
 `;
 
 const ProductTab = () => {
-  const [enableProductTab, setEnableProductTab] = useRecoilState(enableProductTabState);
-
-  const enableHandler = (event: MouseEvent<HTMLAnchorElement>) => {
-    const dataName = event.currentTarget.dataset.name;
-
-    if (dataName) {
-      setEnableProductTab(dataName);
-    }
-  };
+  const [enableProductTab, setEnableProductTab] = useRecoilState(
+    enableProductTabState
+  );
 
   return (
     <StyledProductTab>
       <TabWrapper>
-        <TabItem
-          data-name="add"
-          onClick={enableHandler}
-          color={enableProductTab === "add" ? "red" : ""}
-        >
-          상품등록
-        </TabItem>
-        <TabItem
-          data-name="manage"
-          onClick={enableHandler}
-          color={enableProductTab === "manage" ? "red" : ""}
-        >
-          상품관리
-        </TabItem>
-        <TabItem
-          data-name="history"
-          onClick={enableHandler}
-          color={enableProductTab === "history" ? "red" : ""}
-        >
-          구매/판매 내역
-        </TabItem>
+        <TabItem to="/product/new">상품등록</TabItem>
+        <TabItem to="/product/manage">상품관리</TabItem>
+        <TabItem to="/product/list">상품 판매내역</TabItem>
       </TabWrapper>
     </StyledProductTab>
   );

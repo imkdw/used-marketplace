@@ -1,6 +1,7 @@
+import { useEffect } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import Header from "../header/Header";
-import TopHeader from "../topHeader/TopHeader";
+import { currentPageState } from "../../recoil/common.recoil";
 import TopSearch from "../topSearch/TopSearch";
 import Slider from "./Slider";
 
@@ -20,11 +21,15 @@ const MainWrapper = styled.div`
 `;
 
 const Main = () => {
+  const setCurrentPage = useSetRecoilState(currentPageState);
+
+  useEffect(() => {
+    setCurrentPage("main");
+  }, []);
+
   return (
     <StyledMain>
       <TopSearch />
-      <TopHeader />
-      <Header />
       <MainWrapper>
         <Slider />
       </MainWrapper>

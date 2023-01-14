@@ -1,12 +1,14 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { enableDaumPostcodeState, enableProductTabState } from "../../recoil/product.recoil";
-import Header from "../header/Header";
-import TopHeader from "../topHeader/TopHeader";
+import {
+  enableDaumPostcodeState,
+  enableProductTabState,
+} from "../../recoil/product.recoil";
 import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
 import DaumPostcode from "./addProduct/DaumPostcode";
+import { useLocation } from "react-router";
 
 const StyledProduct = styled.div`
   width: 100%;
@@ -15,17 +17,25 @@ const StyledProduct = styled.div`
   flex-direction: column;
 `;
 
+const getCurrentUrl = (pathname: string) => {
+  const sortaionUrlArray = pathname.split("/");
+  const sortationUrl = sortaionUrlArray[sortaionUrlArray.length - 1];
+
+  return sortationUrl;
+};
+
 const Product = () => {
+  const location = useLocation();
+  const currentUrl = getCurrentUrl(location.pathname);
+
   const enableProductTab = useRecoilValue(enableProductTabState);
   const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
 
   return (
     <StyledProduct>
       {enableDaumPostcode && <DaumPostcode />}
-      <TopHeader />
-      <Header />
       <ProductTab />
-      {enableProductTab === "add" && <AddProduct />}
+      {currentUrl === "new" && <AddProduct />}
       {enableProductTab === "manage" && <ManageProduct />}
     </StyledProduct>
   );

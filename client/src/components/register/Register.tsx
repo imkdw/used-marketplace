@@ -1,4 +1,7 @@
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { currentPageState } from "../../recoil/common.recoil";
 import RegisterForm from "./RegisterForm";
 
 const StyledRegister = styled.div`
@@ -11,6 +14,12 @@ const StyledRegister = styled.div`
 `;
 
 const Register = () => {
+  const setCurrentPage = useSetRecoilState(currentPageState);
+
+  useEffect(() => {
+    setCurrentPage("register");
+  }, []);
+
   return (
     <StyledRegister>
       <RegisterForm />

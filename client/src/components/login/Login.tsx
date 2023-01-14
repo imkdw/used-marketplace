@@ -1,4 +1,7 @@
+import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import { currentPageState } from "../../recoil/common.recoil";
 import LoginForm from "./LoginForm";
 
 const StyledLogin = styled.div`
@@ -11,6 +14,12 @@ const StyledLogin = styled.div`
 `;
 
 const Login = () => {
+  const setCurrentPage = useSetRecoilState(currentPageState);
+
+  useEffect(() => {
+    setCurrentPage("login");
+  }, []);
+
   return (
     <StyledLogin>
       <LoginForm />

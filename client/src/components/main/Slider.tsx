@@ -11,7 +11,7 @@ import nextArrow from "../../assets/images/right-arrow.png";
 import sliderImage from "../../assets/images/slider-image.jpg";
 
 const StyledSwiper = styled(Swiper)`
-  width: 55%;
+  width: 60%;
   height: 300px;
   position: relative;
 
