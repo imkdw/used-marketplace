@@ -32,3 +32,23 @@ export interface ManageProductData {
   title: string;
   modified_at: string;
 }
+
+export interface ProductInfoData {
+  author: string;
+  category_big: string;
+  category_medium: string;
+  category_small: string;
+  created_at: string;
+  description: string;
+  include_delivery_cost: number;
+  like_count: number;
+  modified_at: string;
+  price: number;
+  quality: string;
+  quantity: number;
+  sell_status: string;
+  show_count: number;
+  title: string;
+  trade_area: string;
+  tradeable: number;
+}

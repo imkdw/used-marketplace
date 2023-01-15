@@ -1,9 +1,6 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import {
-  enableDaumPostcodeState,
-  enableProductTabState,
-} from "../../recoil/product.recoil";
+import { enableDaumPostcodeState } from "../../recoil/product.recoil";
 import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
@@ -28,7 +25,6 @@ const Product = () => {
   const location = useLocation();
   const currentUrl = getCurrentUrl(location.pathname);
 
-  const enableProductTab = useRecoilValue(enableProductTabState);
   const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
 
   return (
@@ -36,7 +32,7 @@ const Product = () => {
       {enableDaumPostcode && <DaumPostcode />}
       <ProductTab />
       {currentUrl === "new" && <AddProduct />}
-      {enableProductTab === "manage" && <ManageProduct />}
+      {currentUrl === "manage" && <ManageProduct />}
     </StyledProduct>
   );
 };

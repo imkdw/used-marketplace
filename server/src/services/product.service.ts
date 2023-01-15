@@ -35,13 +35,27 @@ class ProductService {
           const imageUrls = await ProductModel.myProductsImage(productId);
           return imageUrls[0];
         })
-      )
+      );
 
       const myProductsData = myProducts.map((myProduct, index) => {
-        return {...myProduct, sumbnail: productsImage[index].image_url};
+        return { ...myProduct, sumbnail: productsImage[index].image_url };
       });
 
       return myProductsData;
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
+  static productInfo = async (productId: string) => {
+    try {
+      /** 상품 정보 조회 */
+      const productInfo = await ProductModel.productInfo(productId);
+
+      /** 상품 이미지 조회 */
+      const productImages = await ProductModel.myProductsImage(productId);
+
+      return {};
     } catch (err: any) {
       throw err;
     }

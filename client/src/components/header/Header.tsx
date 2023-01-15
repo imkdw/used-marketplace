@@ -8,7 +8,6 @@ import menuImage from "../../assets/images/menu.png";
 import GlassIcon from "../common/icons/RedGlassIcon";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { enableProductTabState } from "../../recoil/product.recoil";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -118,12 +117,6 @@ const HambergerMenu = styled.img`
 `;
 
 const Header = () => {
-  const [enableProductTab, setEnableProductTab] = useRecoilState(enableProductTabState);
-
-  const addProductHandler = () => {
-
-  }
-
   return (
     <StyledHeader>
       <HeaderWrapper>

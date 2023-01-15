@@ -1,3 +1,5 @@
+import { RowDataPacket } from "mysql2";
+
 export interface AddProductData {
   title: string;
   category: {
@@ -21,4 +23,16 @@ export interface UploadImage extends Express.Multer.File {
     type: string;
     data: Buffer;
   };
+}
+
+export interface MyProductsReturns extends RowDataPacket {
+  product_id: string;
+  title: string;
+  price: string;
+  like_count: string;
+  modified_at: string;
+}
+
+export interface MyProductsImageReturns extends RowDataPacket {
+  image_url: string;
 }

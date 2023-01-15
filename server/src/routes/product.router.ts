@@ -12,6 +12,6 @@ productRouter.post("/add", isAuth, ProductValidator.addProduct, ProductControlle
 productRouter.get("/my", isAuth, ProductController.myProducts);
 
 /** 상품 상세보기 */
-productRouter.get("/:productId", ProductController.productInfo)
+productRouter.get("/:productId", ProductController.productInfo);
 
 export default productRouter;

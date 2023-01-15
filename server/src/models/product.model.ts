@@ -1,6 +1,6 @@
 import { FieldPacket } from "mysql2";
 import { connectionPool } from "../utils/db";
-import { AddProductData } from "./../types/product.d";
+import { AddProductData, MyProductsReturns } from "./../types/product.d";
 
 class ProductModel {
   static addProduct = async (userDTO: AddProductData) => {
@@ -68,10 +68,14 @@ class ProductModel {
   };
 
   static myProducts = async (email: string) => {
-    const query = "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
+    const query =
+      "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
     const values = [email];
     try {
-      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (err: any) {
       throw {
@@ -90,10 +94,25 @@ class ProductModel {
     } catch (err: any) {
       throw {
         status: err.status,
-        message: err.message
-      }
+        message: err.message,
+      };
     }
-  }
+  };
+
+  static productInfo = async (productId: string) => {
+    const query = "SELECT * FROM products WHERE product_id=?";
+    const values = [productId];
+
+    try {
+      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status,
+        message: err.message,
+      };
+    }
+  };
 }
 
 export default ProductModel;

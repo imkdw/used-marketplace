@@ -1,8 +1,5 @@
 import styled from "styled-components";
-import { MouseEvent } from "react";
-import { useRecoilState } from "recoil";
-import { enableProductTabState } from "../../recoil/product.recoil";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const StyledProductTab = styled.div`
   width: 100%;
@@ -45,17 +42,32 @@ const TabItem = styled(Link)<{ color?: string }>`
   }
 `;
 
+const getCurrentUrl = (pathname: string) => {
+  const sortaionUrlArray = pathname.split("/");
+  const sortationUrl = sortaionUrlArray[sortaionUrlArray.length - 1];
+
+  return sortationUrl;
+};
+
 const ProductTab = () => {
-  const [enableProductTab, setEnableProductTab] = useRecoilState(
-    enableProductTabState
-  );
+  const location = useLocation();
+  const currentUrl = getCurrentUrl(location.pathname);
 
   return (
     <StyledProductTab>
       <TabWrapper>
-        <TabItem to="/product/new">상품등록</TabItem>
-        <TabItem to="/product/manage">상품관리</TabItem>
-        <TabItem to="/product/list">상품 판매내역</TabItem>
+        <TabItem to="/product/new" color={currentUrl === "new" ? "red" : ""}>
+          상품등록
+        </TabItem>
+        <TabItem
+          to="/product/manage"
+          color={currentUrl === "manage" ? "red" : ""}
+        >
+          상품관리
+        </TabItem>
+        <TabItem to="/product/list" color={currentUrl === "list" ? "red" : ""}>
+          판매내역
+        </TabItem>
       </TabWrapper>
     </StyledProductTab>
   );

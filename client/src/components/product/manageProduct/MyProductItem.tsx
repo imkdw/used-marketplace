@@ -56,11 +56,11 @@ const UtilButton = styled.button<{ color: string }>`
 
 const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
   const [modifiedDate, modifiedTime] = myProduct.modified_at.split(" ");
-  console.log(modifiedDate, modifiedTime, myProduct.modified_at.split(" "));
+
   return (
     <StyledMyProductItem>
       <ItemWrapper width="14%">
-        <SumbnailWrapper to="">
+        <SumbnailWrapper to={"/product/" + myProduct.product_id}>
           <Sumbnail src={myProduct.sumbnail} />
         </SumbnailWrapper>
       </ItemWrapper>
@@ -73,7 +73,7 @@ const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
         </SellStatus>
       </ItemWrapper>
       <ItemWrapper width="23%">
-        <Title to="">{myProduct.title}</Title>
+        <Title to={"/product/" + myProduct.product_id}>{myProduct.title}</Title>
       </ItemWrapper>
       <ItemWrapper width="14%">
         <TextData>{Number(myProduct.price).toLocaleString("ko-KR")}원</TextData>

@@ -3,10 +3,7 @@ import { FormEvent, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { productUrl } from "../../../config/url";
-import {
-  addProductDataState,
-  addProductImageState,
-} from "../../../recoil/product.recoil";
+import { addProductDataState, addProductImageState } from "../../../recoil/product.recoil";
 import { AddProductData, AddProductImage } from "../../../types/product";
 import Category from "./Category";
 import Description from "./Description";
@@ -116,9 +113,7 @@ const checkValidAddProductData = (addProductData: AddProductData): boolean => {
  * @param addProductImage {AddProductImage[]} 상품 추가 이미지 데이터
  * @returns {boolean} 검증 실패시 false, 성공시 true
  */
-const checkValidAddProductImage = (
-  addProductImage: AddProductImage[]
-): boolean => {
+const checkValidAddProductImage = (addProductImage: AddProductImage[]): boolean => {
   if (addProductImage.length === 0) {
     alert("상품 이미지는 한장이상 첨부해주세요");
     return false;
@@ -133,10 +128,8 @@ const checkValidAddProductImage = (
 };
 
 const AddProduct = () => {
-  const [addProductData, setAddProductData] =
-    useRecoilState(addProductDataState);
-  const [addProductImage, setAddProductImage] =
-    useRecoilState(addProductImageState);
+  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
+  const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
 
   const navigator = useNavigate();
@@ -206,11 +199,7 @@ const AddProduct = () => {
   };
 
   return (
-    <StyledAddProduct
-      encType="multipart/form-data"
-      onSubmit={submitHandler}
-      acceptCharset="UTF-8"
-    >
+    <StyledAddProduct encType="multipart/form-data" onSubmit={submitHandler} acceptCharset="UTF-8">
       <ProductForm>
         <FormHeader>기본정보</FormHeader>
         <ImageUpload />

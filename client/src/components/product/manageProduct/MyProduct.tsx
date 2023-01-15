@@ -43,7 +43,6 @@ const MyProduct = () => {
       });
 
       setMyProducts(res.data);
-      console.log(res.data);
     };
 
     getMyProducts();
