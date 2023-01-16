@@ -20,7 +20,7 @@ const StyledTopHeader = styled.div`
 `;
 
 const LinkWrapper = styled.div`
-  width: 60%;
+  width: 55%;
   height: 100%;
   display: flex;
   justify-content: flex-end;

@@ -12,7 +12,7 @@ const StyledProductTab = styled.div`
 `;
 
 const TabWrapper = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -59,10 +59,7 @@ const ProductTab = () => {
         <TabItem to="/product/new" color={currentUrl === "new" ? "red" : ""}>
           상품등록
         </TabItem>
-        <TabItem
-          to="/product/manage"
-          color={currentUrl === "manage" ? "red" : ""}
-        >
+        <TabItem to="/product/manage" color={currentUrl === "manage" ? "red" : ""}>
           상품관리
         </TabItem>
         <TabItem to="/product/list" color={currentUrl === "list" ? "red" : ""}>

@@ -27,7 +27,7 @@ const StyledAddProduct = styled.form`
 `;
 
 const ProductForm = styled.div`
-  width: 60%;
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;

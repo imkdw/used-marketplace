@@ -7,13 +7,13 @@ import talkIcon from "../../assets/images/talk-icon.png";
 import menuImage from "../../assets/images/menu.png";
 import GlassIcon from "../common/icons/RedGlassIcon";
 import { Link } from "react-router-dom";
-import { useRecoilState } from "recoil";
 
 const StyledHeader = styled.div`
   width: 100%;
   height: 150px;
   position: fixed;
   top: 40px;
+  left: 0;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -27,7 +27,7 @@ const StyledHeader = styled.div`
 `;
 
 const HeaderWrapper = styled.div`
-  width: 60%;
+  width: 55%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -101,13 +101,9 @@ const UtilLinkText = styled.div`
 `;
 
 const Category = styled.div`
-  width: 60%;
+  width: 55%;
   height: 70px;
   display: flex;
-
-  @media screen and (max-width: 1400px) {
-    width: 70%;
-  }
 `;
 
 const HambergerMenu = styled.img`

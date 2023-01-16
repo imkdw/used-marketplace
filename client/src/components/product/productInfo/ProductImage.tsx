@@ -1,18 +1,21 @@
+import styled from "styled-components";
+
 import "swiper/css";
 import "swiper/css/navigation";
 
-import styled from "styled-components";
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRef } from "react";
 
-import prevArrow from "../../assets/images/left-arrow.png";
-import nextArrow from "../../assets/images/right-arrow.png";
-import sliderImage from "../../assets/images/slider-image.png";
+import prevArrow from "../../../assets/images/left-arrow.png";
+import nextArrow from "../../../assets/images/right-arrow.png";
+
+import { useRecoilValue } from "recoil";
+import { productInfoDataState } from "../../../recoil/product.recoil";
 
 const StyledSwiper = styled(Swiper)`
-  width: 100%;
-  height: 300px;
+  width: 45%;
+  height: 428px;
   position: relative;
 `;
 
@@ -46,7 +49,9 @@ const SliderItem = styled.img`
   height: 100%;
 `;
 
-const Slider = () => {
+const ProductImage = () => {
+  const productInfoData = useRecoilValue(productInfoDataState);
+
   const prevButtonRef = useRef(null);
   const nextButtonRef = useRef(null);
   SwiperCore.use([Navigation]);
@@ -69,14 +74,13 @@ const Slider = () => {
       <SliderButton right="5px" ref={nextButtonRef}>
         <SliderButtonArrow src={nextArrow} />
       </SliderButton>
-      <StyledSwiperSlide>
-        <SliderItem src={sliderImage} />
-      </StyledSwiperSlide>
-      <StyledSwiperSlide>
-        <SliderItem src={sliderImage} />
-      </StyledSwiperSlide>
+      {productInfoData.images.map((image, index) => (
+        <StyledSwiperSlide key={index}>
+          <SliderItem src={image} />
+        </StyledSwiperSlide>
+      ))}
     </StyledSwiper>
   );
 };
 
-export default Slider;
+export default ProductImage;

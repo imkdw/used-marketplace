@@ -6,6 +6,7 @@ import ClockIcon from "../../../assets/images/product_data/clock.png";
 import EyeIcon from "../../../assets/images/product_data/eye.png";
 import HeartIcon from "../../../assets/images/product_data/heart.png";
 import { Link } from "react-router-dom";
+import ProductImage from "./ProductImage";
 
 const StyledProductData = styled.div`
   width: 60%;
@@ -131,7 +132,7 @@ const ProductData = () => {
 
   return (
     <StyledProductData>
-      <ProductImages />
+      <ProductImage />
       <ProductDatas>
         <TitleAndPrice>
           <Title>{productInfoData.title}</Title>

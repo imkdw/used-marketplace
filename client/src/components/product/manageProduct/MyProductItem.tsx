@@ -8,6 +8,10 @@ const StyledMyProductItem = styled.div`
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #dbdbdb;
+
+  &:last-child {
+    border: none;
+  }
 `;
 
 const ItemWrapper = styled.div<{ width: string }>`

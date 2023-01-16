@@ -51,4 +51,5 @@ export interface ProductInfoData {
   title: string;
   trade_area: string;
   tradeable: number;
+  images: string[];
 }

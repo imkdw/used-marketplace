@@ -55,7 +55,17 @@ class ProductService {
       /** 상품 이미지 조회 */
       const productImages = await ProductModel.myProductsImage(productId);
 
-      return {};
+      /** 상품 이미지를 추가하여 데이터 반환 */
+      const productInfoData = await Promise.all(
+        productInfo.map((product) => {
+          return {
+            ...product,
+            images: productImages.map((image) => image.image_url),
+          };
+        })
+      );
+
+      return productInfoData[0];
     } catch (err: any) {
       throw err;
     }

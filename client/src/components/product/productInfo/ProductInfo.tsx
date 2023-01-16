@@ -25,6 +25,8 @@ const ProductInfo = () => {
   useEffect(() => {
     const getProductInfo = async () => {
       const res = await axios.get(`${productUrl.productInfo}/${productId}`);
+      console.log(res.data);
+
       setProductInfoData(res.data);
     };
 

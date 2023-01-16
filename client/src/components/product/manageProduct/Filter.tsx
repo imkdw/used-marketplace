@@ -3,7 +3,7 @@ import BlackGlassIcon from "../../common/icons/BlackGlassIcon";
 import Description from "./../addProduct/Description";
 
 const StyledFilter = styled.div`
-  width: 60%;
+  width: 100%;
   height: auto;
   padding: 40px 0 40px 0;
 `;

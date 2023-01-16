@@ -8,7 +8,7 @@ import MyProductItem from "./MyProductItem";
 import { ManageProductData } from "../../../types/product";
 
 const StyledMyProduct = styled.ul`
-  width: 60%;
+  width: 100%;
   height: auto;
 `;
 

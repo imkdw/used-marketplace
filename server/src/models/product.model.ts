@@ -1,6 +1,6 @@
 import { FieldPacket } from "mysql2";
 import { connectionPool } from "../utils/db";
-import { AddProductData, MyProductsReturns } from "./../types/product.d";
+import { AddProductData, MyProductsImageReturns, MyProductsReturns } from "./../types/product.d";
 
 class ProductModel {
   static addProduct = async (userDTO: AddProductData) => {
@@ -89,7 +89,8 @@ class ProductModel {
     const query = "SELECT image_url FROM products_image WHERE product_id=?";
     const values = [productId];
     try {
-      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] =
+        await connectionPool.execute(query, values);
       return rows;
     } catch (err: any) {
       throw {

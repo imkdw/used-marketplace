@@ -11,8 +11,6 @@ import Header from "./components/header/Header";
 import ProductInfo from "./components/product/productInfo/ProductInfo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentPageState } from "./recoil/common.recoil";
-import { useEffect } from "react";
-import ManageProduct from "./components/product/manageProduct/ManageProduct";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
@@ -20,9 +18,7 @@ const App = () => {
   return (
     <Container>
       <GlobalStyle />
-      {currentPage === "login" || currentPage === "register" ? (
-        <></>
-      ) : (
+      {currentPage !== "login" && currentPage !== "register" && (
         <>
           <TopHeader />
           <Header />
