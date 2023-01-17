@@ -57,3 +57,8 @@ export const productInfoDataState = atom<ProductInfoData>({
     images: [],
   },
 });
+
+export const productEditDataState = atom({
+  key: "productEditDataState",
+  default: "",
+});

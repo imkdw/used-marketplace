@@ -28,11 +28,10 @@ const App = () => {
         <Route path="/" element={<Main />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/product" element={<Product />} />
         <Route path="/product/new" element={<Product />} />
         <Route path="/product/manage" element={<Product />} />
         <Route path="/product/list" element={<Product />} />
-        <Route path="/product/edit" element={<Product />} />
+        <Route path="/product/edit/:productId" element={<Product />} />
         <Route path="/product/:productId" element={<ProductInfo />} />
       </Routes>
       <StatusBar />

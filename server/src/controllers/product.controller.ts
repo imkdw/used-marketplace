@@ -39,4 +39,14 @@ export default class ProductController {
       res.status(err.status || 500).json({ message: err.message });
     }
   };
+
+  static allProduct = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const products = await ProductService.allProduct();
+      res.status(200).json(products);
+    } catch (err: any) {
+      console.log(err);
+      res.status(err.status || 500).json({ message: err.message });
+    }
+  };
 }

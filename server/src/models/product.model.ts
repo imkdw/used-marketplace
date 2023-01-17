@@ -114,6 +114,21 @@ class ProductModel {
       };
     }
   };
+
+  static allProduct = async () => {
+    const query = "SELECT product_id, title, price, modified_at FROM products";
+
+    try {
+      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query);
+      console.log(rows);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status,
+        message: err.message,
+      };
+    }
+  };
 }
 
 export default ProductModel;

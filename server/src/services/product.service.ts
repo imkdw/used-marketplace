@@ -70,6 +70,33 @@ class ProductService {
       throw err;
     }
   };
+
+  static allProduct = async () => {
+    try {
+      const products = await ProductModel.allProduct();
+
+      const sumbnail = await Promise.all(
+        products.map(async (product) => {
+          return await ProductModel.myProductsImage(product.product_id);
+        })
+      );
+
+      console.log(sumbnail);
+
+      const productsData = await Promise.all(
+        products.map(async (product, index) => {
+          return { ...product, image: sumbnail[index][0].image_url };
+        })
+      );
+
+      return productsData;
+    } catch (err: any) {
+      throw {
+        status: err.status,
+        message: err.message,
+      };
+    }
+  };
 }
 
 export default ProductService;

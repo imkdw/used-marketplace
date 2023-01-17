@@ -23,18 +23,21 @@ const TabWrapper = styled.div`
 `;
 
 const TabItem = styled(Link)<{ color?: string }>`
-  width: auto;
+  width: 120px;
   height: auto;
-  padding: 0 20px 0 0;
   display: flex;
   color: ${(props) => props.color || "#212121"};
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   border-right: 1px solid #bebebe;
 
+  &:first-child {
+    width: 90px;
+  }
+
   &:nth-child(2),
   &:nth-child(3) {
-    padding: 0 20px 0 20px;
+    justify-content: center;
   }
 
   &:last-child {

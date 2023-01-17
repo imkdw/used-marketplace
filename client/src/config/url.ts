@@ -17,4 +17,5 @@ export const productUrl = {
   addProduct: makeUrl("/product/add"),
   myProducts: makeUrl("/product/my"),
   productInfo: makeUrl("/product"),
+  allProduct: makeUrl("/product/all"),
 };

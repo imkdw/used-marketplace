@@ -51,11 +51,14 @@ const SellStatus = styled.select`
   outline: none;
 `;
 
-const UtilButton = styled.button<{ color: string }>`
+const UtilLink = styled(Link)<{ color: string }>`
   width: 52px;
   height: 32px;
   border: 1px solid #dbdbdb;
   color: ${(props) => props.color};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
@@ -90,8 +93,12 @@ const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
         <span>{modifiedTime}</span>
       </ItemWrapper>
       <ItemWrapper width="10%">
-        <UtilButton color="#FF0508">UP</UtilButton>
-        <UtilButton color="#0072E6">수정</UtilButton>
+        <UtilLink color="#FF0508" to={"/product/edit/" + myProduct.product_id}>
+          UP
+        </UtilLink>
+        <UtilLink color="#0072E6" to={"/product/edit/" + myProduct.product_id}>
+          수정
+        </UtilLink>
       </ItemWrapper>
     </StyledMyProductItem>
   );

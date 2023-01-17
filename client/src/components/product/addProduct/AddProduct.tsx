@@ -15,7 +15,7 @@ import Quantity from "./Quantity";
 import Title from "./Title";
 import TradeArea from "./TradeArea";
 import { loginUserState } from "../../../recoil/auth.recoil";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const StyledAddProduct = styled.form`
   width: 100%;
@@ -127,12 +127,13 @@ const checkValidAddProductImage = (addProductImage: AddProductImage[]): boolean 
   return true;
 };
 
-const AddProduct = () => {
+const AddProduct = ({ isEdit }: { isEdit: boolean }) => {
   const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
   const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
   const [loginUser, setLoginUser] = useRecoilState(loginUserState);
-
   const navigator = useNavigate();
+
+  const params = useParams();
 
   useEffect(() => {
     /** 로그인 여부 체크 */
@@ -144,8 +145,16 @@ const AddProduct = () => {
       }
     };
 
+    /** 수정일 경우 기존 데이터 불러오기 */
+    const getProductData = async () => {};
+
     checkLoginUser();
-  }, [loginUser]);
+
+    /** 상품 편집화면일 경우 기존 데이터 가져오기*/
+    if (isEdit) {
+      getProductData();
+    }
+  }, [loginUser, isEdit]);
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -192,8 +201,19 @@ const AddProduct = () => {
           navigator("/");
         }
       } catch (err: any) {
-        alert("서버 오류입니다. 다시 시도해주세요.");
-        console.log(err);
+        const { status, data } = err.response;
+        if (status === 401) {
+          if (data.message === "jwt_expired") {
+            alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+            navigator("/login");
+            return;
+          }
+        }
+
+        if (status === 500) {
+          alert("서버 오류입니다. 다시 시도해주세요.");
+          navigator("/");
+        }
       }
     }
   };

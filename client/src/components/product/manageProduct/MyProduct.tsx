@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { loginUserState } from "../../../recoil/auth.recoil";
 import MyProductItem from "./MyProductItem";
 import { ManageProductData } from "../../../types/product";
+import { useNavigate } from "react-router-dom";
 
 const StyledMyProduct = styled.ul`
   width: 100%;
@@ -33,20 +34,32 @@ const MyProductSubjectItem = styled.div<{ width: string }>`
 const MyProduct = () => {
   const [myProducts, setMyProducts] = useState<ManageProductData[]>([]);
   const loginUser = useRecoilValue(loginUserState);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const getMyProducts = async () => {
-      const res = await axios.get(productUrl.myProducts, {
-        headers: {
-          Authorization: `Bearer ${loginUser.accessToken}`,
-        },
-      });
+      try {
+        const res = await axios.get(productUrl.myProducts, {
+          headers: {
+            Authorization: `Bearer ${loginUser.accessToken}`,
+          },
+        });
 
-      setMyProducts(res.data);
+        setMyProducts(res.data);
+      } catch (err: any) {
+        const { status, data } = err.response;
+        if (status === 401) {
+          if (data.message === "jwt_expired") {
+            alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+            navigator("/login");
+            return;
+          }
+        }
+      }
     };
 
     getMyProducts();
-  }, []);
+  }, [loginUser.accessToken, navigator]);
 
   return (
     <StyledMyProduct>

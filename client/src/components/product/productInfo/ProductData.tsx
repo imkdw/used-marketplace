@@ -9,17 +9,11 @@ import { Link } from "react-router-dom";
 import ProductImage from "./ProductImage";
 
 const StyledProductData = styled.div`
-  width: 60%;
+  width: 100%;
   height: 490px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const ProductImages = styled.div`
-  width: 45%;
-  height: 428px;
-  background-color: aliceblue;
 `;
 
 const ProductDatas = styled.div`

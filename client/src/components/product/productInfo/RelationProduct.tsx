@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const StyledRelationProduct = styled.div`
-  width: 60%;
+  width: 100%;
   height: 200px;
   display: flex;
   flex-direction: column;

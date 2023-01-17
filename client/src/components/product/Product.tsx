@@ -24,15 +24,16 @@ const getCurrentUrl = (pathname: string) => {
 const Product = () => {
   const location = useLocation();
   const currentUrl = getCurrentUrl(location.pathname);
-
+  const isEdit = location.pathname.includes("edit");
   const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
 
   return (
     <StyledProduct>
       {enableDaumPostcode && <DaumPostcode />}
       <ProductTab />
-      {currentUrl === "new" && <AddProduct />}
+      {currentUrl === "new" && <AddProduct isEdit={false} />}
       {currentUrl === "manage" && <ManageProduct />}
+      {isEdit && <AddProduct isEdit />}
     </StyledProduct>
   );
 };

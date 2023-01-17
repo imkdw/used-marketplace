@@ -53,3 +53,11 @@ export interface ProductInfoData {
   tradeable: number;
   images: string[];
 }
+
+export interface RecommandProductData {
+  product_id: string;
+  title: string;
+  price: number;
+  modified_at: string;
+  image: string;
+}

@@ -31,5 +31,6 @@ app.use(
 app.use("/auth", authRouter); // 인증관련
 app.use("/geo", geoRouter); // 주소관련
 app.use("/product", productRouter); // 상품관련
+app.use("/", (req, res) => console.log("FUCK"));
 
 export default app;
