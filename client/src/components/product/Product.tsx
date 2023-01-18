@@ -1,11 +1,9 @@
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { enableDaumPostcodeState } from "../../recoil/product.recoil";
 import AddProduct from "./addProduct/AddProduct";
 import ProductTab from "./ProductTab";
 import ManageProduct from "./manageProduct/ManageProduct";
-import DaumPostcode from "./addProduct/DaumPostcode";
 import { useLocation } from "react-router";
+import EditProduct from "./editProduct/EditProduct";
 
 const StyledProduct = styled.div`
   width: 100%;
@@ -25,15 +23,13 @@ const Product = () => {
   const location = useLocation();
   const currentUrl = getCurrentUrl(location.pathname);
   const isEdit = location.pathname.includes("edit");
-  const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
 
   return (
     <StyledProduct>
-      {enableDaumPostcode && <DaumPostcode />}
       <ProductTab />
-      {currentUrl === "new" && <AddProduct isEdit={false} />}
+      {currentUrl === "new" && <AddProduct />}
       {currentUrl === "manage" && <ManageProduct />}
-      {isEdit && <AddProduct isEdit />}
+      {isEdit && <EditProduct />}
     </StyledProduct>
   );
 };

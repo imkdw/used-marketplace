@@ -17,4 +17,7 @@ productRouter.get("/all", ProductController.allProduct);
 /** 상품 상세보기 */
 productRouter.get("/:productId", ProductController.productInfo);
 
+/** 상품 수정 */
+productRouter.put("/edit/:productId", isAuth, ProductController.editProduct);
+
 export default productRouter;

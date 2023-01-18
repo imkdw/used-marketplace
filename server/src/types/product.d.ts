@@ -1,5 +1,6 @@
 import { RowDataPacket } from "mysql2";
 
+/** 상품추가 - 유저 입력 데이터 */
 export interface AddProductData {
   title: string;
   category: {
@@ -18,6 +19,7 @@ export interface AddProductData {
   author?: string;
 }
 
+/** Multer를 통해 업로드된 이미지  */
 export interface UploadImage extends Express.Multer.File {
   buffer: {
     type: string;
@@ -25,6 +27,7 @@ export interface UploadImage extends Express.Multer.File {
   };
 }
 
+/** Model - 내 상품 조회 반환 데이터 */
 export interface MyProductsReturns extends RowDataPacket {
   product_id: string;
   title: string;
@@ -33,6 +36,37 @@ export interface MyProductsReturns extends RowDataPacket {
   modified_at: string;
 }
 
+/** Model - 내 상품 이미지 반환 데이터 */
 export interface MyProductsImageReturns extends RowDataPacket {
   image_url: string;
+}
+
+/** Model - 상품 상세보기 반환 데이터 */
+export interface ProductInfoReturns extends RowDataPacket {
+  product_id: string;
+  title: string;
+  category_big: string;
+  category_medium: string;
+  category_small: string;
+  trade_area: string;
+  quality: string;
+  tradeable: number;
+  price: number;
+  include_delivery_cost: number;
+  description: string;
+  quantity: number;
+  author: string;
+  like_count: number;
+  show_count: number;
+  created_at: string;
+  modified_at: string;
+  sell_status: string;
+}
+
+/** Model - 모든 상품 가져오기(50개) 반환 데이터 */
+export interface AllProductReturns extends RowDataPacket {
+  product_id: string;
+  title: string;
+  price: number;
+  modified_at: string;
 }

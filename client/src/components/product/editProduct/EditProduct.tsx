@@ -3,8 +3,8 @@ import { FormEvent, useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { productUrl } from "../../../config/url";
-import { addProductDataState, addProductImageState } from "../../../recoil/product.recoil";
-import { AddProductData, AddProductImage } from "../../../types/product";
+import { editProductDataState } from "../../../recoil/product.recoil";
+import { EditProductData } from "../../../types/product";
 import Category from "./Category";
 import Description from "./Description";
 import ImageUpload from "./ImageUpload";
@@ -15,9 +15,9 @@ import Quantity from "./Quantity";
 import Title from "./Title";
 import TradeArea from "./TradeArea";
 import { loginUserState } from "../../../recoil/auth.recoil";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const StyledAddProduct = styled.form`
+const StyledEditProduct = styled.form`
   width: 100%;
   height: auto;
   display: flex;
@@ -73,13 +73,8 @@ const SubmitButton = styled.button`
   transform: translateY(-50%);
 `;
 
-/**
- * 상품 추가 폼데이터 유효성체크
- * @param addProductData {AddProductData} 상품 추가 폼데이터
- * @returns {boolean} 참/거짓 반환
- */
-const checkValidAddProductData = (addProductData: AddProductData): boolean => {
-  const { title, category, tradeArea, description } = addProductData;
+const checkValidEditProductData = (editProductData: EditProductData): boolean => {
+  const { title, categoryBig, categoryMedium, categorySmall, tradeArea, description } = editProductData;
   /** 상품의 제목은 0~40자 까지 입력가능 */
   if (title.length === 0 || title.length >= 40) {
     alert("상품 제목은 0 ~ 40자 사이로 입력해주세요.");
@@ -87,8 +82,7 @@ const checkValidAddProductData = (addProductData: AddProductData): boolean => {
   }
 
   /** 카테고리는 필수 입력사항 */
-  const { big, medium, small } = category;
-  if (big.length === 0 || medium.length === 0 || small.length === 0) {
+  if (categoryBig.length === 0 || categoryMedium.length === 0 || categorySmall.length === 0) {
     alert("카테고리는 대/중/소분류 모두 선택해주세요.");
     return false;
   }
@@ -108,31 +102,13 @@ const checkValidAddProductData = (addProductData: AddProductData): boolean => {
   return true;
 };
 
-/**
- * 상품 추가 이미지 유효성체크
- * @param addProductImage {AddProductImage[]} 상품 추가 이미지 데이터
- * @returns {boolean} 참/거짓 반환
- */
-const checkValidAddProductImage = (addProductImage: AddProductImage[]): boolean => {
-  if (addProductImage.length === 0) {
-    alert("상품 이미지는 한장이상 첨부해주세요");
-    return false;
-  }
-
-  if (addProductImage.length >= 9) {
-    alert("상품 이미지는 최대 8장까지 첨부가 가능합니다");
-    return false;
-  }
-
-  return true;
-};
-
-const AddProduct = () => {
-  const [addProductData, setAddProductData] = useRecoilState(addProductDataState);
-  const [addProductImage, setAddProductImage] = useRecoilState(addProductImageState);
+const EditProduct = () => {
+  const [editProductData, setEditProductData] = useRecoilState(editProductDataState);
   const loginUser = useRecoilValue(loginUserState);
-
   const navigator = useNavigate();
+
+  /** 상품id 가져오기 */
+  const productId = useParams().productId;
 
   useEffect(() => {
     /** 로그인 여부 체크 */
@@ -144,51 +120,34 @@ const AddProduct = () => {
       }
     };
 
+    /** 기존 데이터 불러오기 */
+    const getProductData = async () => {
+      const res = await axios.get(`${productUrl.productInfo}/${productId}`);
+      setEditProductData(res.data);
+    };
+
     checkLoginUser();
-  }, [loginUser, navigator]);
+    getProductData();
+  }, [loginUser, setEditProductData, navigator, productId]);
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log(editProductData);
 
-    /** 상품 추가 폼데이터 및 이미지 유효성체크 */
-    const isValidAddProductData = checkValidAddProductData(addProductData);
-    const isValiAddProductImage = checkValidAddProductImage(addProductImage);
+    /** 상품 수정 폼데이터 및 이미지 유효성체크 */
+    const isValidEditProductData = checkValidEditProductData(editProductData);
 
-    /** 데이터가 유효할경우 서버측으로 상품추가 요청 */
-    if (isValidAddProductData && isValiAddProductImage) {
-      const formData = new FormData(event.currentTarget);
-      formData.append("addProductData", JSON.stringify(addProductData));
-
-      for (let i = 0; i < addProductImage.length; i++) {
-        formData.append("image", addProductImage[i].image);
-      }
-
+    /** 데이터가 유효할경우 서버측으로 상품수정 요청 */
+    if (isValidEditProductData) {
       try {
-        const res = await axios.post(productUrl.addProduct, formData, {
+        const res = await axios.put(`${productUrl.editProduct}/${productId}`, {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${loginUser.accessToken}`,
           },
         });
 
         if (res.status === 200) {
           alert("상품 등록이 완료되었습니다.");
-          setAddProductData({
-            title: "",
-            category: {
-              big: "의류",
-              medium: "남자옷",
-              small: "정장",
-            },
-            tradeArea: "",
-            quality: "old",
-            tradeable: false,
-            price: 0,
-            isIncludeDeliveryCost: false,
-            description: "",
-            quantity: 1,
-          });
-          setAddProductImage([]);
           navigator("/");
         }
       } catch (err: any) {
@@ -210,7 +169,7 @@ const AddProduct = () => {
   };
 
   return (
-    <StyledAddProduct encType="multipart/form-data" onSubmit={submitHandler} acceptCharset="UTF-8">
+    <StyledEditProduct onSubmit={submitHandler}>
       <ProductForm>
         <FormHeader>기본정보</FormHeader>
         <ImageUpload />
@@ -224,10 +183,10 @@ const AddProduct = () => {
         <Quantity />
       </ProductForm>
       <SubmitButtonWrapper>
-        <SubmitButton type="submit">등록하기</SubmitButton>
+        <SubmitButton type="submit">수정하기</SubmitButton>
       </SubmitButtonWrapper>
-    </StyledAddProduct>
+    </StyledEditProduct>
   );
 };
 
-export default AddProduct;
+export default EditProduct;

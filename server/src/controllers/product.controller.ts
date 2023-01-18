@@ -45,8 +45,16 @@ export default class ProductController {
       const products = await ProductService.allProduct();
       res.status(200).json(products);
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       res.status(err.status || 500).json({ message: err.message });
     }
+  };
+
+  static editProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.productId;
+
+    try {
+      const product = await ProductService.productInfo(productId);
+    } catch (err: any) {}
   };
 }

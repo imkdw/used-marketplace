@@ -138,15 +138,15 @@ const ProductData = () => {
         <Icons>
           <IconWrapper>
             <Icon src={HeartIcon} width="16px" height="16px" />
-            {productInfoData.like_count}
+            {productInfoData.likeCount}
           </IconWrapper>
           <IconWrapper>
             <Icon src={EyeIcon} width="21px" height="13px" />
-            {productInfoData.show_count}
+            {productInfoData.showCount}
           </IconWrapper>
           <IconWrapper>
             <Icon src={ClockIcon} width="16px" height="16px" />
-            {productInfoData.created_at.split("T")[0]}
+            {productInfoData.createdAt.split("T")[0]}
           </IconWrapper>
         </Icons>
         <Info>
@@ -161,12 +161,12 @@ const ProductData = () => {
           <InfoItem>
             <InfoSubject>배송비</InfoSubject>
             <InfoData style={{ color: "#6247E2" }}>
-              {productInfoData.include_delivery_cost ? "배송비 포함" : "배송비 별도"}
+              {productInfoData.includeDeliveryCost ? "배송비 포함" : "배송비 별도"}
             </InfoData>
           </InfoItem>
           <InfoItem>
             <InfoSubject>거래지역</InfoSubject>
-            <InfoData>{productInfoData.trade_area}</InfoData>
+            <InfoData>{productInfoData.tradeArea}</InfoData>
           </InfoItem>
         </Info>
         <MyStore to="">내 상점 관리</MyStore>

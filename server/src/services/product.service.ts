@@ -1,7 +1,8 @@
-import { AddProductData, UploadImage } from "./../types/product.d";
+import { AddProductData, ProductInfoReturns, UploadImage } from "./../types/product.d";
 import ProductModel from "./../models/product.model";
 import Secure from "./../utils/secure";
 import FirebaseStorage from "../firebase/firebaseStorage";
+import snakeToCamel from "../modules/snakeToCamel";
 
 class ProductService {
   static addProduct = async (userDTO: AddProductData, images: UploadImage[], author: string) => {
@@ -47,7 +48,7 @@ class ProductService {
     }
   };
 
-  static productInfo = async (productId: string) => {
+  static productInfo = async (productId: string): Promise<ProductInfoReturns> => {
     try {
       /** 상품 정보 조회 */
       const productInfo = await ProductModel.productInfo(productId);
@@ -58,8 +59,16 @@ class ProductService {
       /** 상품 이미지를 추가하여 데이터 반환 */
       const productInfoData = await Promise.all(
         productInfo.map((product) => {
+          const tempProduct: any = {};
+
+          /** DB에서 반환된 snake_case를 camelCase로 변환 */
+          for (const item in product) {
+            const key = snakeToCamel(item);
+            tempProduct[key] = product[item];
+          }
+
           return {
-            ...product,
+            ...tempProduct,
             images: productImages.map((image) => image.image_url),
           };
         })
@@ -81,11 +90,17 @@ class ProductService {
         })
       );
 
-      console.log(sumbnail);
-
       const productsData = await Promise.all(
         products.map(async (product, index) => {
-          return { ...product, image: sumbnail[index][0].image_url };
+          const tempProduct: any = {};
+
+          /** DB에서 반환된 snake_case를 camelCase로 변환 */
+          for (const item in product) {
+            const key = snakeToCamel(item);
+            tempProduct[key] = product[item];
+          }
+
+          return { ...tempProduct, image: sumbnail[index][0].image_url };
         })
       );
 
@@ -97,6 +112,8 @@ class ProductService {
       };
     }
   };
+
+  static editProduct = async () => {};
 }
 
 export default ProductService;

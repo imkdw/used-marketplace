@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { AddProductData, AddProductImage, ProductInfoData } from "../types/product";
+import { AddProductData, AddProductImage, EditProductData, ProductInfoData } from "../types/product";
 
 /** 상품 추가 페이지 유저 입력값  */
 export const addProductDataState = atom<AddProductData>({
@@ -37,28 +37,49 @@ export const enableDaumPostcodeState = atom<boolean>({
 export const productInfoDataState = atom<ProductInfoData>({
   key: "productInfoDataState",
   default: {
+    productId: "",
     author: "",
-    category_big: "",
-    category_medium: "",
-    category_small: "",
-    created_at: "",
+    categoryBig: "",
+    categoryMedium: "",
+    categorySmall: "",
+    createdAt: "",
     description: "",
-    include_delivery_cost: 0,
-    like_count: 0,
-    modified_at: "",
+    includeDeliveryCost: 0,
+    likeCount: 0,
+    modifiedAt: "",
     price: 0,
     quality: "",
     quantity: 0,
-    sell_status: "",
-    show_count: 0,
+    sellStatus: "",
+    showCount: 0,
     title: "",
-    trade_area: "",
+    tradeArea: "",
     tradeable: 0,
     images: [],
   },
 });
 
-export const productEditDataState = atom({
-  key: "productEditDataState",
-  default: "",
+export const editProductDataState = atom<EditProductData>({
+  key: "editProductDataState",
+  default: {
+    productId: "",
+    author: "",
+    categoryBig: "",
+    categoryMedium: "",
+    categorySmall: "",
+    createdAt: "",
+    description: "",
+    includeDeliveryCost: 0,
+    likeCount: 0,
+    modifiedAt: "",
+    price: 0,
+    quality: "",
+    quantity: 0,
+    sellStatus: "",
+    showCount: 0,
+    title: "",
+    tradeArea: "",
+    tradeable: false,
+    images: [],
+  },
 });

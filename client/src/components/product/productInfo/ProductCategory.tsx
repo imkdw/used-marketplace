@@ -48,11 +48,11 @@ const ProductCategory = () => {
       <Home src={homeIcon} />
       <Text>홈</Text>
       <Arrow src={rightArrow} />
-      <CategoryText>{ProductInfoData.category_big}</CategoryText>
+      <CategoryText>{ProductInfoData.categoryBig}</CategoryText>
       <Arrow src={rightArrow} />
-      <CategoryText>{ProductInfoData.category_medium}</CategoryText>
+      <CategoryText>{ProductInfoData.categoryMedium}</CategoryText>
       <Arrow src={rightArrow} />
-      <CategoryText>{ProductInfoData.category_small}</CategoryText>
+      <CategoryText>{ProductInfoData.categorySmall}</CategoryText>
     </StyledProductCategory>
   );
 };

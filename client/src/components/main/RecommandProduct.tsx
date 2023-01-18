@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { productUrl } from "../../config/url";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RecommandProductData } from "../../types/product";
@@ -73,7 +72,6 @@ const RecommandProduct = () => {
   useEffect(() => {
     const getAllProduct = async () => {
       const res = await axios.get("http://localhost:5000/product/all");
-      console.log(res.data);
       setProducts(res.data);
     };
 
@@ -85,15 +83,14 @@ const RecommandProduct = () => {
       <Title>오늘의 상품 추천</Title>
       <Products>
         {products.map((product: RecommandProductData) => (
-          <Product to={"product/" + product.product_id} key={product.product_id}>
+          <Product to={"product/" + product.productId} key={product.productId}>
             <ProductImage src={product.image} />
             <ProductTitle>{product.title}</ProductTitle>
             <PriceAndDate>
               <Price>
-                {Number(product.price).toLocaleString("ko-KR")}{" "}
-                <span style={{ fontSize: "14px" }}>원</span>
+                {Number(product.price).toLocaleString("ko-KR")} <span style={{ fontSize: "14px" }}>원</span>
               </Price>
-              <CreatedAt>{product.modified_at.split("T")[0]}</CreatedAt>
+              <CreatedAt>{product.modifiedAt.split("T")[0]}</CreatedAt>
             </PriceAndDate>
           </Product>
         ))}
