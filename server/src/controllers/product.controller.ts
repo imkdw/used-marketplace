@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import ProductService from "./../services/product.service";
-import { AddProductData, UploadImage } from "./../types/product.d";
+import { AddProductData, EditProductData, UploadImage } from "./../types/product.d";
 
 export default class ProductController {
   static addProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -10,7 +10,7 @@ export default class ProductController {
     try {
       const author = res.locals.email;
       await ProductService.addProduct(userDTO, images, author);
-      res.status(200).json({ message: "상품 등록 성공" });
+      res.status(201).json({ message: "상품 등록 성공" });
     } catch (err: any) {
       console.error(err);
       res.status(err.status || 500).json({ message: err.message });
@@ -52,9 +52,13 @@ export default class ProductController {
 
   static editProduct = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.productId;
+    const userDTO: EditProductData = req.body;
 
     try {
-      const product = await ProductService.productInfo(productId);
-    } catch (err: any) {}
+      await ProductService.editProduct(productId, userDTO);
+      res.status(200).json();
+    } catch (err: any) {
+      res.status(err.status || 500).json({ message: err.message });
+    }
   };
 }

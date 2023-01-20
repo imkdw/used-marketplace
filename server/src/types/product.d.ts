@@ -19,6 +19,29 @@ export interface AddProductData {
   author?: string;
 }
 
+/** 상품수정 - 유저 입력 데이터 */
+export interface EditProductData {
+  productId: string;
+  title: string;
+  categoryBig: string;
+  categoryMedium: string;
+  categorySmall: string;
+  tradeArea: string;
+  quality: string;
+  tradeable: number;
+  price: number;
+  includeDeliveryCost: number;
+  description: string;
+  quantity: number;
+  author: string;
+  likeCount: number;
+  showCount: number;
+  createdAt: string;
+  modifiedAt: string;
+  sellStatus: string;
+  images: string[];
+}
+
 /** Multer를 통해 업로드된 이미지  */
 export interface UploadImage extends Express.Multer.File {
   buffer: {

@@ -171,7 +171,7 @@ const AddProduct = () => {
           },
         });
 
-        if (res.status === 200) {
+        if (res.status === 201) {
           alert("상품 등록이 완료되었습니다.");
           setAddProductData({
             title: "",

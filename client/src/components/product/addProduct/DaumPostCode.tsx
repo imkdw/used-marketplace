@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { addProductDataState, enableDaumPostcodeState } from "../../../recoil/product.recoil";
+import {
+  addProductDataState,
+  editProductDataState,
+  enableDaumPostcodeState,
+} from "../../../recoil/product.recoil";
 
 const ModalBackground = styled.div`
   position: fixed;
@@ -35,16 +39,28 @@ const CloseButtonIcon = () => {
   );
 };
 
-const DaumPostcode = () => {
+interface DaumPostCodeProps {
+  isEdit: boolean;
+}
+
+const DaumPostcode = ({ isEdit }: DaumPostCodeProps) => {
   const setEnableDaumPostcode = useSetRecoilState(enableDaumPostcodeState);
-  const setAddProduct = useSetRecoilState(addProductDataState);
+  const setAddProductData = useSetRecoilState(addProductDataState);
+  const setEditProductData = useSetRecoilState(editProductDataState);
 
   const handleComplete = (data: any) => {
     const fullAddress = `${data.sido} ${data.sigungu} ${data.bname}`;
 
-    setAddProduct((prevState) => {
-      return { ...prevState, tradeArea: fullAddress };
-    });
+    /** 수정 페이지에서 호출될 경우 상품 수정 상태 업데이트 */
+    if (isEdit) {
+      setEditProductData((prevState) => {
+        return { ...prevState, tradeArea: fullAddress };
+      });
+    } else {
+      setAddProductData((prevState) => {
+        return { ...prevState, tradeArea: fullAddress };
+      });
+    }
   };
 
   const handleClose = () => {

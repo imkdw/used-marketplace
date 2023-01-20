@@ -117,7 +117,7 @@ const ImageUpload = () => {
   const images = editProductData.images;
 
   const alertHandler = () => {
-    alert("사진 수정은 불가능합니다.");
+    alert("상품이미지 수정은 불가능합니다.");
     return;
   };
 

@@ -3,6 +3,7 @@ import { connectionPool } from "../utils/db";
 import {
   AddProductData,
   AllProductReturns,
+  EditProductData,
   MyProductsImageReturns,
   MyProductsReturns,
   ProductInfoReturns,
@@ -160,6 +161,74 @@ class ProductModel {
     try {
       const [rows, fields]: [AllProductReturns[], FieldPacket[]] = await connectionPool.execute(query);
       return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status,
+        message: err.message,
+      };
+    }
+  };
+
+  /**
+   * 상품 수정
+   */
+  static editProduct = async (productId: string, userDTO: EditProductData) => {
+    const {
+      title,
+      categoryBig,
+      categoryMedium,
+      categorySmall,
+      tradeArea,
+      price,
+      includeDeliveryCost,
+      description,
+      quantity,
+      likeCount,
+      showCount,
+      createdAt,
+      modifiedAt,
+      sellStatus,
+    } = userDTO;
+
+    const query =
+      "UPDATE products SET\
+      title = ?\
+      category_big = ?\
+      category_medium = ?\
+      category_small = ?\
+      trade_area = ?\
+      price = ?\
+      include_delivery_cost = ?\
+      description = ?\
+      quantity = ?\
+      like_count = ?\
+      show_count = ?\
+      created_at = ?\
+      modified_at = ?\
+      sell_status = ?\
+      WHERE product_id = ?\
+      ";
+
+    const values = [
+      title,
+      categoryBig,
+      categorySmall,
+      categorySmall,
+      tradeArea,
+      price,
+      includeDeliveryCost,
+      description,
+      quantity,
+      likeCount,
+      showCount,
+      createdAt,
+      modifiedAt,
+      sellStatus,
+      productId,
+    ];
+
+    try {
+      await connectionPool.execute(query, values);
     } catch (err: any) {
       throw {
         status: err.status,

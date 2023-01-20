@@ -132,7 +132,6 @@ const EditProduct = () => {
 
   const submitHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(editProductData);
 
     /** 상품 수정 폼데이터 및 이미지 유효성체크 */
     const isValidEditProductData = checkValidEditProductData(editProductData);
@@ -140,7 +139,7 @@ const EditProduct = () => {
     /** 데이터가 유효할경우 서버측으로 상품수정 요청 */
     if (isValidEditProductData) {
       try {
-        const res = await axios.put(`${productUrl.editProduct}/${productId}`, {
+        const res = await axios.put(`${productUrl.editProduct}/${productId}`, editProductData, {
           headers: {
             Authorization: `Bearer ${loginUser.accessToken}`,
           },
@@ -152,6 +151,7 @@ const EditProduct = () => {
         }
       } catch (err: any) {
         const { status, data } = err.response;
+        console.log(err);
         if (status === 401) {
           if (data.message === "jwt_expired") {
             alert("로그인이 만료되었습니다. 다시 로그인해주세요.");

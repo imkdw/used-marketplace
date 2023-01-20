@@ -1,4 +1,4 @@
-import { AddProductData, ProductInfoReturns, UploadImage } from "./../types/product.d";
+import { AddProductData, EditProductData, ProductInfoReturns, UploadImage } from "./../types/product.d";
 import ProductModel from "./../models/product.model";
 import Secure from "./../utils/secure";
 import FirebaseStorage from "../firebase/firebaseStorage";
@@ -113,7 +113,13 @@ class ProductService {
     }
   };
 
-  static editProduct = async () => {};
+  static editProduct = async (productId: string, userDTO: EditProductData) => {
+    try {
+      await ProductModel.editProduct(productId, userDTO);
+    } catch (err: any) {
+      throw err;
+    }
+  };
 }
 
 export default ProductService;
