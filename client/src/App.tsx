@@ -34,7 +34,6 @@ const App = () => {
         <Route path="/product/edit/:productId" element={<Product />} />
         <Route path="/product/:productId" element={<ProductInfo />} />
       </Routes>
-      <StatusBar />
     </Container>
   );
 };

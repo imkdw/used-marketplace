@@ -17,7 +17,7 @@ const Register = () => {
 
   useEffect(() => {
     setCurrentPage("register");
-  }, []);
+  }, [setCurrentPage]);
 
   return (
     <StyledRegister>

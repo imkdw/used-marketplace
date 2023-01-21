@@ -9,7 +9,7 @@ import Category from "./Category";
 import Description from "./Description";
 import ImageUpload from "./ImageUpload";
 import Price from "./Price";
-import ProductStatus from "./quality";
+import ProductStatus from "./Quality";
 import ProductTradeable from "./ProductTradeable";
 import Quantity from "./Quantity";
 import Title from "./Title";
@@ -145,13 +145,12 @@ const EditProduct = () => {
           },
         });
 
-        if (res.status === 200) {
-          alert("상품 등록이 완료되었습니다.");
-          navigator("/");
+        if (res.status === 201) {
+          alert("상품 수정이 완료되었습니다.");
+          navigator("/product/manage");
         }
       } catch (err: any) {
         const { status, data } = err.response;
-        console.log(err);
         if (status === 401) {
           if (data.message === "jwt_expired") {
             alert("로그인이 만료되었습니다. 다시 로그인해주세요.");

@@ -2,11 +2,11 @@ import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { enableDaumPostcodeState } from "../../recoil/product.recoil";
-import DaumPostcode from "../product/addProduct/DaumPostcode";
+import DaumPostcode from "./DaumPostCode";
 
 const StyledContainer = styled.div`
   width: 55%;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
 `;

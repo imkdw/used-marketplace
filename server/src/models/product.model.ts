@@ -93,10 +93,7 @@ class ProductModel {
       "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
     const values = [email];
     try {
-      const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(
-        query,
-        values
-      );
+      const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (err: any) {
       throw {
@@ -115,10 +112,7 @@ class ProductModel {
     const query = "SELECT image_url FROM products_image WHERE product_id=?";
     const values = [productId];
     try {
-      const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] = await connectionPool.execute(
-        query,
-        values
-      );
+      const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (err: any) {
       throw {
@@ -138,10 +132,7 @@ class ProductModel {
     const values = [productId];
 
     try {
-      const [rows, fields]: [ProductInfoReturns[], FieldPacket[]] = await connectionPool.execute(
-        query,
-        values
-      );
+      const [rows, fields]: [ProductInfoReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
       return rows;
     } catch (err: any) {
       throw {
@@ -185,34 +176,16 @@ class ProductModel {
       quantity,
       likeCount,
       showCount,
-      createdAt,
-      modifiedAt,
       sellStatus,
     } = userDTO;
 
     const query =
-      "UPDATE products SET\
-      title = ?\
-      category_big = ?\
-      category_medium = ?\
-      category_small = ?\
-      trade_area = ?\
-      price = ?\
-      include_delivery_cost = ?\
-      description = ?\
-      quantity = ?\
-      like_count = ?\
-      show_count = ?\
-      created_at = ?\
-      modified_at = ?\
-      sell_status = ?\
-      WHERE product_id = ?\
-      ";
+      "UPDATE products SET title = ?, category_big = ?, category_medium = ?, category_small = ?, trade_area = ?, price = ?, include_delivery_cost = ?, description = ?, quantity = ?, like_count = ?, show_count = ?, sell_status = ?, modified_at = now() WHERE product_id = ?";
 
     const values = [
       title,
       categoryBig,
-      categorySmall,
+      categoryMedium,
       categorySmall,
       tradeArea,
       price,
@@ -221,8 +194,6 @@ class ProductModel {
       quantity,
       likeCount,
       showCount,
-      createdAt,
-      modifiedAt,
       sellStatus,
       productId,
     ];

@@ -7,7 +7,7 @@ import { productInfoDataState } from "../../../recoil/product.recoil";
 
 const StyledProductCategory = styled.div`
   width: 100%;
-  height: 78px;
+  min-height: 78px;
   display: flex;
   margin-top: 190px;
   gap: 10px;

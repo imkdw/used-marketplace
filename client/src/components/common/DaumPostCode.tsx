@@ -1,12 +1,7 @@
-import { useState, useEffect } from "react";
 import DaumPostcodeEmbed from "react-daum-postcode";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import {
-  addProductDataState,
-  editProductDataState,
-  enableDaumPostcodeState,
-} from "../../../recoil/product.recoil";
+import { addProductDataState, editProductDataState, enableDaumPostcodeState } from "../../recoil/product.recoil";
 
 const ModalBackground = styled.div`
   position: fixed;

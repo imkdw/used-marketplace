@@ -9,13 +9,15 @@ const StyledRelationProduct = styled.div`
 `;
 
 const Title = styled.div`
+  width: 100%;
+  height: 30px;
   font-size: 18px;
   font-weight: bold;
 `;
 
 const Products = styled.div`
   width: 100%;
-  height: 155px;
+  height: 160px;
   display: flex;
   justify-content: space-between;
 `;
@@ -23,14 +25,17 @@ const Products = styled.div`
 const Product = styled.div`
   width: 15%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const ProductImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 90%;
 `;
 
 const ProductTitle = styled.div`
+  height: 10%;
   display: flex;
   justify-content: center;
   font-size: 13px;

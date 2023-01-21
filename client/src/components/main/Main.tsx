@@ -46,7 +46,6 @@ const Main = () => {
 
   return (
     <StyledMain>
-      <TopSearch />
       <MainWrapper>
         <Slider />
         <Intro>

@@ -8,16 +8,17 @@ import { useSetRecoilState } from "recoil";
 import { productInfoDataState } from "../../../recoil/product.recoil";
 import ProductData from "./ProductData";
 import RelationProduct from "./RelationProduct";
+import ShareLink from "./ShareLink";
 
 const StyledProductInfo = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 `;
 
-// 제목, 가격, 찜, 조회수, 업로드일, 상태, 교ㄹ환여부, 배송비여부, 거래지역, 사진, 내용, 작성자, 카테고리, 상품태그
 const ProductInfo = () => {
   const productId = useParams().productId;
   const setProductInfoData = useSetRecoilState(productInfoDataState);
@@ -36,6 +37,7 @@ const ProductInfo = () => {
       <ProductCategory />
       <ProductData />
       <RelationProduct />
+      <ShareLink />
     </StyledProductInfo>
   );
 };

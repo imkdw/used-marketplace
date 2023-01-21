@@ -12,7 +12,7 @@ const StyledTopHeader = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
-  z-index: 100;
+  z-index: 999;
 
   @media screen and (max-width: 767px) {
     display: none;

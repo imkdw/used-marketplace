@@ -17,7 +17,14 @@ const GlobalStyle = createGlobalStyle`
     list-style: none;
   }
 
+  html, body {
+    width: 100%;
+    height: 100%;
+  }
+
   #root {
+    width: 100%;
+    height: auto;
     display: flex;
     justify-content: center;
   }

@@ -56,8 +56,9 @@ export default class ProductController {
 
     try {
       await ProductService.editProduct(productId, userDTO);
-      res.status(200).json();
+      res.status(201).json();
     } catch (err: any) {
+      console.error(err);
       res.status(err.status || 500).json({ message: err.message });
     }
   };

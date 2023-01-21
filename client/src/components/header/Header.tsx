@@ -19,7 +19,7 @@ const StyledHeader = styled.div`
   flex-direction: column;
   border-bottom: 1px solid #eeeeee;
   background-color: white;
-  z-index: 100;
+  z-index: 999;
 
   @media screen and (max-width: 767px) {
     display: none;
