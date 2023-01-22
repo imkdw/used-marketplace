@@ -9,6 +9,7 @@ import { productInfoDataState } from "../../../recoil/product.recoil";
 import ProductData from "./ProductData";
 import RelationProduct from "./RelationProduct";
 import ShareLink from "./ShareLink";
+import ProductDesc from "./ProductDesc";
 
 const StyledProductInfo = styled.div`
   width: 100%;
@@ -38,6 +39,7 @@ const ProductInfo = () => {
       <ProductData />
       <RelationProduct />
       <ShareLink />
+      <ProductDesc />
     </StyledProductInfo>
   );
 };

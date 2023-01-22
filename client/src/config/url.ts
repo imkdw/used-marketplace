@@ -20,3 +20,7 @@ export const productUrl = {
   allProduct: makeUrl("/product/all"),
   editProduct: makeUrl("/product/edit"),
 };
+
+export const clientUrl = {
+  host: "http://localhost:3000",
+};
