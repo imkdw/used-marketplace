@@ -14,7 +14,6 @@ const StyledMain = styled.div`
 const MainWrapper = styled.div`
   width: 100%;
   height: auto;
-  margin-top: 190px;
   display: flex;
   flex-direction: column;
   align-items: center;

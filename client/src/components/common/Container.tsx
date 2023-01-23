@@ -4,25 +4,30 @@ import styled from "styled-components";
 import { enableDaumPostcodeState } from "../../recoil/product.recoil";
 import DaumPostcode from "./DaumPostCode";
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ marginTop: boolean }>`
   width: 55%;
-  height: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin-top: ${(props) => (props.marginTop ? 190 + "px" : 0)};
 `;
 
 interface ContainerProps {
   children: React.ReactNode;
+  marginTop: boolean;
 }
-const Container = ({ children }: ContainerProps) => {
+
+const Container = ({ children, marginTop }: ContainerProps) => {
   const enableDaumPostcode = useRecoilValue(enableDaumPostcodeState);
 
   /** 상품추가, 상품수정 페이지 구분하기 */
   const location = useLocation();
   const isEdit = location.pathname.includes("edit");
 
+  console.log(marginTop);
   return (
-    <StyledContainer>
+    <StyledContainer marginTop={marginTop}>
       {enableDaumPostcode && <DaumPostcode isEdit={isEdit} />}
       {children}
     </StyledContainer>

@@ -14,9 +14,10 @@ import { currentPageState } from "./recoil/common.recoil";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+  const isMarginTop = currentPage === "login" || currentPage === "register";
 
   return (
-    <Container>
+    <Container marginTop={isMarginTop ? false : true}>
       <GlobalStyle />
       {currentPage !== "login" && currentPage !== "register" && (
         <>

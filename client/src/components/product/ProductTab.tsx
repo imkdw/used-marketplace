@@ -5,7 +5,6 @@ const StyledProductTab = styled.div`
   width: 100%;
   height: 63px;
   min-height: 63px;
-  margin-top: 190px;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #eeeeee;

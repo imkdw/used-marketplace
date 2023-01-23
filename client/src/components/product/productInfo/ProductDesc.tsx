@@ -14,7 +14,11 @@ const Title = styled.div`
 `;
 
 const ProductDesc = () => {
-  return <StyledProductDesc></StyledProductDesc>;
+  return (
+    <StyledProductDesc>
+      <Title></Title>
+    </StyledProductDesc>
+  );
 };
 
 export default ProductDesc;
