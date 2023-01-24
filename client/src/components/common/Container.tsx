@@ -25,7 +25,6 @@ const Container = ({ children, marginTop }: ContainerProps) => {
   const location = useLocation();
   const isEdit = location.pathname.includes("edit");
 
-  console.log(marginTop);
   return (
     <StyledContainer marginTop={marginTop}>
       {enableDaumPostcode && <DaumPostcode isEdit={isEdit} />}
