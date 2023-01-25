@@ -9,6 +9,7 @@ import Slider from "./Slider";
 const StyledMain = styled.div`
   width: 100%;
   height: auto;
+  margin-top: 190px;
 `;
 
 const MainWrapper = styled.div`

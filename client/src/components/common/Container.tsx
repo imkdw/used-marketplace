@@ -8,9 +8,8 @@ const StyledContainer = styled.div<{ marginTop: boolean }>`
   width: 55%;
   height: auto;
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: ${(props) => (props.marginTop ? 190 + "px" : 0)};
+  justify-content: center;
 `;
 
 interface ContainerProps {

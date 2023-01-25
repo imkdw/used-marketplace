@@ -11,6 +11,7 @@ import Header from "./components/header/Header";
 import ProductInfo from "./components/product/productInfo/ProductInfo";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentPageState } from "./recoil/common.recoil";
+import MyShop from "./components/shop/MyShop";
 
 const App = () => {
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/product/list" element={<Product />} />
         <Route path="/product/edit/:productId" element={<Product />} />
         <Route path="/product/:productId" element={<ProductInfo />} />
+        <Route path="/shop/:userId" element={<MyShop />} />
       </Routes>
     </Container>
   );

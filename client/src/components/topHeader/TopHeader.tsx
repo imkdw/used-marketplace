@@ -12,7 +12,8 @@ const StyledTopHeader = styled.div`
   background-color: white;
   position: fixed;
   top: 0;
-  z-index: 999;
+  left: 0;
+  z-index: 100;
 
   @media screen and (max-width: 767px) {
     display: none;
@@ -61,7 +62,7 @@ const TopHeader = () => {
       <LinkWrapper>
         {loginUser.accessToken ? (
           <>
-            <LinkItem to="/">내 정보</LinkItem>
+            <LinkItem to="/">내 상점</LinkItem>
             <LinkItem to="" onClick={logoutHandler}>
               로그아웃
             </LinkItem>
