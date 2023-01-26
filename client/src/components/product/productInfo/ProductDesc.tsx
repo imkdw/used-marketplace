@@ -32,6 +32,7 @@ const DescriptionData = styled.div`
   width: 100%;
   padding: 40px 0 40px 0;
   font-size: 14px;
+  white-space: pre-line;
 `;
 
 const ProductDesc = () => {

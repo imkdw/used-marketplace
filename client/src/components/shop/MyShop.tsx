@@ -1,16 +1,21 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import ShopProfile from "./ShopProfile/ShopProfile";
 
 const StyledMyShop = styled.div`
   width: 100%;
-  height: 500px;
-  background-color: aliceblue;
+  height: auto;
+  margin-top: 220px;
 `;
 
 const MyShop = () => {
   const userId = useParams().userId;
 
-  return <StyledMyShop>{userId}</StyledMyShop>;
+  return (
+    <StyledMyShop>
+      <ShopProfile />
+    </StyledMyShop>
+  );
 };
 
 export default MyShop;

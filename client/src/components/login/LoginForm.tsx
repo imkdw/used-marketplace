@@ -115,13 +115,14 @@ const LoginForm = () => {
 
       /** 로그인 성공시 */
       if (res.status === 200) {
-        const { accessToken, email, nickname } = res.data;
+        const { accessToken, email, nickname, userId } = res.data;
+        console.log(res.data);
         /** 세션스토리지에 access token 저장 */
         sessionStorage.setItem("accessToken", accessToken);
 
         /** 전역 상태에 로그인유저 정보 저장 */
         setLoginUser((prevState) => {
-          return { ...prevState, accessToken, email, nickname };
+          return { ...prevState, accessToken, email, nickname, userId };
         });
 
         /** 메인 페이지로 이동 */
@@ -130,10 +131,8 @@ const LoginForm = () => {
     } catch (error: any) {
       if (error.response.status === 400) {
         alert("등록되지않은 이메일이거나 비밀번호가 일치하지 않습니다.");
-        return;
       } else {
         alert("서버 오류입니다. 다시 시도해주세요.");
-        return;
       }
     }
   };

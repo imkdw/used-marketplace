@@ -27,8 +27,9 @@ export default class AuthController {
       }
 
       res.status(200).json({ ...userInfo });
-    } catch (error: any) {
-      res.status(error.status).json({ message: error.message });
+    } catch (err: any) {
+      console.error(err);
+      res.status(err.status || 500).json({ message: err.message });
     }
   };
 

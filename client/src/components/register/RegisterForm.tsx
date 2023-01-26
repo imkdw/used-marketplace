@@ -113,18 +113,19 @@ const RegisterForm = () => {
     const kakaoAuth = async () => {
       try {
         const res = await axios.post("http://localhost:5000/auth/kakao-login", { code });
-        const { email, nickname } = res.data.data;
+        const { email, nickname } = res.data;
 
         /** 기존에 존재하는 유저일 경우 */
         if (res.data.existUser) {
-          const accessToken = res.data.data.accessToken;
+          const { accessToken, userId } = res.data;
+          console.log(res.data);
 
           /** 세션스토리지에 access token 저장 */
           sessionStorage.setItem("accessToken", accessToken);
 
           /** 전역 상태에 로그인유저 정보 저장 */
           setLoginUser((prevState) => {
-            return { ...prevState, accessToken, email, nickname };
+            return { ...prevState, accessToken, email, nickname, userId };
           });
 
           /** 메인 페이지로 이동 */
@@ -245,7 +246,9 @@ const RegisterForm = () => {
               borderColor={borderColor.email}
             />
             {isValidAccount.email && <ErrorMessage message="올바른 이메일 형식입니다." isValid />}
-            {!isValidAccount.email && <ErrorMessage message="올바르지않은 이메일 형식입니다." isValid={false} />}
+            {!isValidAccount.email && (
+              <ErrorMessage message="올바르지않은 이메일 형식입니다." isValid={false} />
+            )}
           </FormControl>
           <FormControl>
             <AuthInput
@@ -285,7 +288,9 @@ const RegisterForm = () => {
               borderColor={borderColor.rePassword}
             />
             {isValidAccount.rePassword && <ErrorMessage message="비밀번호가 일치합니다." isValid />}
-            {!isValidAccount.rePassword && <ErrorMessage message="비밀번호가 일치하지 않습니다." isValid={false} />}
+            {!isValidAccount.rePassword && (
+              <ErrorMessage message="비밀번호가 일치하지 않습니다." isValid={false} />
+            )}
           </FormControl>
         </InputWrapper>
 

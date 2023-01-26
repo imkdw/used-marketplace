@@ -39,11 +39,15 @@ export default class AuthService {
       }
     }
 
+    /** 비밀번호 암호화 */
     const hashedPassword = await Secure.encryptToHash(userDTO.password);
     userDTO.password = hashedPassword;
 
+    /** hash값으로 유저 ID 생성 */
+    const userId = Secure.getUUID();
+
     try {
-      const registerRecord = await AuthModel.register(userDTO);
+      const registerRecord = await AuthModel.register(userId, userDTO);
       return registerRecord;
     } catch (error: any) {
       throw error;
@@ -64,6 +68,7 @@ export default class AuthService {
 
       const hashedPassword = user[0].password;
       const isSamePassword = await Secure.compareHash(userDTO.password, hashedPassword);
+      console.log(hashedPassword, isSamePassword);
 
       /** 비밀번호가 일치하지 않을경우 */
       if (!isSamePassword) {
@@ -74,11 +79,17 @@ export default class AuthService {
       }
 
       const accessToken = Jwt.createToken(user[0].email, user[0].nickname);
-      return { accessToken, nickname: user[0].nickname, email: user[0].email };
-    } catch (error: any) {
+
+      return {
+        accessToken,
+        nickname: user[0].nickname,
+        email: user[0].email,
+        userId: user[0].user_id,
+      };
+    } catch (err: any) {
       throw {
-        status: error.status,
-        message: error.message,
+        status: err.status,
+        message: err.message,
       };
     }
   };
@@ -120,7 +131,7 @@ export default class AuthService {
       if (!kakaoUser) {
         throw {
           status: 500,
-          message: "Get User Info Failed",
+          message: "Internal Server Error",
         };
       }
 
@@ -146,11 +157,10 @@ export default class AuthService {
 
       return {
         existUser: true,
-        data: {
-          accessToken: accessToken,
-          email: email,
-          nickname: nickname,
-        },
+        accessToken: accessToken,
+        email: email,
+        nickname: nickname,
+        userId: userByEmail[0].user_id,
       };
     } catch (error: any) {
       throw {

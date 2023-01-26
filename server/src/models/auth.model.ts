@@ -8,9 +8,9 @@ import { connectionPool } from "../utils/db";
  */
 
 export default class AuthModel {
-  static register = async (userDTO: RegisterUserDTO) => {
-    const query = `INSERT INTO users(email, nickname, password) VALUES(?, ?, ?)`;
-    const values = [userDTO.email, userDTO.nickname, userDTO.password];
+  static register = async (userId: string, userDTO: RegisterUserDTO) => {
+    const query = `INSERT INTO users(user_id, email, nickname, password) VALUES(?, ?, ?, ?)`;
+    const values = [userId, userDTO.email, userDTO.nickname, userDTO.password];
     try {
       await connectionPool.execute(query, values);
     } catch (error: any) {
@@ -22,10 +22,13 @@ export default class AuthModel {
   };
 
   static getUserByEmail = async (email: string) => {
-    const query = "SELECT * FROM users WHERE email=?";
+    const query = "SELECT user_id, email, nickname, password FROM users WHERE email=?";
     const values = [email];
     try {
-      const [rows, fields]: [GetUserByEmailReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [GetUserByEmailReturn[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (error: any) {
       throw {
@@ -36,10 +39,13 @@ export default class AuthModel {
   };
 
   static getUserByNickname = async (nickname: string) => {
-    const query = "SELECT email, nickname FROM users WHERE nickname=?";
+    const query = "SELECT user_id, email, nickname FROM users WHERE nickname=?";
     const values = [nickname];
     try {
-      const [rows, fields]: [GetUserByNicknameReturn[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [GetUserByNicknameReturn[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (error: any) {
       throw {

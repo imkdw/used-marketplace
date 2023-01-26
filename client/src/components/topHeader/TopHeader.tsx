@@ -51,6 +51,7 @@ const TopHeader = () => {
 
     /** 로그인유저 정보 전역상태 초기화 */
     setLoginUser({
+      userId: "",
       accessToken: "",
       email: "",
       nickname: "",
@@ -62,7 +63,7 @@ const TopHeader = () => {
       <LinkWrapper>
         {loginUser.accessToken ? (
           <>
-            <LinkItem to="/">내 상점</LinkItem>
+            <LinkItem to={"/shop/" + loginUser.userId}>내 상점</LinkItem>
             <LinkItem to="" onClick={logoutHandler}>
               로그아웃
             </LinkItem>

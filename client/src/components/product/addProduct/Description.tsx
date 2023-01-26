@@ -46,6 +46,7 @@ const Description = () => {
 
   const descChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.currentTarget;
+    console.log(value);
 
     setAddProductData((prevState) => {
       return { ...prevState, description: value };
