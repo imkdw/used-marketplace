@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import ShopCounter from "./ShopCounter";
+import ShopIntroduce from "./ShopIntroduce";
 
 const StyledRightProfile = styled.div`
   width: 70%;
@@ -30,6 +31,7 @@ const RightProfile = () => {
       <ProfileWrapper>
         <ShopName>#shopName</ShopName>
         <ShopCounter />
+        <ShopIntroduce />
       </ProfileWrapper>
     </StyledRightProfile>
   );

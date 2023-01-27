@@ -118,7 +118,6 @@ const RegisterForm = () => {
         /** 기존에 존재하는 유저일 경우 */
         if (res.data.existUser) {
           const { accessToken, userId } = res.data;
-          console.log(res.data);
 
           /** 세션스토리지에 access token 저장 */
           sessionStorage.setItem("accessToken", accessToken);

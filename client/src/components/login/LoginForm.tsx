@@ -116,7 +116,7 @@ const LoginForm = () => {
       /** 로그인 성공시 */
       if (res.status === 200) {
         const { accessToken, email, nickname, userId } = res.data;
-        console.log(res.data);
+
         /** 세션스토리지에 access token 저장 */
         sessionStorage.setItem("accessToken", accessToken);
 

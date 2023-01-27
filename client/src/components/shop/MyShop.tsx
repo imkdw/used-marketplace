@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import ShopProfile from "./ShopProfile/ShopProfile";
+import ShopInfo from "./shopInfo/ShopInfo";
+import ShopProfile from "./shopProfile/ShopProfile";
 
 const StyledMyShop = styled.div`
   width: 100%;
@@ -14,6 +15,7 @@ const MyShop = () => {
   return (
     <StyledMyShop>
       <ShopProfile />
+      <ShopInfo />
     </StyledMyShop>
   );
 };
