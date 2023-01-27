@@ -1,5 +1,6 @@
 import { FieldPacket } from "mysql2";
 import { connectionPool } from "../utils/db";
+
 import {
   AddProductData,
   AllProductReturns,
@@ -66,12 +67,17 @@ class ProductModel {
    * @param imageUrls {string[]} 업로드된 상품 이미지의 URL
    */
   static addProductImage = async (productId: string, imageUrls: string[]) => {
-    const query = "INSERT INTO products_image(product_id, image_url) VALUES(?, ?)";
-
     try {
       await Promise.all(
-        imageUrls.map(async (imageUrl) => {
-          const values = [productId, imageUrl];
+        imageUrls.map(async (imageUrl, index) => {
+          let query = "INSERT INTO products_image(product_id, image_url) VALUES(?, ?)";
+          let values = [productId, imageUrl];
+
+          if (index === 0) {
+            query = "INSERT INTO products_image(product_id, image_url, is_sumbnail) VALUES(?, ?, 1)";
+            values = [productId, imageUrl];
+          }
+
           await connectionPool.execute(query, values);
         })
       );
@@ -93,7 +99,10 @@ class ProductModel {
       "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
     const values = [email];
     try {
-      const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (err: any) {
       throw {
@@ -109,10 +118,13 @@ class ProductModel {
    * @returns {MyProductsImageReturns[]} 나의 상품 이미지 URL
    */
   static myProductsImage = async (productId: string) => {
-    const query = "SELECT image_url FROM products_image WHERE product_id=?";
+    const query = "SELECT image_url, is_sumbnail FROM products_image WHERE product_id=?";
     const values = [productId];
     try {
-      const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (err: any) {
       throw {
@@ -132,7 +144,10 @@ class ProductModel {
     const values = [productId];
 
     try {
-      const [rows, fields]: [ProductInfoReturns[], FieldPacket[]] = await connectionPool.execute(query, values);
+      const [rows, fields]: [ProductInfoReturns[], FieldPacket[]] = await connectionPool.execute(
+        query,
+        values
+      );
       return rows;
     } catch (err: any) {
       throw {

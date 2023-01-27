@@ -6,7 +6,8 @@ export default class ShopController {
     const userId = req.params.userId;
 
     try {
-      const shop = ShopService.getShop(userId);
+      const shop = await ShopService.getShop(userId);
+
       res.status(200).json(shop);
     } catch (err: any) {
       console.error(err);

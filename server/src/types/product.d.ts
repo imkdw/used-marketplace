@@ -62,6 +62,7 @@ export interface MyProductsReturns extends RowDataPacket {
 /** Model - 내 상품 이미지 반환 데이터 */
 export interface MyProductsImageReturns extends RowDataPacket {
   image_url: string;
+  is_sumbnail: number;
 }
 
 /** Model - 상품 상세보기 반환 데이터 */

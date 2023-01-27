@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { myShopDataState } from "../../../recoil/shop.recoil";
 
 const StyledShopIntroduce = styled.div`
   width: 100%;
@@ -8,7 +10,10 @@ const StyledShopIntroduce = styled.div`
 `;
 
 const ShopIntroduce = () => {
-  return <StyledShopIntroduce>#shopIntroduce</StyledShopIntroduce>;
+  const myShopData = useRecoilValue(myShopDataState);
+  const { shop } = myShopData;
+
+  return <StyledShopIntroduce>{shop.introduce}</StyledShopIntroduce>;
 };
 
 export default ShopIntroduce;

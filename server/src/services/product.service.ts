@@ -107,7 +107,7 @@ class ProductService {
       return productsData;
     } catch (err: any) {
       throw {
-        status: err.status,
+        status: err.status || 500,
         message: err.message,
       };
     }

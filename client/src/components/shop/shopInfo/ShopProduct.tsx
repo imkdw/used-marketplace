@@ -1,7 +1,10 @@
+import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import catImage from "../../../assets/images/shop/cat.jpg";
 import mapImage from "../../../assets/images/shop/map.png";
+import { myShopDataState } from "../../../recoil/shop.recoil";
 
 const StyledShopProduct = styled.div`
   width: 100%;
@@ -38,7 +41,7 @@ const ProductsHeader = styled.div`
   gap: 20px;
 `;
 
-const Product = styled.div`
+const Product = styled(Link)`
   width: auto;
   height: 315px;
   border: 1px solid #eeeeee;
@@ -56,6 +59,8 @@ const ProductSumbnail = styled.img`
 const ProductTitle = styled.div`
   width: 90%;
   height: 40px;
+  display: flex;
+  align-items: center;
 `;
 
 const PriceAndDate = styled.div`
@@ -63,6 +68,7 @@ const PriceAndDate = styled.div`
   height: 40px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const ProductPrice = styled.div`
@@ -82,7 +88,7 @@ const TradeArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
 `;
 
 const Icon = styled.img`
@@ -96,31 +102,36 @@ const TradeAreaText = styled.div`
 `;
 
 const ShopProduct = () => {
+  const myShopData = useRecoilValue(myShopDataState);
+  const { products } = myShopData;
   const productItem = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
     <StyledShopProduct>
       <Title>
         <TitleText>
-          상품 <span style={{ color: "red" }}>9</span>{" "}
+          상품 <span style={{ color: "red" }}>{products.length}</span>{" "}
         </TitleText>
       </Title>
       <ProductsHeader>
         <span>전체</span>
-        <span style={{ color: "#888888" }}>2개</span>
+        <span style={{ color: "#888888" }}>{products.length}개</span>
       </ProductsHeader>
       <Products>
-        {productItem.map((product, index) => (
-          <Product key={index}>
-            <ProductSumbnail src={catImage} />
-            <ProductTitle>#name{product}</ProductTitle>
+        {products.map((product, index) => (
+          <Product key={product.productId} to={"/product/" + product.productId}>
+            <ProductSumbnail src={product.sumbnail} />
+            <ProductTitle>{product.title}</ProductTitle>
             <PriceAndDate>
-              <ProductPrice>#price{product}</ProductPrice>
-              <CreatedAt>#createAt{product}</CreatedAt>
+              <ProductPrice>
+                {product.price.toLocaleString("ko-KR")}
+                <span style={{ fontSize: "13px" }}> 원</span>
+              </ProductPrice>
+              <CreatedAt>{product.createdAt.split("T")[0]}</CreatedAt>
             </PriceAndDate>
             <TradeArea>
               <Icon src={mapImage} />
-              <TradeAreaText>#tradeArea{product}</TradeAreaText>
+              <TradeAreaText>{product.tradeArea}</TradeAreaText>
             </TradeArea>
           </Product>
         ))}

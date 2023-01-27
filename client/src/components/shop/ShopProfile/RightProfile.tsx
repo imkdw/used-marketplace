@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { myShopDataState } from "../../../recoil/shop.recoil";
 import ShopCounter from "./ShopCounter";
 import ShopIntroduce from "./ShopIntroduce";
 
@@ -26,10 +28,13 @@ const ShopName = styled.div`
 `;
 
 const RightProfile = () => {
+  const myShopData = useRecoilValue(myShopDataState);
+  const { shop } = myShopData;
+
   return (
     <StyledRightProfile>
       <ProfileWrapper>
-        <ShopName>#shopName</ShopName>
+        <ShopName>{shop.nickname}</ShopName>
         <ShopCounter />
         <ShopIntroduce />
       </ProfileWrapper>

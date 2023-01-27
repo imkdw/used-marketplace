@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import catImage from "../../../assets/images/shop/cat.jpg";
+import { myShopDataState } from "../../../recoil/shop.recoil";
 
 const StyledLeftProfile = styled.div`
   width: 30%;
@@ -57,11 +59,14 @@ const ManageProductLink = styled(Link)`
 `;
 
 const LeftProfile = () => {
+  const myShopData = useRecoilValue(myShopDataState);
+  const { shop } = myShopData;
+
   return (
     <StyledLeftProfile>
-      <ProfileImageBackground backgroundImage={catImage} />
-      <ProfileImage src={catImage} />
-      <LeftShopName>#shopName</LeftShopName>
+      <ProfileImageBackground backgroundImage={shop.profileImage} />
+      <ProfileImage src={shop.profileImage} />
+      <LeftShopName>{shop.nickname}</LeftShopName>
       <ManageProductLink to="/product/manage">내 상점 관리</ManageProductLink>
     </StyledLeftProfile>
   );

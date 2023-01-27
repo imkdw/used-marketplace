@@ -24,3 +24,7 @@ export const productUrl = {
 export const clientUrl = {
   host: "http://localhost:3000",
 };
+
+export const shopUrl = {
+  getShop: makeUrl("/shop"),
+};

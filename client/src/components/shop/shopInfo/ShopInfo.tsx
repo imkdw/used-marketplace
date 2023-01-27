@@ -1,4 +1,9 @@
+import axios from "axios";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { shopUrl } from "../../../config/url";
+import { myShopDataState } from "../../../recoil/shop.recoil";
 import ShopProduct from "./ShopProduct";
 
 const StyledShopInfo = styled.div`
@@ -14,7 +19,7 @@ const InfoTab = styled.ul`
 `;
 
 const InfoTabItem = styled.li`
-  width: 33.3%;
+  width: 50%;
   height: 100%;
   border: 1px solid #eeeeee;
   border-bottom: 1px solid;
@@ -36,12 +41,14 @@ const InfoTabItem = styled.li`
 `;
 
 const ShopInfo = () => {
+  const myShopData = useRecoilValue(myShopDataState);
+  const { products } = myShopData;
+
   return (
     <StyledShopInfo>
       <InfoTab>
-        <InfoTabItem>상품 9</InfoTabItem>
-        <InfoTabItem>상점후기 9</InfoTabItem>
-        <InfoTabItem>찜 9</InfoTabItem>
+        <InfoTabItem>상품 {products.length}</InfoTabItem>
+        <InfoTabItem>찜 0</InfoTabItem>
       </InfoTab>
       <ShopProduct />
     </StyledShopInfo>
