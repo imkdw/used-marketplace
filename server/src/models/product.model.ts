@@ -222,6 +222,52 @@ class ProductModel {
       };
     }
   };
+
+  /** 찜 목록 상품 추가 */
+  static addLikeProduct = async (productId: string, email: string) => {
+    const query = "INSERT INTO users_like_product(product_id, user_email) VALUES(?, ?)";
+    const values = [productId, email];
+
+    try {
+      await connectionPool.execute(query, values);
+    } catch (err: any) {
+      throw {
+        status: err.status || 500,
+        message: err.message,
+      };
+    }
+  };
+
+  /** 찜 목록 상품 삭제 */
+  static deleteLikeProduct = async (productId: string, email: string) => {
+    const query = "DELETE FROM users_like_product WHERE product_id=? and user_email=?";
+    const values = [productId, email];
+
+    try {
+      await connectionPool.execute(query, values);
+    } catch (err: any) {
+      throw {
+        status: err.status || 500,
+        message: err.message,
+      };
+    }
+  };
+
+  /** 사용자의 찜 목록 가져오기 */
+  static getLikeProduct = async (email: string) => {
+    const query = "SELECT * FROM users_like_product WHERE user_email=?";
+    const values = [email];
+
+    try {
+      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status || 500,
+        message: err.message,
+      };
+    }
+  };
 }
 
 export default ProductModel;

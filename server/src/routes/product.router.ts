@@ -20,4 +20,7 @@ productRouter.get("/:productId", ProductController.productInfo);
 /** 상품 수정 */
 productRouter.put("/edit/:productId", isAuth, ProductController.editProduct);
 
+/** 상품 찜하기 */
+productRouter.post("/like", isAuth, ProductController.likeProduct);
+
 export default productRouter;

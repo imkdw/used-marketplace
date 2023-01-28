@@ -3,6 +3,7 @@ import ProductModel from "./../models/product.model";
 import Secure from "./../utils/secure";
 import FirebaseStorage from "../firebase/firebaseStorage";
 import snakeToCamel from "../modules/snakeToCamel";
+import Jwt from "../utils/jwt";
 
 class ProductService {
   static addProduct = async (userDTO: AddProductData, images: UploadImage[], author: string) => {
@@ -48,8 +49,17 @@ class ProductService {
     }
   };
 
-  static productInfo = async (productId: string): Promise<ProductInfoReturns> => {
+  static productInfo = async (
+    productId: string,
+    accessToken: string | undefined
+  ): Promise<ProductInfoReturns> => {
     try {
+      /** 로그인된 유저가 조회한 경우 */
+      if (accessToken?.split(" ").length === 2) {
+        const token = Jwt.verifyToken(accessToken);
+        const decodedToken = Jwt.decodeToken(accessToken);
+      }
+
       /** 상품 정보 조회 */
       const productInfo = await ProductModel.productInfo(productId);
 
@@ -116,6 +126,30 @@ class ProductService {
   static editProduct = async (productId: string, userDTO: EditProductData) => {
     try {
       await ProductModel.editProduct(productId, userDTO);
+    } catch (err: any) {
+      throw err;
+    }
+  };
+
+  static likeProduct = async (productId: string, email: string) => {
+    const existLikeProduct = await ProductModel.getLikeProduct(email); // 이미 존재하는 찜 목록
+    const isNotExistProduct =
+      existLikeProduct.filter((product) => product.product_id === productId).length === 0;
+
+    /** 기존 찜 목록에 저장되어있지 않은 상품 -> 찜 목록에 추가 */
+    if (isNotExistProduct) {
+      try {
+        await ProductModel.addLikeProduct(productId, email);
+        return "add";
+      } catch (err: any) {
+        throw err;
+      }
+    }
+
+    /** 기존 찜 목록에 저장된 상품 -> 찜 목록에서 삭제 */
+    try {
+      await ProductModel.deleteLikeProduct(productId, email);
+      return "delete";
     } catch (err: any) {
       throw err;
     }

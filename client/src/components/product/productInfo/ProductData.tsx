@@ -1,12 +1,18 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { productInfoDataState } from "../../../recoil/product.recoil";
 
 import ClockIcon from "../../../assets/images/product_data/clock.png";
 import EyeIcon from "../../../assets/images/product_data/eye.png";
 import HeartIcon from "../../../assets/images/product_data/heart.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductImage from "./ProductImage";
+import { loginUserState } from "../../../recoil/auth.recoil";
+
+import chatIcon from "../../../assets/images/product_info/chat.png";
+import axios from "axios";
+import { productUrl } from "../../../config/url";
+import { useState } from "react";
 
 const StyledProductData = styled.div`
   width: 100%;
@@ -109,6 +115,13 @@ const InfoData = styled.div`
   font-size: 14px;
 `;
 
+const UtilLinks = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const MyStore = styled(Link)`
   width: 100%;
   height: 56px;
@@ -121,8 +134,79 @@ const MyStore = styled(Link)`
   justify-content: center;
 `;
 
+const LikeButton = styled.button`
+  width: 48%;
+  height: 56px;
+  background-color: #cccccc;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const LikeIcon = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+`;
+
+const LikeCount = styled.div`
+  color: white;
+`;
+
+const ChatButton = styled.button`
+  width: 48%;
+  height: 56px;
+  background-color: #ffa425;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`;
+
+const ChatIcon = styled.img`
+  width: 20px;
+  height: 19px;
+  margin-top: 4px;
+`;
+
 const ProductData = () => {
-  const productInfoData = useRecoilValue(productInfoDataState);
+  const [productInfoData, setProductInfoData] = useRecoilState(productInfoDataState);
+  const loginUser = useRecoilValue(loginUserState);
+  const [isLikeProduct, setIsLikeProduct] = useState(false);
+  const navigator = useNavigate();
+
+  /** 게시글 찜하기 기능 */
+  const productLikeHandler = async () => {
+    try {
+      const body = {
+        productId: productInfoData.productId,
+      };
+
+      const res = await axios.post(productUrl.likeProduct, body, {
+        headers: {
+          Authorization: `Bearer ${loginUser.accessToken}`,
+        },
+      });
+
+      /** 좋아요가 추가되었을 경우 */
+      if (res.data.message === "add") {
+        setIsLikeProduct((prevState) => !prevState);
+      }
+    } catch (err: any) {
+      const { status } = err.response;
+      if (status === 401) {
+        alert("로그인이 필요한 기능입니다.");
+        navigator("/login");
+      }
+    }
+  };
 
   return (
     <StyledProductData>
@@ -169,7 +253,20 @@ const ProductData = () => {
             <InfoData>{productInfoData.tradeArea}</InfoData>
           </InfoItem>
         </Info>
-        <MyStore to="">내 상점 관리</MyStore>
+        {productInfoData.author === loginUser.email ? (
+          <MyStore to="/product/manage">내 상점 관리</MyStore>
+        ) : (
+          <UtilLinks>
+            <LikeButton onClick={productLikeHandler}>
+              <LikeIcon src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K" />
+              찜<LikeCount>{productInfoData.likeCount}</LikeCount>
+            </LikeButton>
+            <ChatButton>
+              <ChatIcon src={chatIcon} />
+              채팅하기
+            </ChatButton>
+          </UtilLinks>
+        )}
       </ProductDatas>
     </StyledProductData>
   );

@@ -19,6 +19,7 @@ export const productUrl = {
   productInfo: makeUrl("/product"),
   allProduct: makeUrl("/product/all"),
   editProduct: makeUrl("/product/edit"),
+  likeProduct: makeUrl("/product/like"),
 };
 
 export const clientUrl = {

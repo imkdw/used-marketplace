@@ -15,9 +15,6 @@ const isAuth = (req: Request, res: Response, next: NextFunction) => {
     Jwt.verifyToken(accessToken);
     const decodedToken = Jwt.decodeToken(accessToken);
     res.locals.email = decodedToken.email;
-
-    // TODO: res.locals.nickname은 미사용시 삭제필요
-    res.locals.nickname = decodedToken.nickname;
   } catch (err: any) {
     switch (err.message) {
       case "jwt expired":

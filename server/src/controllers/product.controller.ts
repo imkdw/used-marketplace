@@ -30,9 +30,10 @@ export default class ProductController {
 
   static productInfo = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.productId;
+    const accessToken = req.headers.authorization;
 
     try {
-      const product = await ProductService.productInfo(productId);
+      const product = await ProductService.productInfo(productId, accessToken);
       res.status(200).json(product);
     } catch (err: any) {
       console.error(err);
@@ -59,6 +60,18 @@ export default class ProductController {
       res.status(201).json();
     } catch (err: any) {
       console.error(err);
+      res.status(err.status || 500).json({ message: err.message });
+    }
+  };
+
+  static likeProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const { productId } = req.body;
+
+    try {
+      const likeProduct = await ProductService.likeProduct(productId, res.locals.email);
+      res.status(201).json({ message: likeProduct });
+    } catch (err: any) {
+      console.error(err.message);
       res.status(err.status || 500).json({ message: err.message });
     }
   };
