@@ -9,7 +9,6 @@ export default class ShopService {
       const tempShop: any = {};
       /** users 테이블 조회해서 데이터 가져오기 */
       const shop = await ShopModel.getShop(userId);
-      console.log(shop);
 
       /** shop key를 camelCase로 변환 */
       for (const item in shop[0]) {

@@ -46,6 +46,7 @@ const MyProduct = () => {
         });
 
         setMyProducts(res.data);
+        console.log(res.data);
       } catch (err: any) {
         const { status, data } = err.response;
         if (status === 401) {

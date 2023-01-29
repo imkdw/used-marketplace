@@ -134,10 +134,10 @@ const MyStore = styled(Link)`
   justify-content: center;
 `;
 
-const LikeButton = styled.button`
+const LikeButton = styled.button<{ backgroundColor: string }>`
   width: 48%;
   height: 56px;
-  background-color: #cccccc;
+  background-color: ${(props) => props.backgroundColor};
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
@@ -179,7 +179,6 @@ const ChatIcon = styled.img`
 const ProductData = () => {
   const [productInfoData, setProductInfoData] = useRecoilState(productInfoDataState);
   const loginUser = useRecoilValue(loginUserState);
-  const [isLikeProduct, setIsLikeProduct] = useState(false);
   const navigator = useNavigate();
 
   /** 게시글 찜하기 기능 */
@@ -189,15 +188,29 @@ const ProductData = () => {
         productId: productInfoData.productId,
       };
 
-      const res = await axios.post(productUrl.likeProduct, body, {
+      await axios.post(productUrl.likeProduct, body, {
         headers: {
           Authorization: `Bearer ${loginUser.accessToken}`,
         },
       });
 
-      /** 좋아요가 추가되었을 경우 */
-      if (res.data.message === "add") {
-        setIsLikeProduct((prevState) => !prevState);
+      /** 기존 찜하기된 게시물일 경우 찜하기 취소 */
+      if (productInfoData.isLikeProduct) {
+        setProductInfoData((prevState) => {
+          return {
+            ...prevState,
+            isLikeProduct: !productInfoData.isLikeProduct,
+            likeCount: productInfoData.likeCount - 1,
+          };
+        });
+      } else {
+        setProductInfoData((prevState) => {
+          return {
+            ...prevState,
+            isLikeProduct: !productInfoData.isLikeProduct,
+            likeCount: productInfoData.likeCount + 1,
+          };
+        });
       }
     } catch (err: any) {
       const { status } = err.response;
@@ -257,10 +270,18 @@ const ProductData = () => {
           <MyStore to="/product/manage">내 상점 관리</MyStore>
         ) : (
           <UtilLinks>
-            <LikeButton onClick={productLikeHandler}>
-              <LikeIcon src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K" />
-              찜<LikeCount>{productInfoData.likeCount}</LikeCount>
-            </LikeButton>
+            {productInfoData.isLikeProduct ? (
+              <LikeButton onClick={productLikeHandler} backgroundColor="#333333">
+                <LikeIcon src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGNzJGMzMiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K" />
+                찜<LikeCount>{productInfoData.likeCount}</LikeCount>
+              </LikeButton>
+            ) : (
+              <LikeButton onClick={productLikeHandler} backgroundColor="#cccccc">
+                <LikeIcon src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE2IDE2Ij4KICAgIDxwYXRoIGZpbGw9IiNGRkYiIGZpbGwtcnVsZT0ibm9uemVybyIgZD0iTTcuMDA1IDEuMDQ1aC4yMzNjLjI4LjIyOC41MzcuNDkuNzYyLjc3Ny4yMjUtLjI4OC40ODEtLjU0OS43NjItLjc3N2guMjMzYTYuMTYgNi4xNiAwIDAgMC0uMDktLjExM0M5LjY4NC4zNDQgMTAuNjI4IDAgMTEuNiAwIDE0LjA2NCAwIDE2IDIuMTEgMTYgNC43OTZjMCAzLjI5Ni0yLjcyIDUuOTgxLTYuODQgMTAuMDYyTDggMTZsLTEuMTYtMS4xNTFDMi43MiAxMC43NzcgMCA4LjA5MiAwIDQuNzk2IDAgMi4xMSAxLjkzNiAwIDQuNCAwYy45NzIgMCAxLjkxNi4zNDQgMi42OTUuOTMyYTYuMTYgNi4xNiAwIDAgMC0uMDkuMTEzeiIvPgo8L3N2Zz4K" />
+                찜<LikeCount>{productInfoData.likeCount}</LikeCount>
+              </LikeButton>
+            )}
+
             <ChatButton>
               <ChatIcon src={chatIcon} />
               채팅하기

@@ -30,18 +30,29 @@ class ProductService {
       /** 나의 상품 조회 */
       const myProducts = await ProductModel.myProducts(email);
 
-      /** 나의 상품 첫번쨰 이미지 조회 */
+      /** 나의 상품 썸네일 URL 조회 */
       const productsImage = await Promise.all(
         myProducts.map(async (product, index) => {
-          const productId = product.product_id;
-          const imageUrls = await ProductModel.myProductsImage(productId);
-          return imageUrls[0];
+          const imageUrls = await ProductModel.myProductsImage(product.product_id);
+          return imageUrls[0].image_url;
         })
       );
 
-      const myProductsData = myProducts.map((myProduct, index) => {
-        return { ...myProduct, sumbnail: productsImage[index].image_url };
-      });
+      const myProductsData = await Promise.all(
+        myProducts.map(async (product, index) => {
+          const tempProduct: any = {};
+
+          for (const item in product) {
+            const key = snakeToCamel(item);
+            tempProduct[key] = product[item];
+          }
+
+          const productLikeCount = await ProductModel.getLikeProductByProductId(product.product_id);
+          tempProduct.likeCount = productLikeCount.length;
+
+          return { ...tempProduct, sumbnail: productsImage[index] };
+        })
+      );
 
       return myProductsData;
     } catch (err: any) {
@@ -54,12 +65,6 @@ class ProductService {
     accessToken: string | undefined
   ): Promise<ProductInfoReturns> => {
     try {
-      /** 로그인된 유저가 조회한 경우 */
-      if (accessToken?.split(" ").length === 2) {
-        const token = Jwt.verifyToken(accessToken);
-        const decodedToken = Jwt.decodeToken(accessToken);
-      }
-
       /** 상품 정보 조회 */
       const productInfo = await ProductModel.productInfo(productId);
 
@@ -83,6 +88,29 @@ class ProductService {
           };
         })
       );
+
+      /** 로그인된 유저가 조회한 경우 기존 찜 여부 확인 */
+      if (accessToken?.split(" ").length === 2) {
+        const isValidtoken = Jwt.verifyToken(accessToken?.split(" ")[1]);
+
+        /** 유효한 토큰인지 확인 */
+        if (isValidtoken) {
+          const decodedToken = Jwt.decodeToken(accessToken?.split(" ")[1]);
+          const usersLikeProduct = await ProductModel.getLikeProductByEmail(decodedToken.email);
+          const isExistLikeProduct =
+            usersLikeProduct.filter((product) => product.product_id === productId).length === 1;
+
+          if (isExistLikeProduct) {
+            productInfoData[0].isLikeProduct = true;
+          }
+        }
+      } else {
+        productInfoData[0].isLikeProduct = false;
+      }
+
+      /** 상품 찜하기 갯수 카운트 */
+      const productLikeCount = await ProductModel.getLikeProductByProductId(productId);
+      productInfoData[0].likeCount = productLikeCount.length;
 
       return productInfoData[0];
     } catch (err: any) {
@@ -132,7 +160,7 @@ class ProductService {
   };
 
   static likeProduct = async (productId: string, email: string) => {
-    const existLikeProduct = await ProductModel.getLikeProduct(email); // 이미 존재하는 찜 목록
+    const existLikeProduct = await ProductModel.getLikeProductByEmail(email); // 이미 존재하는 찜 목록
     const isNotExistProduct =
       existLikeProduct.filter((product) => product.product_id === productId).length === 0;
 

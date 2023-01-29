@@ -55,7 +55,6 @@ export interface MyProductsReturns extends RowDataPacket {
   product_id: string;
   title: string;
   price: string;
-  like_count: string;
   modified_at: string;
 }
 
@@ -80,7 +79,6 @@ export interface ProductInfoReturns extends RowDataPacket {
   description: string;
   quantity: number;
   author: string;
-  like_count: number;
   show_count: number;
   created_at: string;
   modified_at: string;

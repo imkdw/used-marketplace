@@ -62,12 +62,12 @@ const UtilLink = styled(Link)<{ color: string }>`
 `;
 
 const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
-  const [modifiedDate, modifiedTime] = myProduct.modified_at.split(" ");
+  const [modifiedDate, modifiedTime] = myProduct.modifiedAt.split(" ");
 
   return (
     <StyledMyProductItem>
       <ItemWrapper width="14%">
-        <SumbnailWrapper to={"/product/" + myProduct.product_id}>
+        <SumbnailWrapper to={"/product/" + myProduct.productId}>
           <Sumbnail src={myProduct.sumbnail} />
         </SumbnailWrapper>
       </ItemWrapper>
@@ -80,23 +80,23 @@ const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
         </SellStatus>
       </ItemWrapper>
       <ItemWrapper width="23%">
-        <Title to={"/product/" + myProduct.product_id}>{myProduct.title}</Title>
+        <Title to={"/product/" + myProduct.productId}>{myProduct.title}</Title>
       </ItemWrapper>
       <ItemWrapper width="14%">
         <TextData>{Number(myProduct.price).toLocaleString("ko-KR")}원</TextData>
       </ItemWrapper>
       <ItemWrapper width="10%">
-        <TextData>{myProduct.like_count}</TextData>
+        <TextData>{myProduct.likeCount}</TextData>
       </ItemWrapper>
       <ItemWrapper width="14%">
         <span>{modifiedDate}</span>
         <span>{modifiedTime}</span>
       </ItemWrapper>
       <ItemWrapper width="10%">
-        <UtilLink color="#FF0508" to={"/product/edit/" + myProduct.product_id}>
+        <UtilLink color="#FF0508" to={"/product/edit/" + myProduct.productId}>
           UP
         </UtilLink>
-        <UtilLink color="#0072E6" to={"/product/edit/" + myProduct.product_id}>
+        <UtilLink color="#0072E6" to={"/product/edit/" + myProduct.productId}>
           수정
         </UtilLink>
       </ItemWrapper>

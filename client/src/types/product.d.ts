@@ -23,12 +23,12 @@ export interface AddProductImage {
 
 /** 내 상품 - 상품 목록 데이터 */
 export interface ManageProductData {
-  like_count: number;
+  likeCount: number;
   price: number;
-  product_id: string;
+  productId: string;
   sumbnail: string;
   title: string;
-  modified_at: string;
+  modifiedAt: string;
 }
 
 /** 상품 상세보기 - 상세보기 데이터 */
@@ -52,6 +52,7 @@ export interface ProductInfoData {
   tradeArea: string;
   tradeable: number;
   images: string[];
+  isLikeProduct: boolean;
 }
 
 /** 추천상품 - 상품 데이터 */

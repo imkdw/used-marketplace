@@ -11,10 +11,7 @@ import {
 } from "./../types/product.d";
 
 class ProductModel {
-  /**
-   * 신규상품 추가
-   * @param userDTO {AddProductData} 클라이언트에서 받은 상품추가 데이터
-   */
+  /** 상품 추가 */
   static addProduct = async (userDTO: AddProductData) => {
     const {
       productId,
@@ -61,11 +58,7 @@ class ProductModel {
     }
   };
 
-  /**
-   * 신규상품 추가시 이미지 업로드
-   * @param productId {string} 상품 ID
-   * @param imageUrls {string[]} 업로드된 상품 이미지의 URL
-   */
+  /** 상품 이미지 추가 */
   static addProductImage = async (productId: string, imageUrls: string[]) => {
     try {
       await Promise.all(
@@ -89,14 +82,10 @@ class ProductModel {
     }
   };
 
-  /**
-   * 나의 상품 조회
-   * @param {string} email  이메일
-   * @returns {MyProductsReturns[]} 상품 조회 데이터
-   */
+  /** 나의 상품 가져오기 */
   static myProducts = async (email: string) => {
     const query =
-      "SELECT product_id, title, price, like_count, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
+      "SELECT product_id, title, price, date_format(modified_at, '%Y-%m-%d %h:%i') as modified_at FROM products WHERE author=?";
     const values = [email];
     try {
       const [rows, fields]: [MyProductsReturns[], FieldPacket[]] = await connectionPool.execute(
@@ -112,13 +101,9 @@ class ProductModel {
     }
   };
 
-  /**
-   * 나의 상품 이미지 조회
-   * @param {string} productId - 상품 ID
-   * @returns {MyProductsImageReturns[]} 나의 상품 이미지 URL
-   */
+  /** 나의 상품 이미지 가져오기 */
   static myProductsImage = async (productId: string) => {
-    const query = "SELECT image_url, is_sumbnail FROM products_image WHERE product_id=?";
+    const query = "SELECT image_url, is_sumbnail FROM products_image WHERE product_id=? and is_sumbnail=1";
     const values = [productId];
     try {
       const [rows, fields]: [MyProductsImageReturns[], FieldPacket[]] = await connectionPool.execute(
@@ -134,11 +119,7 @@ class ProductModel {
     }
   };
 
-  /**
-   * 상품 상세정보 확인
-   * @param {string} productId - 상품 ID
-   * @returns {} - 상품 상세정보 데이터
-   */
+  /** 상품 상세정보 가져오기 */
   static productInfo = async (productId: string) => {
     const query = "SELECT * FROM products WHERE product_id=?";
     const values = [productId];
@@ -157,10 +138,7 @@ class ProductModel {
     }
   };
 
-  /**
-   * 메인화면에 표시되는 오늘의 상품 추천(50개)
-   * @returns {} - 상품 리스트
-   */
+  /** 모든 상품 50개 가져오기 */
   static allProduct = async () => {
     const query = "SELECT product_id, title, price, modified_at FROM products ORDER BY modified_at LIMIT 50";
 
@@ -175,9 +153,7 @@ class ProductModel {
     }
   };
 
-  /**
-   * 상품 수정
-   */
+  /** 상품 수정하기 */
   static editProduct = async (productId: string, userDTO: EditProductData) => {
     const {
       title,
@@ -253,10 +229,26 @@ class ProductModel {
     }
   };
 
-  /** 사용자의 찜 목록 가져오기 */
-  static getLikeProduct = async (email: string) => {
+  /** 이메일로 찜 목록 가져오기 */
+  static getLikeProductByEmail = async (email: string) => {
     const query = "SELECT * FROM users_like_product WHERE user_email=?";
     const values = [email];
+
+    try {
+      const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status || 500,
+        message: err.message,
+      };
+    }
+  };
+
+  /** 상품 ID로 찜 목록 가져오기 */
+  static getLikeProductByProductId = async (productId: string) => {
+    const query = "SELECT * FROM users_like_product WHERE product_id=?";
+    const values = [productId];
 
     try {
       const [rows, fields]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);

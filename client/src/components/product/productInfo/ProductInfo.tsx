@@ -33,6 +33,7 @@ const ProductInfo = () => {
           Authorization: `Bearer ${loginUser.accessToken}`,
         },
       });
+
       setProductInfoData(res.data);
     };
 

@@ -56,6 +56,7 @@ export const productInfoDataState = atom<ProductInfoData>({
     tradeArea: "",
     tradeable: 0,
     images: [],
+    isLikeProduct: false,
   },
 });
 
