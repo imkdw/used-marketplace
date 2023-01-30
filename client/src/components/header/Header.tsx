@@ -7,6 +7,8 @@ import talkIcon from "../../assets/images/talk-icon.png";
 import menuImage from "../../assets/images/menu.png";
 import GlassIcon from "../common/icons/RedGlassIcon";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { loginUserState } from "../../recoil/auth.recoil";
 
 const StyledHeader = styled.div`
   width: 100%;
@@ -113,6 +115,8 @@ const HambergerMenu = styled.img`
 `;
 
 const Header = () => {
+  const loginUser = useRecoilValue(loginUserState);
+
   return (
     <StyledHeader>
       <HeaderWrapper>
@@ -130,7 +134,7 @@ const Header = () => {
             <UtilLinkIcon src={sellIcon} />
             <UtilLinkText>판매하기</UtilLinkText>
           </UtilLink>
-          <UtilLink to="">
+          <UtilLink to={"/shop/" + loginUser.userId}>
             <UtilLinkIcon src={myStoreIcon} />
             <UtilLinkText>나의상점</UtilLinkText>
           </UtilLink>

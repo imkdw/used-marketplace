@@ -28,4 +28,5 @@ export const clientUrl = {
 
 export const shopUrl = {
   getShop: makeUrl("/shop"),
+  likeProduct: makeUrl("/shop/like"),
 };

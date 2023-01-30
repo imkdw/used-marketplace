@@ -34,7 +34,6 @@ export interface EditProductData {
   description: string;
   quantity: number;
   author: string;
-  likeCount: number;
   showCount: number;
   createdAt: string;
   modifiedAt: string;

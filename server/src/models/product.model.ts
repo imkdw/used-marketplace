@@ -165,13 +165,12 @@ class ProductModel {
       includeDeliveryCost,
       description,
       quantity,
-      likeCount,
       showCount,
       sellStatus,
     } = userDTO;
 
     const query =
-      "UPDATE products SET title = ?, category_big = ?, category_medium = ?, category_small = ?, trade_area = ?, price = ?, include_delivery_cost = ?, description = ?, quantity = ?, like_count = ?, show_count = ?, sell_status = ?, modified_at = now() WHERE product_id = ?";
+      "UPDATE products SET title = ?, category_big = ?, category_medium = ?, category_small = ?, trade_area = ?, price = ?, include_delivery_cost = ?, description = ?, quantity = ?, show_count = ?, sell_status = ?, modified_at = now() WHERE product_id = ?";
 
     const values = [
       title,
@@ -183,7 +182,6 @@ class ProductModel {
       includeDeliveryCost,
       description,
       quantity,
-      likeCount,
       showCount,
       sellStatus,
       productId,

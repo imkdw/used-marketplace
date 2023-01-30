@@ -14,4 +14,15 @@ export default class ShopController {
       res.status(err.status || 500).json({ message: err.message });
     }
   };
+
+  static likeProducts = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+
+    try {
+      const likeProducts = await ShopService.likeProducts(userId);
+      res.json();
+    } catch (err: any) {
+      res.json(err.status || 500).json({ message: err.message });
+    }
+  };
 }

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { shopUrl } from "../../config/url";
 import ShopInfo from "./shopInfo/ShopInfo";
@@ -13,6 +13,13 @@ const StyledMyShop = styled.div`
   height: auto;
   margin-top: 220px;
 `;
+
+const getCurrentUrl = (pathname: string) => {
+  const sortaionUrlArray = pathname.split("/");
+  const sortationUrl = sortaionUrlArray[sortaionUrlArray.length - 1];
+
+  return sortationUrl;
+};
 
 const MyShop = () => {
   const userId = useParams().userId;

@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
-import catImage from "../../../assets/images/shop/cat.jpg";
 import mapImage from "../../../assets/images/shop/map.png";
 import { myShopDataState } from "../../../recoil/shop.recoil";
 

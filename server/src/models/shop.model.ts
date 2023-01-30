@@ -37,4 +37,24 @@ export default class ShopModel {
       };
     }
   };
+
+  /**
+   * 유저 ID로 찜 목록에 포함되어 있는 상품 ID 가져오기
+   * @param {string} userId - 유저 ID
+   */
+  static likeProductId = async (userId: string) => {
+    const query =
+      "SELECT product_id FROM users_like_product WHERE user_email = (SELECT email FROM users WHERE user_id=?)";
+    const values = [userId];
+
+    try {
+      const [rows, filed]: [any[], FieldPacket[]] = await connectionPool.execute(query, values);
+      return rows;
+    } catch (err: any) {
+      throw {
+        status: err.status || 500,
+        message: err.message,
+      };
+    }
+  };
 }

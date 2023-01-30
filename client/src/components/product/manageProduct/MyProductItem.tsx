@@ -93,7 +93,7 @@ const MyProductItem = ({ myProduct }: { myProduct: ManageProductData }) => {
         <span>{modifiedTime}</span>
       </ItemWrapper>
       <ItemWrapper width="10%">
-        <UtilLink color="#FF0508" to={"/product/edit/" + myProduct.productId}>
+        <UtilLink color="#FF0508" to="">
           UP
         </UtilLink>
         <UtilLink color="#0072E6" to={"/product/edit/" + myProduct.productId}>

@@ -1,10 +1,14 @@
 import axios from "axios";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { shopUrl } from "../../../config/url";
+import { loginUserState } from "../../../recoil/auth.recoil";
 import { myShopDataState } from "../../../recoil/shop.recoil";
-import ShopProduct from "./ShopProduct";
+import LikeProduct from "../likeProduct/LikeProduct";
+import ShopProduct from "../shopProduct/ShopProduct";
 
 const StyledShopInfo = styled.div`
   width: 100%;
@@ -12,13 +16,13 @@ const StyledShopInfo = styled.div`
   margin-top: 30px;
 `;
 
-const InfoTab = styled.ul`
+const InfoTab = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
 `;
 
-const InfoTabItem = styled.li`
+const InfoTabItem = styled(Link)`
   width: 50%;
   height: 100%;
   border: 1px solid #eeeeee;
@@ -40,17 +44,29 @@ const InfoTabItem = styled.li`
   }
 `;
 
+const getCurrentUrl = (pathname: string) => {
+  const sortaionUrlArray = pathname.split("/");
+  const sortationUrl = sortaionUrlArray[sortaionUrlArray.length - 1];
+
+  return sortationUrl;
+};
+
 const ShopInfo = () => {
   const myShopData = useRecoilValue(myShopDataState);
+  const loginUser = useRecoilValue(loginUserState);
   const { products } = myShopData;
+
+  const location = useLocation();
+  const currentUrl = getCurrentUrl(location.pathname);
 
   return (
     <StyledShopInfo>
       <InfoTab>
-        <InfoTabItem>상품 {products.length}</InfoTabItem>
-        <InfoTabItem>찜 0</InfoTabItem>
+        <InfoTabItem to={"/shop/" + loginUser.userId + "/products"}>상품 {products.length}</InfoTabItem>
+        <InfoTabItem to={"/shop/" + loginUser.userId + "/favorites"}>찜 0</InfoTabItem>
       </InfoTab>
-      <ShopProduct />
+      {currentUrl === "products" && <ShopProduct />}
+      {currentUrl === "favorites" && <LikeProduct />}
     </StyledShopInfo>
   );
 };

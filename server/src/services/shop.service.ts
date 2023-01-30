@@ -48,4 +48,9 @@ export default class ShopService {
       };
     } catch (err: any) {}
   };
+
+  static likeProducts = async (userId: string) => {
+    const likeProductId = await ShopModel.likeProductId(userId);
+    console.log(likeProductId);
+  };
 }
